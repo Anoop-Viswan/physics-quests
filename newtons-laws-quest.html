@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head><body>
+<title>Newton's Laws Quest</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one lab-notebook column on graph paper; a sticky level bar tracks the 6 stages + XP. Force arrows keep one colour per force type everywhere. */
+:root{
+  --bg:#eef3f6; --grid:#dfe7ed; --paper:#ffffff; --ink:#15212c; --muted:#566775; --line:#d3dde5;
+  --accent:#3b3fb6; --accent-soft:#e7e8fb; --xp:#b7791f; --ok:#1f8a4c; --ok-soft:#e3f4ea; --bad:#c2412d; --bad-soft:#fbe9e5;
+  --f-grav:#d2452f; --f-norm:#1f6fc8; --f-fric:#b97a06; --f-tens:#2f8a3a; --f-app:#8a46cc; --f-fake:#8b97a1;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e141a; --grid:#17212a; --paper:#151e27; --ink:#e5edf3; --muted:#93a4b1; --line:#283643;
+  --accent:#a2a6ff; --accent-soft:#252a52; --xp:#f2c14e; --ok:#5fd18f; --ok-soft:#173326; --bad:#ff8a73; --bad-soft:#3a1e19;
+  --f-grav:#ff7a63; --f-norm:#6faaff; --f-fric:#f0b545; --f-tens:#6fd27c; --f-app:#c495ff; --f-fake:#7d8a95; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e141a; --grid:#17212a; --paper:#151e27; --ink:#e5edf3; --muted:#93a4b1; --line:#283643;
+  --accent:#a2a6ff; --accent-soft:#252a52; --xp:#f2c14e; --ok:#5fd18f; --ok-soft:#173326; --bad:#ff8a73; --bad-soft:#3a1e19;
+  --f-grav:#ff7a63; --f-norm:#6faaff; --f-fric:#f0b545; --f-tens:#6fd27c; --f-app:#c495ff; --f-fake:#7d8a95; color-scheme:dark}
+
+body{background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:8px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.65rem;font-weight:800}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* level bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding-block:8px}
+.bar-in{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;gap:12px;align-items:center}
+.levels{display:flex;gap:6px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.levels a{flex:none;text-decoration:none;font-family:var(--mono);font-size:.78rem;padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);background:var(--paper)}
+.levels a.done{border-color:var(--ok);color:var(--ok)}
+.xp{flex:none;font-family:var(--mono);font-weight:700;color:var(--xp);font-variant-numeric:tabular-nums}
+
+header.hero{display:flex;flex-direction:column;gap:12px;padding-top:20px}
+header.hero p{color:var(--muted);max-width:60ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.9rem}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:22px;height:4px;border-radius:2px;display:inline-block}
+
+section.stage{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,4vw,32px);display:flex;flex-direction:column;gap:18px;scroll-margin-top:64px}
+.stage-head{display:flex;flex-direction:column;gap:4px}
+.stage-head .eyebrow{color:var(--accent)}
+.lead{font-size:1.05rem;max-width:62ch}
+.note{color:var(--muted);font-size:.92rem}
+
+/* story */
+.story{font-size:1.06rem;display:flex;flex-direction:column;gap:12px;max-width:62ch}
+.story q{font-style:italic}
+.scene{width:100%;height:auto;max-width:100%;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.trivia{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.trivia div{border:1px dashed var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.trivia b{font-family:var(--display)}
+
+/* predictions + quiz options */
+.pred{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:10px}
+.pred:first-of-type{border-top:0;padding-top:0}
+.qnum{font-family:var(--mono);color:var(--muted);font-size:.8rem}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer}
+.opt:hover{border-color:var(--accent)}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt .k{font-family:var(--mono);font-weight:700;color:var(--muted);flex:none}
+textarea{width:100%;box-sizing:border-box;min-height:70px;font:inherit;font-size:.98rem;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px}
+.btn{font:inherit;font-weight:700;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--accent);color:var(--paper)}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* learn */
+.card{border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.card h3 .law{font-family:var(--mono);font-size:.9rem;color:var(--accent);margin-left:6px}
+.big-eq{font-family:var(--mono);font-size:1.25rem;font-weight:700;padding:10px 14px;background:var(--bg);border-radius:8px;align-self:flex-start}
+ul.tight{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+.vid{display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg)}
+.vid:hover{border-color:var(--accent)}
+.vid .play{flex:none;width:34px;height:34px;border-radius:50%;background:var(--accent);display:grid;place-items:center}
+.vid .play::after{content:"";border-left:11px solid var(--paper);border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:3px}
+.vid small{display:block;color:var(--muted)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* sandbox */
+.sandbox{display:flex;flex-direction:column;gap:10px}
+canvas{width:100%;height:auto;max-width:100%;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;font-family:var(--mono);font-size:.85rem;font-variant-numeric:tabular-nums}
+.readout div{background:var(--bg);border-radius:8px;padding:6px 10px}
+.readout b{display:block;font-size:1.05rem}
+input[type=range]{width:100%;accent-color:var(--accent)}
+
+/* reveal */
+.reveal{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.verdict{font-family:var(--mono);font-size:.8rem;font-weight:700;padding:2px 8px;border-radius:99px;align-self:flex-start}
+.verdict.ok{background:var(--ok-soft);color:var(--ok)} .verdict.no{background:var(--bad-soft);color:var(--bad)} .verdict.none{background:var(--bg);color:var(--muted)}
+.yours{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:10px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:inherit;font-size:.85rem;padding:5px 10px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+
+/* quiz */
+.quiz-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:.85rem;color:var(--muted)}
+.meter{height:8px;background:var(--bg);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.meter i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.streak{color:var(--xp);font-weight:700}
+.qcard{display:flex;flex-direction:column;gap:14px}
+.qtext{font-size:1.1rem}
+.boss{font-family:var(--mono);font-size:.78rem;font-weight:700;color:var(--bad);letter-spacing:.1em}
+.feedback{border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.feedback.ok{background:var(--ok-soft)} .feedback.no{background:var(--bad-soft)}
+.feedback .tip{font-size:.92rem;color:var(--muted)}
+.fbd-wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.fbd-wrap svg{flex:none}
+.score{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.score .num{font-family:var(--display);font-size:3rem;font-weight:800;line-height:1}
+.rank{font-family:var(--mono);color:var(--xp);font-weight:700}
+
+/* playbook */
+.compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.compare > div{border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.weak{background:var(--bad-soft)} .strong{background:var(--ok-soft)}
+.pts{font-family:var(--mono);font-weight:700}
+ol.steps{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:6px}
+.cll{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.cll div{background:var(--bg);border-radius:10px;padding:12px;min-width:0}
+.cll b{font-family:var(--display);font-size:1.1rem;display:block}
+pre.copybox{white-space:pre-wrap;font-family:var(--mono);font-size:.8rem;background:var(--bg);border-radius:10px;padding:12px;max-height:240px;overflow:auto;margin:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<nav class="bar" aria-label="Stages">
+  <div class="bar-in">
+    <div class="levels" id="levels">
+      <a href="#hook" data-stage="hook">1 Hook</a>
+      <a href="#predict" data-stage="predict">2 Predict</a>
+      <a href="#learn" data-stage="learn">3 Learn</a>
+      <a href="#check" data-stage="check">4 Check</a>
+      <a href="#quiz" data-stage="quiz">5 Quiz</a>
+      <a href="#frq" data-stage="frq">6 FRQ</a>
+    </div>
+    <div class="xp" aria-live="polite"><span id="xp">0</span> XP</div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="hero">
+    <span class="eyebrow">AP Physics 1 · Unit 2 · Topics 2.2–2.5</span>
+    <h1>Newton's Laws Quest</h1>
+    <p>Forces, free-body diagrams, and Newton's three laws. Every FRQ in Unit 2 starts here. Work through the six stages in order. Your answers stay on this device.</p>
+    <div class="legend" aria-label="Force colour key">
+      <span><i style="background:var(--f-grav)"></i>Gravity F<sub>g</sub></span>
+      <span><i style="background:var(--f-norm)"></i>Normal F<sub>N</sub></span>
+      <span><i style="background:var(--f-fric)"></i>Friction F<sub>f</sub></span>
+      <span><i style="background:var(--f-tens)"></i>Tension F<sub>T</sub></span>
+      <span><i style="background:var(--f-app)"></i>Applied / push</span>
+    </div>
+  </header>
+
+  <!-- 1 HOOK -->
+  <section class="stage" id="hook">
+    <div class="stage-head"><span class="eyebrow">Stage 1 · Hook · 5 min</span><h2>The horse who read Newton</h2></div>
+    <div class="story">
+      <p>Barnaby was a cart horse with a library card. One night he read Newton's third law: <em>for every force, there is an equal and opposite force.</em></p>
+      <p>Next morning the farmer hitched him to a cart full of pumpkins. Barnaby didn't move.</p>
+      <p><q>It's pointless,</q> he said. <q>Whatever force I put on the cart, the cart puts the same force back on me, in the opposite direction. Equal and opposite forces cancel out. Physics says this cart can never move. I'm going back to bed.</q></p>
+      <p>The farmer had no physics degree, so he couldn't argue. Barnaby went back to bed.</p>
+      <p><strong>Was Barnaby right?</strong> Carts obviously move, so something in his argument is wrong. By the end of Stage 4 you'll be able to say exactly what.</p>
+    </div>
+    <svg class="scene" id="scene" viewBox="0 0 640 260" role="img" aria-label="A horse hitched to a cart, with force arrows"></svg>
+    <div class="row seg" id="sceneMode" aria-label="Show forces">
+      <button type="button" data-mode="claim" aria-pressed="true">Barnaby's two forces</button>
+      <button type="button" data-mode="none" aria-pressed="false">No arrows</button>
+    </div>
+    <p class="note" id="sceneNote">These are the two forces Barnaby is talking about. They really are equal and opposite. So why does the cart move anyway?</p>
+    <div class="trivia">
+      <div><b>You move the Earth</b><p>Every time you jump, you push Earth away with the same force it pushes you up. Earth recoils by less than a hundred-millionth of a proton's width. Same force, enormous mass, tiny acceleration.</p></div>
+      <div><b>A truck and a mosquito</b><p>When a mosquito hits a truck's windshield, which one feels the bigger force? Most adults get this wrong. You'll answer it in Stage 2.</p></div>
+    </div>
+  </section>
+
+  <!-- 2 PREDICT -->
+  <section class="stage" id="predict">
+    <div class="stage-head"><span class="eyebrow">Stage 2 · Predict · 10 min</span><h2>Guess first, then learn</h2></div>
+    <p class="lead">Pick an answer and write one sentence on <em>why</em>. Wrong guesses are fine. Committing to an answer first is what makes the videos stick. You'll check yourself in Stage 4. <span class="mono">+10 XP</span> for each prediction you lock in.</p>
+    <div id="predList"></div>
+  </section>
+
+  <!-- 3 LEARN -->
+  <section class="stage" id="learn">
+    <div class="stage-head"><span class="eyebrow">Stage 3 · Learn · 30–40 min</span><h2>The ideas, one at a time</h2></div>
+    <p class="lead">Read each card, then watch its video. Don't take notes during the video. After it ends, write the card's main equation from memory.</p>
+
+    <div class="card">
+      <h3>A. Forces and free-body diagrams <span class="law">Topic 2.2</span></h3>
+      <p>A force is a push or pull <strong>from one object on another object</strong>. If you can't name the object doing the pushing, the force doesn't exist.</p>
+      <div class="fbd-wrap">
+        <div id="fbdBook"></div>
+        <p style="flex:1;min-width:200px">A book at rest on a table. Only two objects touch it or pull on it: Earth (gravity) and the table (normal force). Two forces, two arrows, and nothing else.</p>
+      </div>
+      <ul class="tight">
+        <li>Draw the object as a <strong>dot</strong>. Every arrow <strong>starts on the dot</strong> and points away from it.</li>
+        <li>Label every arrow: F<sub>g</sub>, F<sub>N</sub>, F<sub>f</sub>, F<sub>T</sub>, F<sub>app</sub>.</li>
+        <li>Arrow lengths show relative size. Forces that balance get equal lengths.</li>
+        <li>No components, no velocity arrows, and no "ma" arrow on the diagram.</li>
+        <li><strong>Phantom forces</strong> lose the point: "force of motion", "force of inertia", "the force from the throw" after the ball leaves your hand, and an extra "centripetal force" arrow.</li>
+      </ul>
+      <a class="vid" href="https://www.flippingphysics.com/fbds-for-ap-physics.html" target="_blank" rel="noopener"><span class="play"></span><span><strong>How to Draw Free-Body Diagrams for AP Physics</strong><small>Flipping Physics · 10:29 · taught by an AP exam reader, the people who grade the FRQs</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>B. Newton's first law <span class="law">Topic 2.4</span></h3>
+      <div class="big-eq">ΣF = 0 ⇔ constant velocity</div>
+      <p>If the net force is zero, the velocity doesn't change. That includes v = 0 (at rest), and it also includes cruising at 30 m/s. <strong>Moving doesn't need a force. Changing velocity does.</strong> This is called <em>translational equilibrium</em>.</p>
+      <div class="sandbox">
+        <canvas id="sim" width="760" height="220" aria-label="Box on a floor simulation"></canvas>
+        <label for="push"><span class="mono">Your push: <b id="pushVal">0.0</b> N</span></label>
+        <input type="range" id="push" min="-60" max="60" step="0.2" value="0">
+        <div class="row">
+          <label class="row" style="gap:6px"><input type="checkbox" id="fricOn" checked> Friction on (μ = 0.30, 10 kg box → 29.4 N)</label>
+          <button type="button" class="btn ghost" id="matchBtn">Set push = friction</button>
+          <button type="button" class="btn ghost" id="resetBtn">Reset</button>
+        </div>
+        <div class="readout" aria-live="off">
+          <div>push<b id="rP">0.0 N</b></div><div>friction<b id="rF">0.0 N</b></div><div>ΣF<b id="rN">0.0 N</b></div><div>a<b id="rA">0.00 m/s²</b></div><div>v<b id="rV">0.00 m/s</b></div>
+        </div>
+        <p class="note"><strong>Try this:</strong> (1) push 45 N until the box is moving, then press <em>Set push = friction</em>. Does the box stop? (2) Turn friction off, give it a push, then set push to 0. What happens to v?</p>
+      </div>
+      <a class="vid" href="https://www.youtube.com/watch?v=NBClEj0h6kc" target="_blank" rel="noopener"><span class="play"></span><span><strong>Newton's 1st Law and Equilibrium Explained</strong><small>The Physics Universe</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>C. Newton's second law <span class="law">Topic 2.5</span></h3>
+      <div class="big-eq">a = ΣF / m</div>
+      <ul class="tight">
+        <li>Acceleration points the same way as the <strong>net</strong> force, not necessarily the same way as the velocity.</li>
+        <li>Recipe: FBD → pick + direction (the way it accelerates) → ΣF = ma along that axis → solve in symbols → substitute numbers.</li>
+        <li>Elevator, accelerating up at a: F<sub>N</sub> − mg = ma, so <span class="mono">F<sub>N</sub> = m(g + a)</span>. The scale reads F<sub>N</sub>, so it reads more than your weight.</li>
+        <li>Several blocks moving together: treat them as one <strong>system</strong> to find a, then use one block alone to find the force between them.</li>
+      </ul>
+      <a class="vid" href="https://www.youtube.com/watch?v=HQOoL9cqkgM" target="_blank" rel="noopener"><span class="play"></span><span><strong>Newton's 2nd Law Concept and Problems</strong><small>The Physics Universe</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>D. Newton's third law <span class="law">Topic 2.3</span></h3>
+      <div class="big-eq">F<sub>A on B</sub> = −F<sub>B on A</sub></div>
+      <p>Third-law pairs <strong>act on different objects</strong>, so they never appear on the same FBD and never cancel each other. Balanced forces act on the <strong>same</strong> object. Mixing these two up is the most common Unit 2 mistake.</p>
+      <div class="tbl"><table>
+        <thead><tr><th></th><th>3rd-law pair</th><th>Balanced forces (1st law)</th></tr></thead>
+        <tbody>
+          <tr><td>Acts on</td><td>Two different objects</td><td>The same object</td></tr>
+          <tr><td>Force type</td><td>Always the same type (gravity ↔ gravity)</td><td>Can be different types</td></tr>
+          <tr><td>Always equal?</td><td>Yes, always, even during a crash</td><td>Only when a = 0</td></tr>
+          <tr><td>Book on table</td><td>Earth pulls book ↔ book pulls Earth</td><td>Earth's gravity on book ↔ table's normal force on book</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Test for a pair: swap the two object names. "Earth pulls book" becomes "book pulls Earth". If the swapped sentence is the other force, they're a pair.</p>
+      <a class="vid" href="https://www.youtube.com/watch?v=NOYMbIUzzOA" target="_blank" rel="noopener"><span class="play"></span><span><strong>Newton's Third Law and Common Misconceptions</strong><small>The Physics Universe</small></span></a>
+      <a class="vid" href="https://www.youtube.com/shorts/vJvzHLyLENM" target="_blank" rel="noopener"><span class="play"></span><span><strong>The Apple Pulls the Earth Just as Hard. So Why Doesn't It Move?</strong><small>The Physics Universe · Short</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>E. Pause-and-solve</h3>
+      <p>Pause before each solution and solve it on paper first, with an FBD and the equation in symbols. Only then press play. Count how many you got fully right before seeing the solution.</p>
+      <a class="vid" href="https://www.youtube.com/watch?v=-Td8HKSigmo" target="_blank" rel="noopener"><span class="play"></span><span><strong>6 Dynamics Problems You MUST Know For AP Physics 1</strong><small>The Physics Universe</small></span></a>
+      <div class="row"><label for="pauseScore">Solved before seeing the answer:</label>
+        <select id="pauseScore" style="font:inherit;padding:6px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)">
+          <option value="">–</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+        </select><span class="note">of 6 (+5 XP each)</span></div>
+    </div>
+  </section>
+
+  <!-- 4 CHECK -->
+  <section class="stage" id="check">
+    <div class="stage-head"><span class="eyebrow">Stage 4 · Check your predictions · 10 min</span><h2>How did your guesses hold up?</h2></div>
+    <p class="lead">Read your prediction next to the physics. Grade yourself honestly, including your reason, not just the letter you picked. <span class="mono">+15 XP</span> for every self-grade, whatever the grade. Being honest with yourself is the skill.</p>
+    <div id="checkList" style="display:flex;flex-direction:column;gap:12px"></div>
+    <div class="card">
+      <h3>Case closed: why the cart moves</h3>
+      <p>Barnaby's two forces are a third-law pair. They act on <strong>different objects</strong>, one on the cart and one on Barnaby, so they can't cancel. To see whether something accelerates, draw the forces on <em>that one object</em>.</p>
+      <svg class="scene" id="scene2" viewBox="0 0 640 260" role="img" aria-label="Horse and cart, forces on one object at a time"></svg>
+      <div class="row seg" id="scene2Mode">
+        <button type="button" data-mode="horse" aria-pressed="true">Forces on horse</button>
+        <button type="button" data-mode="cart" aria-pressed="false">Forces on cart</button>
+        <button type="button" data-mode="system" aria-pressed="false">Horse + cart system</button>
+      </div>
+      <p class="note" id="scene2Note"></p>
+      <a class="vid" href="https://www.youtube.com/watch?v=H_btHXDWxxc" target="_blank" rel="noopener"><span class="play"></span><span><strong>Newton's 3rd Law and the Horse Cart Problem</strong><small>The Physics Universe</small></span></a>
+    </div>
+  </section>
+
+  <!-- 5 QUIZ -->
+  <section class="stage" id="quiz">
+    <div class="stage-head"><span class="eyebrow">Stage 5 · Quiz · 15 min</span><h2>Force Run</h2></div>
+    <p class="lead">13 questions, including 3 "draw the FBD" questions and a boss question at the end. Correct answer +10 XP. From 3 in a row on, every correct answer is +5 bonus. Every explanation ends with an FRQ tip.</p>
+    <div id="quizBox"></div>
+  </section>
+
+  <!-- 6 FRQ -->
+  <section class="stage" id="frq">
+    <div class="stage-head"><span class="eyebrow">Stage 6 · FRQ playbook · read twice before the test</span><h2>How to collect every point</h2></div>
+    <p class="lead">FRQs are graded line by line against a rubric. Each point needs specific words or a specific step. The physics can be right and still score zero if the rubric's words aren't there.</p>
+
+    <div class="card">
+      <h3>The question verbs</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>The question says</th><th>To earn the point</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Draw and label</strong> the forces</td><td>Dot, arrows starting on the dot, one per real force, labelled, with sensible relative lengths. No components, no phantom forces.</td></tr>
+          <tr><td><strong>Derive</strong></td><td>Start from a law in symbols (ΣF = ma), substitute the FBD forces, then solve. Final answer only uses the variables the question lists.</td></tr>
+          <tr><td><strong>Calculate</strong></td><td>Write the equation, show the numbers going in, give the answer with units.</td></tr>
+          <tr><td><strong>Justify / Explain</strong></td><td>Claim + law + link (below). One-word answers score 0.</td></tr>
+          <tr><td><strong>Sketch a graph</strong></td><td>Label both axes, get the shape right (line or curve? up or down?), and show where it crosses the axis.</td></tr>
+          <tr><td><strong>Is this consistent with…</strong></td><td>Name the earlier part and use its equation or result in your answer.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h3>Claim → Law → Link: the justify template</h3>
+      <div class="cll">
+        <div><b>Claim</b>Answer the question directly. "The scale reading is greater than mg."</div>
+        <div><b>Law</b>Name the physics. "Newton's 2nd law: F<sub>N</sub> − mg = ma."</div>
+        <div><b>Link</b>Apply it to <em>this</em> situation. "The acceleration is upward, so F<sub>N</sub> = m(g + a) &gt; mg."</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Same question, two answers</h3>
+      <p><em>A person stands on a scale in an elevator that is speeding up as it moves upward. Is the scale reading greater than, less than, or equal to the person's weight? Justify your answer.</em></p>
+      <div class="compare">
+        <div class="weak"><span class="pts">0 / 2</span><p>"Greater, because the elevator is going up."</p><p class="note">Points to velocity ("going up") instead of acceleration, and names no law. An elevator going up at constant speed would read <em>equal</em>, so this reasoning is wrong even with the right letter.</p></div>
+        <div class="strong"><span class="pts">2 / 2</span><p>"Greater. The only forces on the person are F<sub>N</sub> up from the scale and F<sub>g</sub> = mg down. By Newton's 2nd law, F<sub>N</sub> − mg = ma. The acceleration is upward, so F<sub>N</sub> = m(g + a), which is greater than mg. The scale reads F<sub>N</sub>."</p><p class="note">Claim, FBD forces, law, and the direction of a, linked to the reading.</p></div>
+      </div>
+      <p class="note">Typical 2-point rubric: 1 point for relating the reading to an upward net force / upward acceleration, 1 point for using Newton's 2nd law with F<sub>N</sub>, mg and a. (A sample rubric for practice, not an official College Board one.)</p>
+    </div>
+
+    <div class="card">
+      <h3>The derive routine</h3>
+      <p><em>Example: blocks of mass m₁ and m₂ touch on a frictionless floor. Force F pushes m₁. Derive the force m₁ exerts on m₂.</em></p>
+      <ol class="steps">
+        <li><strong>Choose the system.</strong> For a, use both blocks: F = (m₁ + m₂)a, so a = F / (m₁ + m₂).</li>
+        <li><strong>Isolate.</strong> FBD of m₂ alone. The only horizontal force on it is F<sub>12</sub>.</li>
+        <li><strong>Apply the law in symbols.</strong> F<sub>12</sub> = m₂a.</li>
+        <li><strong>Substitute and box it.</strong> F<sub>12</sub> = m₂F / (m₁ + m₂).</li>
+        <li><strong>Check a limit.</strong> If m₂ → 0, F<sub>12</sub> → 0. That makes sense, since you can't push hard on something with no mass. Graders like seeing this check in "explain" parts.</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>Test-day rules</h3>
+      <ol class="steps">
+        <li>Read every FRQ first (1 min). Start with the one you're most sure of.</li>
+        <li>Draw an FBD for every dynamics part, even when the question doesn't ask for one. It shows you the equation.</li>
+        <li>Write symbols first and numbers last. Most points are in the setup, not the arithmetic.</li>
+        <li>Never leave a part blank. Points are given line by line, so a correct first step still scores.</li>
+        <li>If part (b) uses your answer to part (a) and (a) was wrong, still use it. Graders usually don't take the point away twice.</li>
+        <li>Units on every final number. Use g = 9.8 m/s² unless told otherwise.</li>
+        <li>With 3 minutes left, stop polishing and write a claim plus a law for every unanswered "justify".</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>The 8 Unit 2 traps</h3>
+      <ul class="tight">
+        <li>Moving ≠ net force. Constant velocity means ΣF = 0.</li>
+        <li>Normal force ≠ mg on inclines, in elevators, or when a rope pulls at an angle.</li>
+        <li>F<sub>N</sub> and F<sub>g</sub> on a book are <em>not</em> a 3rd-law pair.</li>
+        <li>3rd-law forces are equal even when the masses aren't. Truck = mosquito.</li>
+        <li>At the top of a throw, v = 0 but a = g. The net force is mg, downward.</li>
+        <li>Mass (kg) and weight (N) are different things. Weight = mg.</li>
+        <li>Static friction is "up to" μ<sub>s</sub>F<sub>N</sub>, not always equal to it.</li>
+        <li>No "centripetal force" arrow on an FBD. Centripetal is a direction, not an extra force.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Next: timed FRQs on paper</h3>
+      <p>The real test is handwritten, so the last step is on paper. Take the printed <strong>Forces & Newton's Laws FRQ Pack</strong>, set a timer, then score it strictly against the scoring guide and fill in the error log.</p>
+    </div>
+  </section>
+
+  <section class="stage" id="results">
+    <div class="stage-head"><span class="eyebrow">Wrap-up</span><h2>Send your results</h2></div>
+    <p class="lead">Copy this summary and send it over. It shows which ideas stuck and what to review before Thursday.</p>
+    <pre class="copybox" id="summary"></pre>
+    <div class="row"><button type="button" class="btn" id="copyBtn">Copy summary</button><span class="note" id="copyMsg" aria-live="polite"></span>
+      <button type="button" class="btn ghost" id="wipeBtn">Start over</button><span class="note" id="wipeAsk" hidden>Erase all answers on this device? <button type="button" class="btn ghost" id="wipeYes">Yes, erase</button></span></div>
+  </section>
+</main>
+
+<script>
+(() => {
+const KEY = "nlq-v1";
+let S = { pred:{}, grade:{}, quiz:{ i:0, answers:{}, streak:0, best:0, done:false, retry:null }, pause:"", xp:0 };
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} renderXP(); renderSummary(); };
+const $ = s => document.querySelector(s);
+const esc = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- SVG helpers ---------- */
+const COL = {grav:"var(--f-grav)",norm:"var(--f-norm)",fric:"var(--f-fric)",tens:"var(--f-tens)",app:"var(--f-app)",fake:"var(--f-fake)"};
+function arrow(x1,y1,x2,y2,k,label,lx,ly,anchor){
+  const c = COL[k], ang = Math.atan2(y2-y1,x2-x1), h = 11;
+  const p1 = [x2 - h*Math.cos(ang-0.42), y2 - h*Math.sin(ang-0.42)], p2 = [x2 - h*Math.cos(ang+0.42), y2 - h*Math.sin(ang+0.42)];
+  const ex = x2 - 7*Math.cos(ang), ey = y2 - 7*Math.sin(ang);
+  return `<line x1="${x1}" y1="${y1}" x2="${ex}" y2="${ey}" style="stroke:${c}" stroke-width="4" stroke-linecap="round"/>`+
+    `<polygon points="${x2},${y2} ${p1[0]},${p1[1]} ${p2[0]},${p2[1]}" style="fill:${c}"/>`+
+    (label?`<text x="${lx}" y="${ly}" text-anchor="${anchor||"middle"}" style="fill:${c};font:700 14px var(--mono)">${label}</text>`:"");
+}
+function fbd(list, size=150){
+  const c = size/2; let s = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="Free-body diagram">`;
+  const dir = {up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
+  for (const f of list){ const [dx,dy] = dir[f.d], L = f.len*(size/2-26);
+    const lx = c+dx*(L+14) + (dy? 18:0), ly = c+dy*(L+16)+ (dx? -8:5);
+    s += arrow(c,c,c+dx*L,c+dy*L,f.k,f.t,lx,ly,dy?"start":"middle"); }
+  return s + `<circle cx="${c}" cy="${c}" r="6" style="fill:var(--ink)"/></svg>`;
+}
+$("#fbdBook").innerHTML = fbd([{d:"up",len:.8,k:"norm",t:"F_N"},{d:"down",len:.8,k:"grav",t:"F_g"}]);
+
+/* ---------- horse & cart scene ---------- */
+function sceneBase(){
+  return `<line x1="20" y1="222" x2="620" y2="222" style="stroke:var(--muted)" stroke-width="2"/>`+
+  `<rect x="90" y="128" width="150" height="62" rx="6" style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"/>`+
+  `<text x="165" y="165" text-anchor="middle" style="fill:var(--muted);font:700 13px var(--mono)">CART</text>`+
+  `<circle cx="122" cy="200" r="20" style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"/><circle cx="208" cy="200" r="20" style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"/>`+
+  `<line x1="240" y1="150" x2="332" y2="138" style="stroke:var(--ink)" stroke-width="3"/>`+
+  `<rect x="330" y="112" width="150" height="54" rx="26" style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"/>`+
+  `<polygon points="462,118 505,62 540,70 512,130" style="fill:var(--paper);stroke:var(--ink)" stroke-width="2" stroke-linejoin="round"/>`+
+  `<line x1="350" y1="164" x2="348" y2="221" style="stroke:var(--ink)" stroke-width="5" stroke-linecap="round"/><line x1="372" y1="164" x2="378" y2="221" style="stroke:var(--ink)" stroke-width="5" stroke-linecap="round"/>`+
+  `<line x1="440" y1="164" x2="436" y2="221" style="stroke:var(--ink)" stroke-width="5" stroke-linecap="round"/><line x1="462" y1="164" x2="470" y2="221" style="stroke:var(--ink)" stroke-width="5" stroke-linecap="round"/>`+
+  `<line x1="332" y1="122" x2="312" y2="160" style="stroke:var(--ink)" stroke-width="3" stroke-linecap="round"/>`+
+  `<text x="405" y="145" text-anchor="middle" style="fill:var(--muted);font:700 13px var(--mono)">BARNABY</text>`;
+}
+const SCENES = {
+  none: ["", "Just a horse, a cart and a lot of pumpkins."],
+  claim: [arrow(160,110,235,110,"tens","horse on cart",190,98)+arrow(425,98,350,98,"tens","cart on horse",388,86),
+    "These are the two forces Barnaby is talking about. They really are equal and opposite. So why does the cart move anyway?"],
+  horse: [arrow(425,98,350,98,"tens","cart on horse",388,86)+arrow(350,240,450,240,"fric","ground pushes hooves forward",400,256)+`<rect x="325" y="56" width="225" height="170" rx="10" fill="none" style="stroke:var(--accent)" stroke-width="2" stroke-dasharray="6 5"/>`,
+    "On Barnaby alone: the cart pulls him back, but the ground pushes his hooves forward (static friction, because he pushes back on the ground). The forward push is bigger, so ΣF on Barnaby points forward and he accelerates. Vertical forces (F_g, F_N) cancel and are left off here."],
+  cart: [arrow(160,110,235,110,"tens","horse on cart",190,98)+arrow(205,240,165,240,"fric","rolling friction",185,256)+`<rect x="80" y="90" width="175" height="135" rx="10" fill="none" style="stroke:var(--accent)" stroke-width="2" stroke-dasharray="6 5"/>`,
+    "On the cart alone: the horse pulls forward and friction at the wheels pulls back. The pull is bigger, so ΣF on the cart points forward. Barnaby's 'opposite force' isn't on this diagram at all. It acts on him."],
+  system: [arrow(350,240,450,240,"fric","ground on hooves",400,256)+arrow(205,240,165,240,"fric","friction on wheels",185,256)+`<rect x="78" y="56" width="474" height="170" rx="10" fill="none" style="stroke:var(--accent)" stroke-width="2" stroke-dasharray="6 5"/>`+`<text x="285" y="78" text-anchor="middle" style="fill:var(--accent);font:700 13px var(--mono)">internal pair cancels inside the box</text>`,
+    "Treat horse + cart as one system. The rope forces are both inside the box, so they cancel. Only external forces count: the ground pushes forward harder than the wheels drag back, so the whole system accelerates. In the end, the ground is what moves the cart."]
+};
+function bindScene(svgSel, segSel, noteSel, start){
+  const draw = m => { $(svgSel).innerHTML = sceneBase()+SCENES[m][0]; $(noteSel).textContent = SCENES[m][1];
+    document.querySelectorAll(segSel+" button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.mode===m)); };
+  document.querySelectorAll(segSel+" button").forEach(b=>b.addEventListener("click",()=>draw(b.dataset.mode)));
+  draw(start);
+}
+bindScene("#scene","#sceneMode","#sceneNote","claim");
+bindScene("#scene2","#scene2Mode","#scene2Note","horse");
+
+/* ---------- predictions ---------- */
+const PRED = [
+  {id:"p1", q:"A mosquito splats on the windshield of a highway truck. During the collision, which force is bigger?",
+   o:["The truck's force on the mosquito","The mosquito's force on the truck","They are exactly equal","It depends on how fast the truck is going"], a:2,
+   why:"Newton's 3rd law: the two forces are a pair, so they're always equal in size, even in a crash. What differs is the <em>effect</em>: a = F/m, and the mosquito's mass is tiny, so its acceleration is enormous."},
+  {id:"p2", q:"You stand on a bathroom scale in an elevator moving UP at a constant 3 m/s. The scale reads…",
+   o:["More than your weight","Less than your weight","Exactly your weight"], a:2,
+   why:"Constant velocity means a = 0, so ΣF = 0 (1st law). F<sub>N</sub> − mg = 0, so F<sub>N</sub> = mg. Moving up doesn't matter. Only <em>accelerating</em> changes the reading."},
+  {id:"p3", q:"A hockey puck slides across perfectly frictionless ice at a steady 5 m/s. What horizontal force keeps it moving?",
+   o:["The force from the stick, still acting on it","A 'force of motion' that slowly runs out","No horizontal force at all"], a:2,
+   why:"1st law: with ΣF = 0 the velocity stays constant forever. Nothing has to keep it moving. The stick's force ended when contact ended. The FBD has only F<sub>g</sub> down and F<sub>N</sub> up."},
+  {id:"p4", q:"Barnaby says equal and opposite forces mean the cart can never move. What's wrong with his argument?",
+   o:["Nothing. He's right, and carts only move because of momentum","The horse actually pulls the cart a bit harder than the cart pulls back","The two forces act on different objects, so they can't cancel"], a:2,
+   why:"The pair is (horse on cart) and (cart on horse). They're equal, but one acts on the cart and one on the horse. Whether the <em>cart</em> accelerates depends only on the forces on the cart. Option B is the most common wrong answer: 3rd-law forces are always exactly equal."},
+  {id:"p5", q:"You toss a ball straight up. At the very top, for an instant, its velocity is zero. The net force on it at that instant is…",
+   o:["Zero, because it isn't moving","mg, downward","A small force upward, left over from the throw"], a:1,
+   why:"Gravity never switches off. Only F<sub>g</sub> acts, so ΣF = mg downward and a = g downward, even when v = 0. Velocity is zero for an instant, but acceleration is not."}
+];
+function renderPred(){
+  $("#predList").innerHTML = PRED.map((p,n)=>{ const st = S.pred[p.id]||{}; const locked = !!st.locked;
+    return `<div class="pred" data-id="${p.id}"><span class="qnum">PREDICTION ${n+1} OF ${PRED.length}</span><p class="qtext"><strong>${p.q}</strong></p>
+    <div class="opts">${p.o.map((o,i)=>`<button type="button" class="opt" data-i="${i}" aria-pressed="${st.c===i}" ${locked?"disabled":""}><span class="k">${"ABCD"[i]}</span><span>${o}</span></button>`).join("")}</div>
+    <label class="note" for="why-${p.id}">Why do you think so? One sentence.</label>
+    <textarea id="why-${p.id}" ${locked?"disabled":""}>${esc(st.why||"")}</textarea>
+    <div class="row"><button type="button" class="btn lock" ${locked||st.c==null?"disabled":""}>${locked?"Locked in ✓":"Lock in prediction"}</button>${locked?"":'<span class="note">Pick an answer, write your reason, then lock it in.</span>'}</div></div>`; }).join("");
+  document.querySelectorAll(".pred").forEach(el=>{ const id = el.dataset.id;
+    el.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{ S.pred[id] = Object.assign(S.pred[id]||{}, {c:+b.dataset.i, why:el.querySelector("textarea").value}); save(); renderPred(); }));
+    el.querySelector("textarea").addEventListener("input",e=>{ S.pred[id] = Object.assign(S.pred[id]||{}, {why:e.target.value}); try{localStorage.setItem(KEY,JSON.stringify(S));}catch(_){} });
+    el.querySelector(".lock").addEventListener("click",()=>{ const st=S.pred[id]; if(!st||st.c==null||st.locked) return; st.why = el.querySelector("textarea").value; st.locked = true; S.xp += 10; save(); renderPred(); renderCheck(); });
+  });
+}
+
+/* ---------- check ---------- */
+function renderCheck(){
+  $("#checkList").innerHTML = PRED.map((p,n)=>{ const st = S.pred[p.id]||{}; const g = S.grade[p.id];
+    const has = st.locked; const right = has && st.c===p.a;
+    return `<div class="reveal" data-id="${p.id}"><span class="qnum">PREDICTION ${n+1}</span><p><strong>${p.q}</strong></p>
+    ${has?`<span class="verdict ${right?"ok":"no"}">${right?"Your pick: correct":"Your pick: "+"ABCD"[st.c]+", not quite"}</span>
+      <p class="yours">You wrote: ${st.why?esc(st.why):"<em>(no reason written)</em>"}</p>`:`<span class="verdict none">Not predicted yet. Go back to Stage 2 first.</span>`}
+    <p><strong>Answer: ${"ABCD"[p.a]}. ${p.o[p.a]}.</strong> ${p.why}</p>
+    ${has?`<div class="seg" aria-label="Grade your reasoning">${["Nailed it, answer and reason","Right answer, shaky reason","Missed it, but I get it now"].map((t,i)=>`<button type="button" data-g="${i}" aria-pressed="${g===i}">${t}</button>`).join("")}</div>`:""}</div>`; }).join("");
+  document.querySelectorAll(".reveal").forEach(el=>el.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>{
+    const id = el.dataset.id; if (S.grade[id]==null) S.xp += 15; S.grade[id] = +b.dataset.g; save(); renderCheck(); })));
+}
+
+/* ---------- quiz ---------- */
+const Q = [
+  {t:"mc", q:"A book rests on a table. Which force is the Newton's-3rd-law partner of Earth's gravitational force on the book?",
+   o:["The table's normal force on the book","The book's gravitational pull on Earth","The book's push down on the table","There isn't one, because the book is at rest"], a:1,
+   e:"A 3rd-law partner is the same <em>type</em> of force with the objects swapped: Earth pulls book → book pulls Earth. The normal force equals mg here only because a = 0 (1st law). That's a coincidence of balance, not a pair.",
+   tip:"In a 'justify' about pairs, name both objects: 'the force of A on B and the force of B on A'."},
+  {t:"fbd", q:"A book slides to the RIGHT across a rough table, slowing down. You let go of it a moment ago. Select every force acting on the book.",
+   o:[["grav","Gravity, down"],["norm","Normal force, up"],["fricL","Friction, to the LEFT"],["fricR","Friction, to the right"],["motion","'Force of motion', to the right"],["hand","Push from your hand, to the right"]],
+   a:["grav","norm","fricL"], fbd:[{d:"up",len:.75,k:"norm",t:"F_N"},{d:"down",len:.75,k:"grav",t:"F_g"},{d:"left",len:.5,k:"fric",t:"F_f"}],
+   e:"Your hand stopped touching it, so its push is gone. There's no 'force of motion'. Kinetic friction opposes the sliding, so it points left, and that's why the book slows down (a points left).",
+   tip:"For every arrow you draw, ask: which object exerts this? No object, no arrow."},
+  {t:"mc", q:"An elevator moves UP at constant speed. Compared with your weight, the scale under you reads…",
+   o:["More","The same","Less"], a:1,
+   e:"Constant speed in a straight line means a = 0, so F<sub>N</sub> = mg.",
+   tip:"In FRQs, explicitly say 'constant velocity, so a = 0 and ΣF = 0 (Newton's 1st law)'. That sentence is often a rubric point."},
+  {t:"mc", q:"A 60 kg student rides an elevator accelerating UPWARD at 2.0 m/s². What does the scale read? (g = 9.8 m/s²)",
+   o:["708 N","588 N","468 N","120 N"], a:0,
+   e:"F<sub>N</sub> − mg = ma → F<sub>N</sub> = m(g + a) = 60(9.8 + 2.0) = 708 N. 588 N is mg (ignores the acceleration). 468 N uses g − a (wrong direction).",
+   tip:"Write F<sub>N</sub> = m(g + a) in symbols before plugging in. If the arithmetic slips, the symbolic step still earns the point."},
+  {t:"mc", q:"An elevator is moving DOWN and slowing to a stop at the ground floor. The scale reads…",
+   o:["More than your weight","Exactly your weight","Less than your weight"], a:0,
+   e:"Slowing down means a points opposite to v. v is down, so a is up. Upward a → F<sub>N</sub> = m(g + a) > mg.",
+   tip:"Always find the direction of <em>a</em> first. Velocity direction alone tells you nothing about the forces."},
+  {t:"mc", q:"A mosquito hits a truck's windshield. Which statement is correct?",
+   o:["Equal forces; the mosquito has a much larger acceleration","The truck exerts the larger force, so the mosquito accelerates more","Equal forces and equal accelerations","The mosquito exerts the larger force because it's the one that stops"], a:0,
+   e:"3rd law: equal forces. 2nd law: a = F/m, so the tiny mass gets the huge acceleration.",
+   tip:"Questions like this test two laws at once. Name both: '3rd law → equal forces; 2nd law → a = F/m'."},
+  {t:"fbd", q:"A hockey puck glides to the RIGHT at constant velocity on frictionless ice. Select every force acting on it.",
+   o:[["grav","Gravity, down"],["norm","Normal force, up"],["motion","Forward force keeping it moving"],["fric","Friction, to the left"],["stick","Force from the stick"]],
+   a:["grav","norm"], fbd:[{d:"up",len:.75,k:"norm",t:"F_N"},{d:"down",len:.75,k:"grav",t:"F_g"}],
+   e:"Constant velocity → ΣF = 0. Vertical forces balance. Horizontally there's nothing: no friction (frictionless), no stick (no contact), no 'forward force'.",
+   tip:"If an FRQ says 'constant velocity', the FBD must balance. Draw balanced arrows with equal lengths."},
+  {t:"mc", q:"A 6.0 kg box on a frictionless floor is pushed with a 30 N horizontal force. Its acceleration is…",
+   o:["5.0 m/s²","180 m/s²","0.20 m/s²","30 m/s²"], a:0,
+   e:"a = ΣF/m = 30/6.0 = 5.0 m/s². 180 means you multiplied, and 0.20 means you flipped the fraction.",
+   tip:"Check units: N/kg = m/s². A units check catches the flipped fraction."},
+  {t:"mc", q:"Blocks of 2.0 kg and 4.0 kg touch on a frictionless floor. A 30 N force pushes the 2.0 kg block, which pushes the 4.0 kg block. What force does the 2.0 kg block exert on the 4.0 kg block?",
+   o:["20 N","30 N","10 N","15 N"], a:0,
+   e:"System: a = 30/(2 + 4) = 5.0 m/s². The 4.0 kg block alone: F = 4.0 × 5.0 = 20 N. 30 N would accelerate the 4 kg block at 7.5 m/s², faster than the system.",
+   tip:"'System for a, isolate for the internal force'. This is a standard AP derive question."},
+  {t:"mc", q:"A crate is dragged at CONSTANT velocity across a rough floor by a horizontal rope with 40 N of tension. The friction force on the crate is…",
+   o:["Exactly 40 N","Less than 40 N, otherwise it wouldn't move","More than 40 N","Zero, because the velocity is constant"], a:0,
+   e:"Constant velocity → ΣF = 0 → friction exactly balances the tension: 40 N. Option B is the classic 'motion needs a bigger force' misconception.",
+   tip:"'Constant velocity' in the stem is a gift. It means the forces balance."},
+  {t:"fbd", q:"A lamp hangs at rest from a single vertical cord. Select every force acting on the lamp.",
+   o:[["grav","Gravity, down"],["tens","Tension from the cord, up"],["norm","Normal force from the ceiling, up"],["tensdown","Tension, down"]],
+   a:["grav","tens"], fbd:[{d:"up",len:.75,k:"tens",t:"F_T"},{d:"down",len:.75,k:"grav",t:"F_g"}],
+   e:"The ceiling doesn't touch the lamp. The cord does. A rope can only pull, so its tension points up along the cord, away from the lamp.",
+   tip:"Normal force needs a surface in contact. Tension always pulls along the rope, away from the object."},
+  {t:"mc", q:"A rope pulls a 10 kg crate across a frictionless floor with 50 N at 30° ABOVE the horizontal. What normal force does the floor exert? (g = 9.8 m/s²)",
+   o:["73 N","98 N","123 N","50 N"], a:0,
+   e:"Vertical: F<sub>N</sub> + 50 sin30° − mg = 0 → F<sub>N</sub> = 98 − 25 = 73 N. The rope lifts a little, so the floor pushes less. 123 N adds the 25 N instead of subtracting it.",
+   tip:"Normal force is NOT automatically mg. Find it from ΣF<sub>y</sub> = 0 every time."},
+  {t:"mc", boss:true, q:"A 2.0 kg lamp hangs from a cord inside an elevator that accelerates DOWNWARD at 3.0 m/s². What is the tension in the cord? (g = 9.8 m/s²)",
+   o:["13.6 N","19.6 N","25.6 N","6.0 N"], a:0,
+   e:"Take down as +: mg − T = ma → T = m(g − a) = 2.0(9.8 − 3.0) = 13.6 N. Accelerating down makes things feel lighter. 19.6 N is mg and 25.6 N used g + a.",
+   tip:"Pick + as the direction of a. Then ΣF = ma always has a positive right side, and sign mistakes disappear."}
+];
+const RANKS = [[0,"Rookie"],[60,"Force Finder"],[100,"FBD Builder"],[140,"Newton's Apprentice"],[175,"Unit 2 Ready"]];
+let picked = new Set(), answered = false;
+function quizOrder(){ return S.quiz.retry ? S.quiz.retry : Q.map((_,i)=>i); }
+function renderQuiz(){
+  const order = quizOrder(), box = $("#quizBox");
+  if (S.quiz.done){
+    const ans = S.quiz.answers, right = Q.filter((_,i)=>ans[i]===true).length, missed = Q.map((_,i)=>i).filter(i=>ans[i]!==true);
+    const pts = right*10; const rank = RANKS.filter(r=>S.xp>=r[0]).pop()[1];
+    box.innerHTML = `<div class="score"><span class="eyebrow">Run complete</span><span class="num">${right} / ${Q.length}</span>
+      <span class="rank">Rank: ${rank} · ${S.xp} XP · best streak ${S.quiz.best}</span>
+      ${missed.length?`<p>Missed: ${missed.map(i=>"Q"+(i+1)).join(", ")}. Re-do them now while the explanations are fresh. A redo still counts.</p>
+      <div class="row"><button type="button" class="btn" id="retryBtn">Redo missed (${missed.length})</button><button type="button" class="btn ghost" id="restartBtn">Restart full run</button></div>`
+      :`<p>Clean sweep. Head to Stage 6 and learn how to turn this into FRQ points.</p><div class="row"><button type="button" class="btn ghost" id="restartBtn">Restart full run</button></div>`}</div>`;
+    const r = $("#retryBtn"); if (r) r.onclick = ()=>{ S.quiz.retry = missed; S.quiz.i = 0; S.quiz.done = false; S.quiz.streak = 0; save(); renderQuiz(); };
+    $("#restartBtn").onclick = ()=>{ S.quiz = {i:0,answers:{},streak:0,best:S.quiz.best,done:false,retry:null}; save(); renderQuiz(); };
+    return;
+  }
+  const qi = order[S.quiz.i], q = Q[qi]; picked = new Set(); answered = false;
+  box.innerHTML = `<div class="qcard"><div class="quiz-top"><span>${S.quiz.retry?"REDO":"Q"} ${S.quiz.i+1} / ${order.length}</span><span class="streak">${S.quiz.streak>=2?"streak ×"+S.quiz.streak:""}</span></div>
+    <div class="meter"><i style="width:${S.quiz.i/order.length*100}%"></i></div>
+    ${q.boss?'<span class="boss">BOSS QUESTION · 2× XP</span>':""}
+    <p class="qtext"><strong>${q.q}</strong></p>
+    ${q.t==="fbd"?'<p class="note">Select all that apply, then check.</p>':""}
+    <div class="opts">${q.o.map((o,i)=>`<button type="button" class="opt" data-i="${i}" aria-pressed="false"><span class="k">${"ABCDEF"[i]}</span><span>${q.t==="fbd"?o[1]:o}</span></button>`).join("")}</div>
+    ${q.t==="fbd"?'<div class="row"><button type="button" class="btn" id="checkFbd" disabled>Check my FBD</button></div>':""}
+    <div id="fb"></div></div>`;
+  box.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{ if (answered) return; const i=+b.dataset.i;
+    if (q.t==="mc") return grade(qi, i===q.a, b, i);
+    picked.has(i)?picked.delete(i):picked.add(i); b.setAttribute("aria-pressed", picked.has(i)); $("#checkFbd").disabled = picked.size===0; }));
+  const cf = $("#checkFbd"); if (cf) cf.onclick = ()=>{ const want = new Set(q.a), got = [...picked].map(i=>q.o[i][0]);
+    const ok = got.length===want.size && got.every(k=>want.has(k)); grade(qi, ok); };
+}
+function grade(qi, ok, btn, i){
+  answered = true; const q = Q[qi], opts = document.querySelectorAll("#quizBox .opt");
+  if (q.t==="mc"){ opts.forEach((b,j)=>{ b.disabled = true; if (j===q.a) b.classList.add("right"); }); if (!ok && btn) btn.classList.add("wrong"); }
+  else { opts.forEach((b,j)=>{ b.disabled = true; const k = q.o[j][0]; if (q.a.includes(k)) b.classList.add("right"); else if (picked.has(j)) b.classList.add("wrong"); }); $("#checkFbd").disabled = true; }
+  if (ok){ S.quiz.streak++; S.quiz.best = Math.max(S.quiz.best, S.quiz.streak); S.xp += (q.boss?20:10) + (S.quiz.streak>=3?5:0); }
+  else S.quiz.streak = 0;
+  if (S.quiz.answers[qi]!==true) S.quiz.answers[qi] = ok;
+  const last = S.quiz.i === quizOrder().length-1;
+  $("#fb").innerHTML = `<div class="feedback ${ok?"ok":"no"}"><strong>${ok?"Correct"+(S.quiz.streak>=3?" · +5 streak bonus":""):"Not this time"}</strong>
+    ${q.fbd?`<div class="fbd-wrap">${fbd(q.fbd,130)}<p style="flex:1;min-width:180px">${q.e}</p></div>`:`<p>${q.e}</p>`}
+    <p class="tip"><strong>FRQ tip:</strong> ${q.tip}</p></div>
+    <div class="row" style="margin-top:10px"><button type="button" class="btn" id="nextBtn">${last?"See results":"Next question"}</button></div>`;
+  $("#nextBtn").onclick = ()=>{ if (last){ S.quiz.done = true; S.quiz.retry = null; } else S.quiz.i++; save(); renderQuiz(); $("#quiz").scrollIntoView({block:"start"}); };
+  save();
+}
+
+/* ---------- pause score ---------- */
+const ps = $("#pauseScore"); ps.value = S.pause || "";
+ps.addEventListener("change",()=>{ const old = +S.pause||0, nw = +ps.value||0; S.xp += (nw-old)*5; S.pause = ps.value; save(); });
+
+/* ---------- sandbox ---------- */
+const cv = $("#sim"), cx = cv.getContext("2d"), M = 10, G = 9.8, MU = 0.30, FK = MU*M*G;
+let x = 2, v = 0, P = 0, fNow = 0, aNow = 0, last = null;
+const pushEl = $("#push");
+pushEl.addEventListener("input",()=>{ P = +pushEl.value; $("#pushVal").textContent = P.toFixed(1); });
+$("#matchBtn").onclick = ()=>{ const sgn = v<0?-1:1; P = $("#fricOn").checked ? +(sgn*FK).toFixed(1) : 0; pushEl.value = P; $("#pushVal").textContent = P.toFixed(1); };
+$("#resetBtn").onclick = ()=>{ x = 2; v = 0; P = 0; pushEl.value = 0; $("#pushVal").textContent = "0.0"; };
+function step(dt){
+  const fr = $("#fricOn").checked;
+  if (Math.abs(v) < 1e-4){ v = 0;
+    if (fr && Math.abs(P) <= FK){ fNow = -P; aNow = 0; }
+    else { fNow = fr ? -Math.sign(P)*FK : 0; aNow = (P+fNow)/M; }
+  } else { fNow = fr ? -Math.sign(v)*FK : 0; aNow = (P+fNow)/M;
+    const nv = v + aNow*dt; if (fr && Math.sign(nv)!==Math.sign(v) && Math.abs(P) <= FK){ v = 0; aNow = 0; fNow = -P; return; } }
+  v += aNow*dt; x += v*dt;
+}
+function tok(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+function harrow(x0,y0,len,col){ if (Math.abs(len)<2) return; cx.strokeStyle=col; cx.fillStyle=col; cx.lineWidth=4; const d=Math.sign(len);
+  cx.beginPath(); cx.moveTo(x0,y0); cx.lineTo(x0+len-d*8,y0); cx.stroke(); cx.beginPath(); cx.moveTo(x0+len,y0); cx.lineTo(x0+len-d*12,y0-7); cx.lineTo(x0+len-d*12,y0+7); cx.fill(); }
+function varrow(x0,y0,len,col){ cx.strokeStyle=col; cx.fillStyle=col; cx.lineWidth=4; const d=Math.sign(len);
+  cx.beginPath(); cx.moveTo(x0,y0); cx.lineTo(x0,y0+len-d*8); cx.stroke(); cx.beginPath(); cx.moveTo(x0,y0+len); cx.lineTo(x0-7,y0+len-d*12); cx.lineTo(x0+7,y0+len-d*12); cx.fill(); }
+function draw(){
+  const W = cv.width, H = cv.height, scale = 40, span = W/scale; const gy = 170;
+  cx.clearRect(0,0,W,H); cx.strokeStyle = tok("--muted"); cx.lineWidth = 2; cx.beginPath(); cx.moveTo(0,gy); cx.lineTo(W,gy); cx.stroke();
+  cx.fillStyle = tok("--muted"); cx.font = "12px " + tok("--mono");
+  for (let m=0;m<=span;m+=2){ const px = m*scale; cx.fillRect(px,gy,1,8); }
+  const wx = (((x % span) + span) % span) * scale; const bw = 70, bh = 56, bx = wx - bw/2, by = gy - bh;
+  cx.fillStyle = tok("--paper"); cx.strokeStyle = tok("--ink"); cx.lineWidth = 2; cx.fillRect(bx,by,bw,bh); cx.strokeRect(bx,by,bw,bh);
+  cx.fillStyle = tok("--muted"); cx.textAlign="center"; cx.fillText("10 kg", wx, by+bh/2+4);
+  const k = 1.6, cyy = by + bh/2;
+  harrow(wx, cyy-10, P*k, tok("--f-app")); harrow(wx, cyy+10, fNow*k, tok("--f-fric"));
+  varrow(wx, by, -40, tok("--f-norm")); varrow(wx, gy, 40, tok("--f-grav"));
+  $("#rP").textContent = P.toFixed(1)+" N"; $("#rF").textContent = fNow.toFixed(1)+" N"; $("#rN").textContent = (P+fNow).toFixed(1)+" N";
+  $("#rA").textContent = aNow.toFixed(2)+" m/s²"; $("#rV").textContent = v.toFixed(2)+" m/s";
+}
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function loop(t){ if (last!=null){ let dt = Math.min(0.05,(t-last)/1000); step(dt); } last = t; draw(); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+
+/* ---------- XP, levels, summary ---------- */
+function renderXP(){
+  $("#xp").textContent = S.xp;
+  const done = { hook: true, predict: PRED.every(p=>S.pred[p.id]&&S.pred[p.id].locked), learn: S.pause!=="" , check: PRED.every(p=>S.grade[p.id]!=null), quiz: S.quiz.done && !S.quiz.retry, frq:false };
+  document.querySelectorAll("#levels a").forEach(a=>a.classList.toggle("done", !!done[a.dataset.stage]));
+}
+function renderSummary(){
+  const G3 = ["nailed it","right answer, shaky reason","missed, understands now"];
+  const lines = [`Newton's Laws Quest · ${new Date().toLocaleDateString()} · ${S.xp} XP`, "", "PREDICTIONS"];
+  PRED.forEach((p,n)=>{ const st=S.pred[p.id]; lines.push(`P${n+1}: ${st&&st.locked?("ABCD"[st.c]+(st.c===p.a?" ✓":" ✗")+" | self-grade: "+(S.grade[p.id]!=null?G3[S.grade[p.id]]:"–")+" | why: "+(st.why||"–")):"not done"}`); });
+  lines.push("", `PAUSE-AND-SOLVE: ${S.pause||"–"}/6`, "", "QUIZ");
+  const ans = S.quiz.answers; const right = Q.filter((_,i)=>ans[i]===true).length;
+  lines.push(`Correct (incl. redos): ${right}/${Q.length} · best streak ${S.quiz.best}`);
+  const miss = Q.map((q,i)=>[q,i]).filter(([_,i])=>ans[i]===false); if (miss.length) lines.push("Still missed: "+miss.map(([q,i])=>"Q"+(i+1)+" ("+q.q.slice(0,50)+"…)").join("; "));
+  $("#summary").textContent = lines.join("\n");
+}
+$("#copyBtn").onclick = async ()=>{ const t = $("#summary").textContent;
+  try { await navigator.clipboard.writeText(t); $("#copyMsg").textContent = "Copied."; }
+  catch(e){ const r = document.createRange(); r.selectNodeContents($("#summary")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("#copyMsg").textContent = "Text selected. Press Copy."; } };
+$("#wipeBtn").onclick = ()=>{ $("#wipeAsk").hidden = false; };
+$("#wipeYes").onclick = ()=>{ try{localStorage.removeItem(KEY);}catch(e){} location.reload(); };
+
+renderPred(); renderCheck(); renderQuiz(); renderXP(); renderSummary();
+})();
+</script>
+
+</body></html>
