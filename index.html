@@ -3,8 +3,8 @@
 <title>Physics Quests</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,800&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-:root{--bg:#eef3f6;--grid:#dfe7ed;--paper:#fff;--ink:#15212c;--muted:#566775;--line:#d3dde5;--accent:#3b3fb6;--soon:#8b97a1}
-@media (prefers-color-scheme:dark){:root{--bg:#0e141a;--grid:#17212a;--paper:#151e27;--ink:#e5edf3;--muted:#93a4b1;--line:#283643;--accent:#a2a6ff;--soon:#7d8a95;color-scheme:dark}}
+:root{--bg:#eef3f6;--grid:#dfe7ed;--paper:#fff;--ink:#15212c;--muted:#566775;--line:#d3dde5;--accent:#3b3fb6;--soon:#8b97a1;--key:#1f8a4c}
+@media (prefers-color-scheme:dark){:root{--bg:#0e141a;--grid:#17212a;--paper:#151e27;--ink:#e5edf3;--muted:#93a4b1;--line:#283643;--accent:#a2a6ff;--soon:#7d8a95;--key:#5fd18f;color-scheme:dark}}
 body{margin:0;background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif}
 main{max-width:720px;margin:0 auto;padding:40px max(16px,env(safe-area-inset-right,0px)) 64px max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:20px}
 .eyebrow{font:500 .75rem "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
@@ -16,25 +16,51 @@ li a:hover{border-color:var(--accent)}
 li b{font-family:"Bricolage Grotesque",sans-serif;font-size:1.1rem}
 li small{display:block;color:var(--muted)}
 .tag{font:500 .75rem "JetBrains Mono",monospace;white-space:nowrap;color:var(--accent)}
-li div{opacity:.6} li div .tag{color:var(--soon)}
+.tag.key{color:var(--key)}
 h2{font:800 1.4rem "Bricolage Grotesque",sans-serif;margin:16px 0 0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pair li{list-style:none}
+@media (max-width:520px){.pair{grid-template-columns:1fr}}
+.plan{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:16px 18px}
+.plan ol{list-style:decimal;padding-left:1.3em;gap:4px;display:flex}
+.plan li{color:var(--ink)}
 </style></head><body><main>
 <span class="eyebrow">AP Physics 1 · Unit 2 · Forces &amp; Translational Dynamics</span>
 <h1>Physics Quests</h1>
-<p>One quest per topic: hook, predict, learn, check, quiz, FRQ playbook. Your progress is saved in this browser, so use the same device each time.</p>
+<p>Practice sets to get test-ready, and one quest per topic to make the basics rock-solid. Quest progress is saved in this browser, so use the same device each time.</p>
+
+<div class="plan"><b>How to use this site</b>
+  <ol>
+    <li><b>Test-ready first:</b> do Quiz A and FRQ Set 1 under a timer. Grade them with the coaching guides.</li>
+    <li>For every topic you missed, play that topic's <b>quest</b> below.</li>
+    <li>Then Quiz B + FRQ Set 2, more quests, and Quiz C + FRQ Set 3 last, as a final mock test.</li>
+  </ol>
+</div>
+
+<h2>Practice sets (print these)</h2>
+<p>AP-style and AP difficulty. Questions and answers are separate files: do the questions under a timer, then open the coaching guide. The guides don't just give answers. They ask you guiding questions first, then walk through the steps.</p>
+<ol>
+  <li class="pair"><a href="printables/unit2-quiz-a.pdf"><span><b>Quiz A</b><small>12 MCQ + 1 optional · 24 min</small></span><span class="tag">PDF ↓</span></a><a href="printables/unit2-quiz-a-coaching-guide.pdf"><span><b>Quiz A: Coaching guide</b><small>Open after the timer</small></span><span class="tag key">PDF ↓</span></a></li>
+  <li class="pair"><a href="printables/unit2-quiz-b.pdf"><span><b>Quiz B</b><small>12 MCQ + 1 optional · 24 min</small></span><span class="tag">PDF ↓</span></a><a href="printables/unit2-quiz-b-coaching-guide.pdf"><span><b>Quiz B: Coaching guide</b><small>Open after the timer</small></span><span class="tag key">PDF ↓</span></a></li>
+  <li class="pair"><a href="printables/unit2-quiz-c.pdf"><span><b>Quiz C</b><small>12 MCQ + 1 optional · 24 min</small></span><span class="tag">PDF ↓</span></a><a href="printables/unit2-quiz-c-coaching-guide.pdf"><span><b>Quiz C: Coaching guide</b><small>Open after the timer</small></span><span class="tag key">PDF ↓</span></a></li>
+  <li class="pair"><a href="printables/unit2-frq-set-1.pdf"><span><b>FRQ Set 1</b><small>MR · TBR · LAB · QQT · 40 pts · 95 min</small></span><span class="tag">PDF ↓</span></a><a href="printables/unit2-frq-set-1-coaching-guide.pdf"><span><b>FRQ Set 1: Coaching guide</b><small>Rubric + full-credit answers</small></span><span class="tag key">PDF ↓</span></a></li>
+  <li class="pair"><a href="printables/unit2-frq-set-2.pdf"><span><b>FRQ Set 2</b><small>MR · TBR · LAB · QQT · 40 pts · 95 min</small></span><span class="tag">PDF ↓</span></a><a href="printables/unit2-frq-set-2-coaching-guide.pdf"><span><b>FRQ Set 2: Coaching guide</b><small>Rubric + full-credit answers</small></span><span class="tag key">PDF ↓</span></a></li>
+  <li class="pair"><a href="printables/unit2-frq-set-3.pdf"><span><b>FRQ Set 3</b><small>MR · TBR · LAB · QQT · 40 pts · 95 min</small></span><span class="tag">PDF ↓</span></a><a href="printables/unit2-frq-set-3-coaching-guide.pdf"><span><b>FRQ Set 3: Coaching guide</b><small>Rubric + full-credit answers</small></span><span class="tag key">PDF ↓</span></a></li>
+</ol>
+
+<h2>Quests (lessons)</h2>
 <ol>
   <li><a href="newtons-laws-quest.html"><span><b>Newton's Laws Quest</b><small>Forces, free-body diagrams, Newton's 1st, 2nd and 3rd laws · Topics 2.2–2.5</small></span><span class="tag">START →</span></a></li>
-  <li><div><span><b>Systems &amp; Gravity</b><small>Center of mass, gravitational field · Topics 2.1, 2.6</small></span><span class="tag">COMING</span></div></li>
-  <li><div><span><b>Friction &amp; Inclines</b><small>Static and kinetic friction, ramps · Topic 2.7</small></span><span class="tag">COMING</span></div></li>
-  <li><div><span><b>Tension &amp; Pulleys</b><small>Ropes, connected systems</small></span><span class="tag">COMING</span></div></li>
-  <li><div><span><b>Circular Motion</b><small>Centripetal acceleration, universal gravitation · Topic 2.9</small></span><span class="tag">COMING</span></div></li>
+  <li><a href="systems-gravity-quest.html"><span><b>Systems &amp; Gravity Quest</b><small>Systems, center of mass, universal gravitation, g, apparent weight · Topics 2.1, 2.6</small></span><span class="tag">START →</span></a></li>
+  <li><a href="friction-inclines-quest.html"><span><b>Friction &amp; Inclines Quest</b><small>Static vs. kinetic friction, normal force, ramps · Topic 2.7</small></span><span class="tag">START →</span></a></li>
+  <li><a href="tension-pulleys-quest.html"><span><b>Tension &amp; Pulleys Quest</b><small>Ropes, Atwood machines, connected systems, springs · Topics 2.5, 2.8</small></span><span class="tag">START →</span></a></li>
+  <li><a href="circular-motion-quest.html"><span><b>Circular Motion Quest</b><small>Centripetal acceleration, loops, curves, orbits · Topics 2.9, 2.6</small></span><span class="tag">START →</span></a></li>
 </ol>
-<h2>Printable FRQ packs</h2>
-<p>The real test is on paper, so print these. Set a timer, finish the pack, and only then open the scoring guide and grade yourself strictly.</p>
+
+<h2>Topic FRQ packs</h2>
+<p>Shorter packs tied to one quest each. Set a timer, finish the pack, then grade yourself strictly.</p>
 <ol>
-  <li><a href="printables/newtons-laws-frq-pack.docx"><span><b>Newton's Laws FRQ Pack</b><small>3 timed FRQs, 30 points · do after Newton's Laws Quest</small></span><span class="tag">DOCX ↓</span></a></li>
-  <li><a href="printables/newtons-laws-frq-scoring-guide.docx"><span><b>Newton's Laws: Scoring Guide</b><small>Open only after the timer is done</small></span><span class="tag">DOCX ↓</span></a></li>
-  <li><a href="printables/circular-motion-frq-pack.docx"><span><b>Circular Motion FRQ Pack</b><small>4 timed FRQs (MR, TBR, LAB, QQT), 40 points · Topic 2.9</small></span><span class="tag">DOCX ↓</span></a></li>
-  <li><a href="printables/circular-motion-frq-scoring-guide.docx"><span><b>Circular Motion: Scoring Guide</b><small>Open only after the timer is done</small></span><span class="tag">DOCX ↓</span></a></li>
+  <li class="pair"><a href="printables/newtons-laws-frq-pack.docx"><span><b>Newton's Laws FRQ Pack</b><small>3 timed FRQs, 30 points</small></span><span class="tag">DOCX ↓</span></a><a href="printables/newtons-laws-frq-scoring-guide.docx"><span><b>Newton's Laws: Scoring Guide</b><small>Open after the timer</small></span><span class="tag key">DOCX ↓</span></a></li>
+  <li class="pair"><a href="printables/circular-motion-frq-pack.docx"><span><b>Circular Motion FRQ Pack</b><small>4 timed FRQs, 40 points</small></span><span class="tag">DOCX ↓</span></a><a href="printables/circular-motion-frq-scoring-guide.docx"><span><b>Circular Motion: Scoring Guide</b><small>Open after the timer</small></span><span class="tag key">DOCX ↓</span></a></li>
 </ol>
 </main></body></html>

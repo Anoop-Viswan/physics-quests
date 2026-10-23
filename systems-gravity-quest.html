@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Systems &amp; Gravity Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="quest.css">
+</head><body>
+<nav class="bar" aria-label="Stages"><div class="bar-in">
+  <div class="levels" id="levels">
+    <a href="#hook" data-stage="hook">1 Hook</a><a href="#predict" data-stage="predict">2 Predict</a><a href="#learn" data-stage="learn">3 Learn</a>
+    <a href="#check" data-stage="check">4 Check</a><a href="#quiz" data-stage="quiz">5 Quiz</a><a href="#frq" data-stage="frq">6 FRQ</a>
+  </div><div class="xp" aria-live="polite"><span id="xp">0</span> XP</div></div></nav>
+
+<main class="wrap">
+  <header class="hero">
+    <span class="eyebrow">AP Physics 1 · Unit 2 · Topics 2.1, 2.6</span>
+    <h1>Systems &amp; Gravity Quest</h1>
+    <p>Where is an object's "middle"? Why does g equal 9.8? Why do astronauts float when gravity up there is almost full strength? Six stages, and your answers stay on this device.</p>
+  </header>
+
+  <!-- 1 HOOK -->
+  <section class="stage" id="hook">
+    <div class="stage-head"><span class="eyebrow">Stage 1 · Hook · 5 min</span><h2>The jumper who cheated gravity (legally)</h2></div>
+    <div class="story">
+      <p>In 1968, a 21-year-old engineering student named Dick Fosbury walked into the Olympic high-jump final in Mexico City with a technique everyone thought was a joke. Every other jumper went over the bar face-down, scissoring their legs. Fosbury ran in on a curve, turned his back to the bar, and went over <em>backwards</em>, head first, his body arched like a bridge.</p>
+      <p>The crowd laughed. Then he won the gold medal with an Olympic record of 2.24 m.</p>
+      <p>Today almost every elite high jumper uses the "Fosbury Flop". Here's the strange part: done perfectly, the jumper's body goes OVER the bar while their <strong>center of mass goes UNDER it</strong>.</p>
+      <p><strong>How can a body clear a bar that its own "middle" never rises above?</strong> Toggle the picture and keep that question in your head.</p>
+    </div>
+    <svg class="scene" id="scene" viewBox="0 0 640 260" role="img" aria-label="A high jumper arched backwards over a bar"></svg>
+    <div class="row seg" id="sceneMode">
+      <button type="button" data-mode="body" aria-pressed="true">The flop</button>
+      <button type="button" data-mode="com" aria-pressed="false">Show center of mass</button>
+    </div>
+    <p class="note" id="sceneNote"></p>
+    <div class="trivia">
+      <div><b>You weigh less in Ecuador</b><p>g is about 9.78 N/kg at the equator and 9.83 N/kg at the poles. Same you, same mass, but a bathroom scale reads about 0.5% less near the equator. Earth's bulge and spin are why.</p></div>
+      <div><b>Gravity in orbit: still 89%</b><p>The Space Station is only 400 km up. Gravity there is about 8.7 N/kg, almost full strength. Astronauts float for a different reason. You'll predict it in Stage 2.</p></div>
+    </div>
+  </section>
+
+  <!-- 2 PREDICT -->
+  <section class="stage" id="predict">
+    <div class="stage-head"><span class="eyebrow">Stage 2 · Predict · 10 min</span><h2>Guess first, then learn</h2></div>
+    <p class="lead">Pick an answer and write one sentence on <em>why</em>. Committing first makes the learning stick, even when the guess is wrong. <span class="mono">+10 XP</span> for each prediction you lock in.</p>
+    <div id="predList"></div>
+  </section>
+
+  <!-- 3 LEARN -->
+  <section class="stage" id="learn">
+    <div class="stage-head"><span class="eyebrow">Stage 3 · Learn · 30–40 min</span><h2>The ideas, one at a time</h2></div>
+    <p class="lead">Read the card, play with the widget, then watch the video. After each card, write its main equation from memory.</p>
+
+    <div class="card">
+      <h3>A. Systems: draw a box around what you care about <span class="law">Topic 2.1</span></h3>
+      <p>A <strong>system</strong> is whatever you choose to draw a dashed box around: one block, two blocks and a string, a horse and a cart, or Earth and the Moon. That choice decides which forces count.</p>
+      <ul class="tight">
+        <li><strong>Internal forces</strong> act between objects inside the box. They come in 3rd-law pairs and cancel, so they can't accelerate the system as a whole.</li>
+        <li><strong>External forces</strong> come from outside the box. Only these change the motion of the system's center of mass: <span class="mono">ΣF<sub>ext</sub> = M<sub>total</sub>·a<sub>cm</sub></span>.</li>
+        <li>If the inside details don't matter, you can treat the whole system as <strong>one object sitting at its center of mass</strong>. That's why you can draw a whole car as a dot on an FBD.</li>
+      </ul>
+      <p class="note">Recall lesson 1: horse + cart as one system. The rope forces were inside the box, so they cancelled, and only the ground's push on the hooves moved the whole thing.</p>
+    </div>
+
+    <div class="card">
+      <h3>B. Center of mass <span class="law">Topic 2.1</span></h3>
+      <div class="big-eq">x<sub>cm</sub> = Σ m<sub>i</sub>x<sub>i</sub> / Σ m<sub>i</sub></div>
+      <p>The center of mass is a <strong>mass-weighted average position</strong>. Heavier objects pull it toward themselves. For symmetric objects (a uniform rod, ball or ring), it sits on the lines of symmetry, so it's at the geometric center. That point can even be in empty space: the center of a ring or a donut, or under the bar for a Fosbury jumper.</p>
+      <div class="widget" id="comW">
+        <svg id="comSvg" viewBox="0 0 640 170" role="img" aria-label="Two masses on a beam with the center of mass marked"></svg>
+        <div class="sliders">
+          <label>Mass A: <b id="mAv">2</b> kg<input type="range" id="mA" min="1" max="10" step="1" value="2"></label>
+          <label>Position A: <b id="xAv">1.0</b> m<input type="range" id="xA" min="0" max="10" step="0.5" value="1"></label>
+          <label>Mass B: <b id="mBv">6</b> kg<input type="range" id="mB" min="1" max="10" step="1" value="6"></label>
+          <label>Position B: <b id="xBv">9.0</b> m<input type="range" id="xB" min="0" max="10" step="0.5" value="9"></label>
+        </div>
+        <p class="mono" id="comOut" style="font-size:.9rem"></p>
+        <p class="note"><strong>Try this:</strong> (1) Make the masses equal. Where is the center of mass? (2) Make B 3 times A. What fraction of the way from A to B is the center of mass? (3) Can you put the center of mass outside the region between the two masses? (No. Why not?)</p>
+      </div>
+      <a class="vid" href="https://www.youtube.com/watch?v=nyJeaUe7wXM" target="_blank" rel="noopener"><span class="play"></span><span><strong>Center of Mass Introduction</strong><small>Flipping Physics</small></span></a>
+      <a class="vid" href="https://www.youtube.com/watch?v=O-q-MAYpNLI" target="_blank" rel="noopener"><span class="play"></span><span><strong>Calculating the Center of Mass of a System of Particles</strong><small>Flipping Physics</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>C. Universal gravitation <span class="law">Topic 2.6</span></h3>
+      <div class="big-eq">F<sub>g</sub> = G m₁m₂ / r²</div>
+      <ul class="tight">
+        <li>Every pair of masses attracts, with equal and opposite forces (3rd law!). The apple pulls Earth exactly as hard as Earth pulls the apple.</li>
+        <li><strong>r is measured center to center</strong>, not from the surface. Altitude h above Earth means r = R<sub>E</sub> + h.</li>
+        <li>Inverse square: double r and the force drops to ¼. Triple it and it drops to 1/9. It never reaches zero.</li>
+        <li>G = 6.67 × 10⁻¹¹ N·m²/kg². That's tiny, which is why you don't feel your phone pulling you.</li>
+      </ul>
+      <a class="vid" href="https://www.youtube.com/watch?v=OmSeWjSwtD4" target="_blank" rel="noopener"><span class="play"></span><span><strong>Newton's Law of Universal Gravitation Made Simple</strong><small>The Physics Universe</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>D. Gravitational field, weight, and "apparent weight" <span class="law">Topic 2.6</span></h3>
+      <div class="big-eq">g = G M / r² &nbsp;(N/kg = m/s²)</div>
+      <ul class="tight">
+        <li><strong>g is a property of the place</strong>, not of the object: the gravitational force per kilogram. Near Earth's surface, g = 9.8 N/kg.</li>
+        <li><strong>Weight</strong> F<sub>g</sub> = mg changes with location. <strong>Mass</strong> doesn't change.</li>
+        <li><strong>Apparent weight</strong> = what a scale reads = the normal force. It changes when you accelerate (elevators), and it's zero in free fall, even though gravity is still acting.</li>
+        <li>Mass shows up twice: as "gravitational mass" (how hard gravity pulls) and as "inertial mass" (how hard you are to accelerate). They're equal, so in free fall a = mg/m = g for every object. Hammer and feather land together.</li>
+      </ul>
+      <div class="widget">
+        <svg id="gSvg" viewBox="0 0 640 150" role="img" aria-label="Gravitational field strength at a distance from a planet"></svg>
+        <div class="sliders">
+          <label>Distance from center: <b id="rv">1.00</b> × planet radius<input type="range" id="rr" min="1" max="10" step="0.01" value="1"></label>
+          <label>Planet mass: <b id="Mv">1.0</b> × Earth's<input type="range" id="MM" min="0.5" max="4" step="0.5" value="1"></label>
+          <label>Planet radius: <b id="Rv">1.0</b> × Earth's<input type="range" id="RR" min="0.5" max="3" step="0.5" value="1"></label>
+        </div>
+        <div class="row"><button type="button" class="btn ghost" data-r="1.06">ISS height</button><button type="button" class="btn ghost" data-r="2">r = 2R</button><button type="button" class="btn ghost" data-r="3">r = 3R</button></div>
+        <div class="readout"><div>g here<b id="gOut">9.80 N/kg</b></div><div>60 kg person weighs<b id="wOut">588 N</b></div><div>vs surface<b id="fOut">× 1.00</b></div></div>
+        <p class="note"><strong>Try this:</strong> set "planet mass" to 2 and "radius" to 2. Predict g before you look (it's Quiz A #5 on paper). Then press <em>ISS height</em>. Is gravity really "gone" up there?</p>
+      </div>
+      <a class="vid" href="https://www.youtube.com/watch?v=xtKtk2fNWYg" target="_blank" rel="noopener"><span class="play"></span><span><strong>Understanding Gravitational Fields &amp; Why g = 9.8 N/kg on Earth</strong><small>The Physics Universe</small></span></a>
+      <a class="vid" href="https://www.youtube.com/watch?v=U5yTf5Z6iIk" target="_blank" rel="noopener"><span class="play"></span><span><strong>Why Is Gravity 9.8? (And the Mistakes Students Make)</strong><small>The Physics Universe</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>E. Pause-and-solve</h3>
+      <p>Watch the review below. Every time a problem appears, pause, solve it on paper (sketch, then the equation in symbols), then press play. Count the ones you got fully right.</p>
+      <a class="vid" href="https://www.youtube.com/watch?v=bwlWnj3JTTg" target="_blank" rel="noopener"><span class="play"></span><span><strong>Center of Mass: AP Physics 1 Unit 2 Review Supplement</strong><small>Flipping Physics</small></span></a>
+      <a class="vid" href="https://www.youtube.com/watch?v=PSkO7s0LSHc" target="_blank" rel="noopener"><span class="play"></span><span><strong>[NEW] AP Physics 1 Unit 2b Circular Motion &amp; Gravitation Review</strong><small>The Physics Universe · watch the gravitation part now and the circular part in the Circular Motion Quest</small></span></a>
+      <div class="row"><label for="pauseScore">Solved before seeing the answer:</label>
+        <select id="pauseScore" style="font:inherit;padding:6px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)"></select><span class="note">(+5 XP each)</span></div>
+    </div>
+  </section>
+
+  <!-- 4 CHECK -->
+  <section class="stage" id="check">
+    <div class="stage-head"><span class="eyebrow">Stage 4 · Check your predictions · 10 min</span><h2>How did your guesses hold up?</h2></div>
+    <p class="lead">Read your prediction next to the physics. Grade your <em>reason</em>, not just the letter. <span class="mono">+15 XP</span> for every honest self-grade.</p>
+    <div id="checkList" style="display:flex;flex-direction:column;gap:12px"></div>
+    <div class="card">
+      <h3>Case closed: how the flop beats the bar</h3>
+      <p>The center of mass is a weighted average of where all the body's mass is. When the body is arched over the bar, the head and arms hang down on one side, the legs on the other, and the hips sit on top. Average all of that and the result lands <strong>in the empty space below the arch</strong>, under the bar. Like the center of a ring, it doesn't have to be inside the body.</p>
+      <p>Why does it matter? The run-up energy has to lift the <em>center of mass</em> (that's what gravity "sees"). A jumper whose center of mass rises less can clear a higher bar with the same legs. Fosbury found a loophole in where "the middle" of a body can be.</p>
+    </div>
+  </section>
+
+  <!-- 5 QUIZ -->
+  <section class="stage" id="quiz">
+    <div class="stage-head"><span class="eyebrow">Stage 5 · Quiz · 15 min</span><h2>Gravity Run</h2></div>
+    <p class="lead">12 questions, including 2 FBD questions and a boss at the end. Correct = +10 XP, and +5 bonus from a 3-question streak on. Every explanation ends with an FRQ tip.</p>
+    <div id="quizBox"></div>
+  </section>
+
+  <!-- 6 FRQ -->
+  <section class="stage" id="frq">
+    <div class="stage-head"><span class="eyebrow">Stage 6 · FRQ playbook · read twice before the test</span><h2>Turning gravity into points</h2></div>
+
+    <div class="card">
+      <h3>Factor-of-change: the 3-line ratio method</h3>
+      <p><em>"Planet X has 3 times Earth's mass and 2 times its radius. Find g<sub>X</sub>."</em> Don't guess. Write the ratio:</p>
+      <ol class="steps">
+        <li><strong>Symbols:</strong> g = GM/R².</li>
+        <li><strong>Ratio:</strong> g<sub>X</sub>/g<sub>E</sub> = (M<sub>X</sub>/M<sub>E</sub>) · (R<sub>E</sub>/R<sub>X</sub>)² = 3 · (1/2)² = 3/4.</li>
+        <li><strong>Answer:</strong> g<sub>X</sub> = ¾ × 9.8 = 7.4 N/kg.</li>
+      </ol>
+      <p class="note">This handles every "if mass doubles and distance triples…" question, in multiple choice and in QQT parts. Remember to flip the distance ratio, because r is on the bottom.</p>
+    </div>
+
+    <div class="card">
+      <h3>Same question, two answers</h3>
+      <p><em>An astronaut on the Space Station floats. A student says "there's no gravity in orbit." Do you agree? Justify.</em></p>
+      <div class="compare">
+        <div class="weak"><span class="pts">0 / 3</span><p>"Disagree, there is gravity in space."</p><p class="note">Correct claim, but no law, no number, and it never explains why she floats.</p></div>
+        <div class="strong"><span class="pts">3 / 3</span><p>"Disagree. By F = GMm/r², gravity at r = 6800 km is (6400/6800)² ≈ 0.89 of its surface value, so it's still strong. She floats because she and the station both fall toward Earth with the same acceleration, so the floor doesn't need to push on her: the normal force (her apparent weight) is zero."</p><p class="note">Claim, law with a number, and a link to the real reason (F<sub>N</sub> = 0 in free fall).</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Center of mass in FRQs</h3>
+      <ul class="tight">
+        <li>Symmetric object? Say "by symmetry, the center of mass is at the geometric center". That sentence alone can earn the point.</li>
+        <li>Several pieces? Write x<sub>cm</sub> = Σmx/Σm with the numbers substituted, and include the total mass in the denominator.</li>
+        <li>"No external horizontal force" → the system's center of mass doesn't accelerate. If it starts at rest, it stays put (boat walker, two skaters on a rope).</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>The 6 Systems &amp; Gravity traps</h3>
+      <ul class="tight">
+        <li>Measuring r from the surface instead of the center.</li>
+        <li>Squaring the mass factor (only distance is squared).</li>
+        <li>"No gravity in space." Gravity never switches off. Free fall makes apparent weight zero.</li>
+        <li>Mixing up mass (kg, the same everywhere) and weight (N, depends on g).</li>
+        <li>Thinking the bigger object pulls harder. The forces are a 3rd-law pair, so they're equal.</li>
+        <li>Forgetting a mass in the denominator of x<sub>cm</sub> because it sits at x = 0.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Next: timed practice on paper</h3>
+      <p>Systems and gravity questions are spread through <strong>Quizzes A–C</strong> and FRQ Set 2 Q4 (orbits) and Set 3 Q4 (skaters + center of mass). Find them on the <a href="index.html">home page</a>.</p>
+    </div>
+  </section>
+
+  <section class="stage" id="results">
+    <div class="stage-head"><span class="eyebrow">Wrap-up</span><h2>Send your results</h2></div>
+    <p class="lead">Copy this summary and send it over. It shows which ideas stuck and what to review before the test.</p>
+    <pre class="copybox" id="summary"></pre>
+    <div class="row"><button type="button" class="btn" id="copyBtn">Copy summary</button><span class="note" id="copyMsg" aria-live="polite"></span>
+      <button type="button" class="btn ghost" id="wipeBtn">Start over</button><span class="note" id="wipeAsk" hidden>Erase all answers on this device? <button type="button" class="btn ghost" id="wipeYes">Yes, erase</button></span></div>
+    <div class="next-quest"><a href="index.html">← All quests</a><a href="friction-inclines-quest.html">Next: Friction &amp; Inclines Quest →</a></div>
+  </section>
+</main>
+
+<script src="quest.js"></script>
+<script>
+(() => {
+const {arrow, $} = QuestKit;
+
+/* ---------- hook scene: Fosbury flop ---------- */
+function flop(mode){
+  let s = `<line x1="20" y1="232" x2="620" y2="232" style="stroke:var(--muted)" stroke-width="2"/>`+
+    `<rect x="230" y="232" width="200" height="14" rx="3" style="fill:var(--accent-soft);stroke:var(--line)"/>`+
+    `<line x1="200" y1="232" x2="200" y2="96" style="stroke:var(--ink)" stroke-width="4"/><line x1="450" y1="232" x2="450" y2="96" style="stroke:var(--ink)" stroke-width="4"/>`+
+    `<line x1="196" y1="110" x2="454" y2="110" style="stroke:var(--f-grav)" stroke-width="4"/>`+
+    `<text x="462" y="114" style="fill:var(--f-grav);font:700 13px var(--mono)">bar 2.24 m</text>`+
+    `<path d="M 238 200 C 250 120, 290 92, 325 92 C 360 92, 395 112, 410 150 L 432 196" fill="none" style="stroke:var(--ink)" stroke-width="16" stroke-linecap="round"/>`+
+    `<circle cx="236" cy="210" r="15" style="fill:var(--paper);stroke:var(--ink)" stroke-width="3"/>`+
+    `<text x="236" y="250" text-anchor="middle" style="fill:var(--muted);font:700 11px var(--mono)">head</text><text x="432" y="222" text-anchor="middle" style="fill:var(--muted);font:700 11px var(--mono)">legs</text>`;
+  if (mode==="com") s += `<circle cx="326" cy="140" r="8" style="fill:var(--accent)"/><line x1="326" y1="140" x2="326" y2="111" style="stroke:var(--accent)" stroke-width="1.5" stroke-dasharray="4 3"/>`+
+    `<line x1="334" y1="142" x2="470" y2="170" style="stroke:var(--accent)" stroke-width="1.5"/>`+
+    `<text x="476" y="168" style="fill:var(--accent);font:700 13px var(--mono)">center of mass</text><text x="476" y="184" style="fill:var(--accent);font:700 13px var(--mono)">BELOW the bar</text>`;
+  $("#scene").innerHTML = s;
+  $("#sceneNote").textContent = mode==="com" ? "Every part of the body is above or beside the bar at some point, but the mass-weighted average position is in the empty space under the arch." : "Arched backwards over the bar: head and shoulders already falling on the far side, legs still coming up.";
+  document.querySelectorAll("#sceneMode button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.mode===mode));
+}
+document.querySelectorAll("#sceneMode button").forEach(b=>b.addEventListener("click",()=>flop(b.dataset.mode)));
+flop("body");
+
+/* ---------- COM beam widget ---------- */
+function com(){
+  const mA=+$("#mA").value, xA=+$("#xA").value, mB=+$("#mB").value, xB=+$("#xB").value, xc=(mA*xA+mB*xB)/(mA+mB);
+  $("#mAv").textContent=mA; $("#xAv").textContent=xA.toFixed(1); $("#mBv").textContent=mB; $("#xBv").textContent=xB.toFixed(1);
+  const X = v => 40 + v*56, size = m => 14 + m*3.2;
+  let s = `<rect x="34" y="96" width="572" height="10" rx="4" style="fill:var(--line)"/>`;
+  for (let i=0;i<=10;i++) s += `<line x1="${X(i)}" y1="106" x2="${X(i)}" y2="114" style="stroke:var(--muted)"/><text x="${X(i)}" y="128" text-anchor="middle" style="fill:var(--muted);font:11px var(--mono)">${i}</text>`;
+  [[mA,xA,"A","var(--f-norm)"],[mB,xB,"B","var(--f-app)"]].forEach(([m,x,l,c])=>{ const z=size(m);
+    s += `<rect x="${X(x)-z/2}" y="${96-z}" width="${z}" height="${z}" rx="4" style="fill:${c};opacity:.85"/><text x="${X(x)}" y="${96-z-6}" text-anchor="middle" style="fill:var(--ink);font:700 12px var(--mono)">${l} ${m} kg</text>`; });
+  s += `<polygon points="${X(xc)},140 ${X(xc)-10},158 ${X(xc)+10},158" style="fill:var(--xp)"/><text x="${X(xc)}" y="${168}" text-anchor="middle" style="fill:var(--xp);font:700 11px var(--mono)">cm ${xc.toFixed(2)} m</text>`;
+  $("#comSvg").innerHTML = s;
+  $("#comOut").innerHTML = `x<sub>cm</sub> = (${mA}·${xA} + ${mB}·${xB}) / (${mA} + ${mB}) = ${(mA*xA+mB*xB).toFixed(1)} / ${mA+mB} = <b>${xc.toFixed(2)} m</b>`;
+}
+["mA","xA","mB","xB"].forEach(id=>$("#"+id).addEventListener("input",com)); com();
+
+/* ---------- gravity explorer ---------- */
+function grav(){
+  const r=+$("#rr").value, M=+$("#MM").value, R=+$("#RR").value;
+  const g = 9.8*M/((r*R)**2)*1;           // r is in planet radii, R in Earth radii → distance = r·R Earth radii
+  $("#rv").textContent=r.toFixed(2); $("#Mv").textContent=M.toFixed(1); $("#Rv").textContent=R.toFixed(1);
+  $("#gOut").textContent=g.toFixed(2)+" N/kg"; $("#wOut").textContent=(60*g).toFixed(0)+" N"; $("#fOut").textContent="× "+(g/9.8).toFixed(2);
+  const pr = 22*R, cx = 30+pr, dist = r*pr, W = 640;
+  const scale = Math.min(1, (W-80-cx)/Math.max(dist,1));
+  let s = `<circle cx="${cx}" cy="75" r="${pr}" style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="2"/>`+
+    `<line x1="${cx}" y1="75" x2="${cx+dist*scale}" y2="75" style="stroke:var(--muted)" stroke-dasharray="4 4"/>`+
+    `<circle cx="${cx+dist*scale}" cy="75" r="7" style="fill:var(--ink)"/>`+
+    arrow(cx+dist*scale, 75, cx+dist*scale-Math.max(12, Math.min(110, g*9)), 75, "grav", "g", cx+dist*scale-Math.max(12, Math.min(110,g*9))/2, 62)+
+    `<text x="${cx}" y="140" text-anchor="middle" style="fill:var(--muted);font:11px var(--mono)">planet</text>`;
+  $("#gSvg").innerHTML = s;
+}
+["rr","MM","RR"].forEach(id=>$("#"+id).addEventListener("input",grav));
+document.querySelectorAll("[data-r]").forEach(b=>b.addEventListener("click",()=>{ $("#rr").value=b.dataset.r; grav(); }));
+grav();
+
+/* ---------- predictions ---------- */
+const PRED = [
+  {id:"p1", q:"In a perfect Fosbury Flop, can the jumper's body clear the bar while their center of mass passes BELOW the bar?",
+   o:["No. The center of mass is always inside the body, so it has to go over","Yes. The center of mass can be outside the body, in the space under the arch","Only if the jumper is very tall"], a:1,
+   why:"The center of mass is a weighted <em>average</em> position. For a bent shape (a ring, a boomerang, an arched jumper), the average can land in empty space. Gravity only has to lift that average point, so the flop saves energy."},
+  {id:"p2", q:"A 1 kg ball and a 3 kg ball sit 4 m apart on a light rod. The center of mass is…",
+   o:["2 m from each (the middle)","1 m from the 1 kg ball","3 m from the 1 kg ball","Right at the 3 kg ball"], a:2,
+   why:"x<sub>cm</sub> = (1·0 + 3·4)/(1 + 3) = 12/4 = 3 m from the 1 kg ball, or 1 m from the heavy one. The heavier ball pulls the center of mass 3 times as close to itself."},
+  {id:"p3", q:"Astronauts on the Space Station (400 km up) float. How strong is gravity up there compared with on the ground?",
+   o:["Zero. That's why they float","About 10%","About 90%","Stronger, because they're closer to the Sun"], a:2,
+   why:"g ∝ 1/r². r goes from 6400 km to 6800 km, so g drops only to (6400/6800)² ≈ 0.89, about 8.7 N/kg. They float because they and the station are <em>falling together</em> (orbiting), so the floor never pushes on them: zero normal force means zero apparent weight."},
+  {id:"p4", q:"A planet has the SAME mass as Earth but HALF the radius. Gravity at its surface is…",
+   o:["Half of Earth's","The same as Earth's","2 times Earth's","4 times Earth's"], a:3,
+   why:"g = GM/R². Halving R makes R² one quarter as big, so g becomes 4 times bigger. You'd weigh 4 times as much on a squeezed-down Earth."},
+  {id:"p5", q:"On the Moon (no air), an astronaut drops a hammer and a feather together. What happens?",
+   o:["The hammer lands first: more mass, more gravity","They land together","The feather floats, since the Moon's gravity is too weak"], a:1,
+   why:"The hammer does feel a much bigger force (F = mg), but it also has much more inertia. a = F/m = mg/m = g. The mass cancels. An Apollo 15 astronaut did this on live TV in 1971."}
+];
+
+/* ---------- quiz ---------- */
+const QZ = [
+  {t:"mc", q:"A 2.0 kg mass sits at x = 0 and a 6.0 kg mass at x = 4.0 m. Where is the center of mass?",
+   o:["x = 3.0 m","x = 2.0 m","x = 1.0 m","x = 4.0 m"], a:0,
+   e:"x<sub>cm</sub> = (2·0 + 6·4)/(2 + 6) = 24/8 = 3.0 m. That's three-quarters of the way toward the heavier mass, which is 3 times as heavy.",
+   tip:"Write the formula with numbers substituted. Even if the arithmetic slips, the setup earns the point."},
+  {t:"mc", q:"Where is the center of mass of a uniform ring (like a hula hoop)?",
+   o:["Anywhere on the ring","At the center, where there is no material","At the top of the ring","It doesn't have one"], a:1,
+   e:"By symmetry, the center of mass lies on every line of symmetry. They all cross at the center, even though the hoop has no material there.",
+   tip:"'By symmetry' is a valid justification in an FRQ. Use those exact words."},
+  {t:"fbd", q:"A satellite orbits Earth in a circle. Select every force acting on the satellite.",
+   o:[["grav","Gravity toward Earth's center"],["cent","A separate centripetal force"],["thrust","A forward force keeping it moving"],["out","An outward 'centrifugal' force"]],
+   a:["grav"], fbd:[{d:"down",len:.8,k:"grav",t:"F_g"}],
+   e:"Only gravity, pointing toward Earth's center. Gravity IS the centripetal force here, not an extra one. No engine is needed to keep it moving (1st law), and 'centrifugal' isn't a real force.",
+   tip:"In orbit FRQs, write: 'The gravitational force from the planet provides the centripetal force.'"},
+  {t:"mc", q:"At a distance of 2R from a planet's CENTER (R = its radius), the gravitational field is how big compared with g at the surface?",
+   o:["g/2","g/4","g","2g"], a:1,
+   e:"g ∝ 1/r². The distance doubles, so g → g/2² = g/4.",
+   tip:"Write the ratio: g′/g = (R/2R)² = 1/4."},
+  {t:"mc", q:"Planet Z has 3 times Earth's mass and 3 times Earth's radius. Its surface gravity is:",
+   o:["9.8 N/kg","3.3 N/kg","29 N/kg","1.1 N/kg"], a:1,
+   e:"g<sub>Z</sub>/g<sub>E</sub> = 3/3² = 1/3, so g<sub>Z</sub> ≈ 3.3 N/kg. 1.1 N/kg comes from squaring the mass too.",
+   tip:"Mass is on top and NOT squared. Radius is on the bottom and squared."},
+  {t:"mc", q:"Two blocks on ice push off each other. Which forces can change the velocity of the two-block system's center of mass?",
+   o:["The push between the blocks","Only forces from objects outside the system","Both","Neither; the center of mass can never move"], a:1,
+   e:"The push between the blocks is internal: a 3rd-law pair inside the system, which cancels. Only external forces change a<sub>cm</sub> (ΣF<sub>ext</sub> = Ma<sub>cm</sub>). Here there are none horizontally, so the center of mass stays put while the blocks fly apart.",
+   tip:"In 'system' questions, start by naming the system and listing its external forces."},
+  {t:"mc", q:"A 60 kg student stands on the Moon (g = 1.6 N/kg). What are their mass and weight?",
+   o:["60 kg and 96 N","60 kg and 588 N","10 kg and 96 N","9.8 kg and 60 N"], a:0,
+   e:"Mass doesn't change: 60 kg. Weight = mg = 60 × 1.6 = 96 N.",
+   tip:"Units are a free check: mass in kg, weight in N."},
+  {t:"mc", q:"Earth pulls an apple down with a force of 1.0 N. How hard does the apple pull on Earth?",
+   o:["Essentially zero","1.0 N, upward","1.0 N, downward","More than 1 N, because Earth is bigger"], a:1,
+   e:"It's a 3rd-law pair, so the forces are equal and opposite: 1.0 N on Earth, pointing up toward the apple. Earth's acceleration is tiny because its mass is huge.",
+   tip:"Name both objects: 'the force of the apple on Earth equals the force of Earth on the apple.'"},
+  {t:"fbd", q:"An elevator's cable snaps and it falls freely (no air resistance). Select every force on the rider standing inside.",
+   o:[["grav","Gravity, down"],["norm","Normal force from the floor, up"],["tens","Tension from the cable"],["air","Air resistance"]],
+   a:["grav"], fbd:[{d:"down",len:.8,k:"grav",t:"F_g"}],
+   e:"Rider and elevator both accelerate at g, so the floor doesn't push on the rider: F<sub>N</sub> = 0. Gravity is still mg. That's 'weightlessness': zero apparent weight, not zero gravity.",
+   tip:"'Apparent weight' always means the normal force (or what a scale reads). Say so explicitly."},
+  {t:"mc", q:"A 50 kg rider is in an elevator accelerating DOWNWARD at 2.0 m/s². The scale reads:",
+   o:["390 N","490 N","590 N","100 N"], a:0,
+   e:"Down as +: mg − F<sub>N</sub> = ma → F<sub>N</sub> = m(g − a) = 50(7.8) = 390 N. Accelerating down makes you feel lighter.",
+   tip:"Take + as the direction of a, and the signs sort themselves out."},
+  {t:"mc", q:"Two spheres attract with force F when their centers are distance d apart. At distance 3d the force is:",
+   o:["F/3","F/9","3F","F/6"], a:1,
+   e:"F ∝ 1/r², so tripling r divides F by 3² = 9.",
+   tip:"Write 'F ∝ 1/r²' in your answer. It shows the grader which relationship you used."},
+  {t:"mc", boss:true, q:"An astronaut weighs 600 N on Earth and 300 N on Planet X. Planet X's radius is twice Earth's. What is Planet X's mass?",
+   o:["2 × Earth's mass","½ × Earth's mass","4 × Earth's mass","Same as Earth's"], a:0,
+   e:"g<sub>X</sub> = g<sub>E</sub>/2 (half the weight). g<sub>X</sub>/g<sub>E</sub> = (M<sub>X</sub>/M<sub>E</sub>)(R<sub>E</sub>/R<sub>X</sub>)² → ½ = (M<sub>X</sub>/M<sub>E</sub>)(¼) → M<sub>X</sub> = 2M<sub>E</sub>. A heavier planet can still have weaker surface gravity if it's big enough.",
+   tip:"Write the ratio equation, then solve for the unknown ratio. This is the standard derive-and-compare move."}
+];
+
+Quest({key:"sgq-v1", title:"Systems & Gravity Quest", pred:PRED, quiz:QZ, pauseMax:8,
+  ranks:[[0,"Rookie"],[60,"Mass Mapper"],[100,"Field Finder"],[140,"Orbit Apprentice"],[175,"Gravity Ready"]]});
+})();
+</script>
+</body></html>

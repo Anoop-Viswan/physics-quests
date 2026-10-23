@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Circular Motion Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="quest.css">
+</head><body>
+<nav class="bar" aria-label="Stages"><div class="bar-in">
+  <div class="levels" id="levels">
+    <a href="#hook" data-stage="hook">1 Hook</a><a href="#predict" data-stage="predict">2 Predict</a><a href="#learn" data-stage="learn">3 Learn</a>
+    <a href="#check" data-stage="check">4 Check</a><a href="#quiz" data-stage="quiz">5 Quiz</a><a href="#frq" data-stage="frq">6 FRQ</a>
+  </div><div class="xp" aria-live="polite"><span id="xp">0</span> XP</div></div></nav>
+
+<main class="wrap">
+  <header class="hero">
+    <span class="eyebrow">AP Physics 1 · Unit 2 · Topics 2.9, 2.6 (orbits)</span>
+    <h1>Circular Motion Quest</h1>
+    <p>Why the force points inward, why there's no "centrifugal force", loops, curves and orbits. This is the end of Unit 2, and one idea runs through all of it: find the net force toward the center.</p>
+    <div class="legend" aria-label="Force colour key">
+      <span><i style="background:var(--f-grav)"></i>Gravity</span><span><i style="background:var(--f-norm)"></i>Normal</span>
+      <span><i style="background:var(--f-fric)"></i>Friction</span><span><i style="background:var(--f-tens)"></i>Tension</span>
+    </div>
+  </header>
+
+  <!-- 1 HOOK -->
+  <section class="stage" id="hook">
+    <div class="stage-head"><span class="eyebrow">Stage 1 · Hook · 5 min</span><h2>The roller coaster that broke necks</h2></div>
+    <div class="story">
+      <p>In 1895, Coney Island in New York opened the <strong>Flip Flap Railway</strong>, one of America's first upside-down roller coasters. Its loop was a perfect circle. Riders lined up for blocks.</p>
+      <p>Then the complaints started: sore necks, whiplash, people staggering off dizzy. The loop was small, about 25 feet across, and to make it safely over the top, the car had to enter the bottom very fast. Down at the bottom of that tight circle, riders were crushed into their seats with forces reported at up to 12 times their weight. The ride closed in 1903.</p>
+      <p>For decades, nobody built a loop again. Then in 1976 a coaster called <em>Revolution</em> opened in California with a loop that <strong>wasn't a circle</strong>: tall and narrow, shaped like an upside-down teardrop. Nearly every looping coaster since has used that shape.</p>
+      <p><strong>Why does the shape of a loop change how hard it pushes on you?</strong> Toggle the two loops and keep that question in your head.</p>
+    </div>
+    <svg class="scene" id="scene" viewBox="0 0 640 270" role="img" aria-label="Circular loop vs teardrop loop"></svg>
+    <div class="row seg" id="sceneMode">
+      <button type="button" data-mode="circle" aria-pressed="true">1895: circle</button>
+      <button type="button" data-mode="drop" aria-pressed="false">Modern: teardrop</button>
+    </div>
+    <p class="note" id="sceneNote"></p>
+    <div class="trivia">
+      <div><b>The Moon is falling</b><p>Right now, the Moon is accelerating toward Earth at about 0.0027 m/s². It never hits us because it's moving sideways fast enough to keep "missing". Newton used exactly this number to prove that apple-gravity and Moon-gravity are the same force. That's the boss question in Stage 5.</p></div>
+      <div><b>Pilots and 9 g</b><p>In a tight turn, a fighter pilot's seat has to push up to 9 times their weight to bend their path into a circle. Their blood "lags" toward their feet, and without a special suit they black out.</p></div>
+    </div>
+  </section>
+
+  <!-- 2 PREDICT -->
+  <section class="stage" id="predict">
+    <div class="stage-head"><span class="eyebrow">Stage 2 · Predict · 10 min</span><h2>Guess first, then learn</h2></div>
+    <p class="lead">Pick an answer and write one sentence on <em>why</em>. <span class="mono">+10 XP</span> for each prediction you lock in.</p>
+    <div id="predList"></div>
+  </section>
+
+  <!-- 3 LEARN -->
+  <section class="stage" id="learn">
+    <div class="stage-head"><span class="eyebrow">Stage 3 · Learn · 35–45 min</span><h2>The ideas, one at a time</h2></div>
+
+    <div class="card">
+      <h3>A. Moving in a circle means accelerating <span class="law">Topic 2.9</span></h3>
+      <div class="big-eq">a<sub>c</sub> = v² / r &nbsp;·&nbsp; v = 2πr / T</div>
+      <ul class="tight">
+        <li>Velocity is tangent to the circle. Even at constant <em>speed</em>, its <em>direction</em> keeps changing, so there is an acceleration.</li>
+        <li>That acceleration points <strong>toward the center</strong> ("centripetal" means "center-seeking").</li>
+        <li>Double the speed → 4 times the acceleration. Half the radius → twice the acceleration (at the same speed).</li>
+        <li>If the inward force vanishes (the string breaks), the object flies off in a straight line <strong>along the tangent</strong> (1st law), not outward along the radius.</li>
+      </ul>
+      <a class="vid" href="https://www.youtube.com/watch?v=bYqNjPIpEcY" target="_blank" rel="noopener"><span class="play"></span><span><strong>Speed And Velocity For Circular Motion</strong><small>The Physics Universe</small></span></a>
+      <a class="vid" href="https://www.youtube.com/watch?v=LQNAqiPA-2M" target="_blank" rel="noopener"><span class="play"></span><span><strong>Deriving Centripetal Acceleration Equation</strong><small>The Physics Universe</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>B. The recipe: there is no "centripetal force" arrow</h3>
+      <ol class="steps">
+        <li>FBD with <strong>only real forces</strong> (gravity, normal, tension, friction).</li>
+        <li>Choose + as <strong>toward the center</strong>.</li>
+        <li>ΣF<sub>toward center</sub> = mv²/r. Forces pointing in count +, and forces pointing out count −.</li>
+        <li>Solve. "Centripetal force" is just the name for whichever real force (or combination) points inward: tension for a ball on a string, friction for a car on a flat curve, gravity for an orbit, normal plus gravity in a loop.</li>
+      </ol>
+      <p class="note">The outward "push" you feel in a turning car isn't a force. It's your body trying to keep going straight (inertia) while the car turns under you.</p>
+    </div>
+
+    <div class="card">
+      <h3>C. Vertical circles: top vs. bottom</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Position</th><th>Toward center</th><th>Equation (ball on string)</th></tr></thead>
+        <tbody>
+          <tr><td>Top</td><td>down</td><td class="mono">T + mg = mv²/r → T = mv²/r − mg</td></tr>
+          <tr><td>Bottom</td><td>up</td><td class="mono">T − mg = mv²/r → T = mv²/r + mg</td></tr>
+          <tr><td>Minimum speed at top</td><td>T = 0</td><td class="mono">v = √(gr)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="widget">
+        <svg id="vc" viewBox="0 0 640 320" role="img" aria-label="Ball on a string in a vertical circle"></svg>
+        <div class="sliders">
+          <label>Speed v: <b id="vv">4.0</b> m/s<input type="range" id="vs" min="1" max="8" step="0.1" value="4"></label>
+          <label>Radius r: <b id="rv">0.80</b> m<input type="range" id="rs" min="0.3" max="2" step="0.05" value="0.8"></label>
+          <label>Mass m: <b id="mv">0.20</b> kg<input type="range" id="ms" min="0.1" max="1" step="0.05" value="0.2"></label>
+        </div>
+        <div class="readout"><div>T at top<b id="tTop">–</b></div><div>T at bottom<b id="tBot">–</b></div><div>T right now<b id="tNow">–</b></div><div>min v at top<b id="vMin">–</b></div></div>
+        <p class="note" id="vcWarn"></p>
+        <p class="note"><strong>Try this:</strong> (1) Watch the green tension arrow shrink at the top and grow at the bottom. (2) Lower v until the warning appears and compare with √(gr). (3) These are FRQ Set 3 Q1's numbers. Check your answers against the readout.</p>
+      </div>
+      <a class="vid" href="https://www.youtube.com/watch?v=zfYBV3O7l58" target="_blank" rel="noopener"><span class="play"></span><span><strong>AP Physics 1: Tension in a Vertical Circle</strong><small>The Physics Universe</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>D. Cars on curves</h3>
+      <ul class="tight">
+        <li><strong>Flat curve:</strong> static friction points sideways toward the center (the tires aren't skidding). μ<sub>s</sub>mg = mv²<sub>max</sub>/r → <span class="mono">v<sub>max</sub> = √(μ<sub>s</sub>gr)</span>. The mass cancels.</li>
+        <li><strong>Hilltop</strong> (center below you): mg − F<sub>N</sub> = mv²/r. You feel lighter, and at v = √(gr) you get "airtime".</li>
+        <li><strong>Bottom of a dip</strong> (center above you): F<sub>N</sub> − mg = mv²/r. You feel heavier.</li>
+        <li><strong>Banked curve:</strong> part of the normal force points toward the center, so even with no friction there's one speed that works.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>E. Orbits <span class="law">2.6 + 2.9</span></h3>
+      <div class="big-eq">GMm/r² = mv²/r → v = √(GM/r)</div>
+      <ul class="tight">
+        <li>Gravity is the only force, and it IS the centripetal force. The satellite's mass cancels.</li>
+        <li>Farther orbits are slower, and they have longer periods: T² ∝ r³ (Kepler's 3rd law).</li>
+        <li>An orbiting astronaut is in free fall, so their apparent weight is 0, while gravity is still about 90% of surface strength in low orbit.</li>
+      </ul>
+      <a class="vid" href="https://www.youtube.com/watch?v=xv1oE4ysWa4" target="_blank" rel="noopener"><span class="play"></span><span><strong>Kepler's Laws Explained (and the Astronomer Who Lost His Nose)</strong><small>The Physics Universe</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>F. Pause-and-solve</h3>
+      <p>Six classic circular-motion problems. Pause before every solution: FBD, + toward the center, ΣF = mv²/r. Then finish with the Unit 2b review.</p>
+      <a class="vid" href="https://www.youtube.com/watch?v=3hUqzUqTYeQ" target="_blank" rel="noopener"><span class="play"></span><span><strong>6 Circular Motion Problems You MUST Know For AP Physics 1</strong><small>The Physics Universe</small></span></a>
+      <a class="vid" href="https://www.youtube.com/watch?v=wVFaWWyQi0c" target="_blank" rel="noopener"><span class="play"></span><span><strong>AP Physics 1 Circular Motion and Gravitation Review</strong><small>The Physics Universe</small></span></a>
+      <div class="row"><label for="pauseScore">Solved before seeing the answer:</label>
+        <select id="pauseScore" style="font:inherit;padding:6px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)"></select><span class="note">of 6 (+5 XP each)</span></div>
+    </div>
+  </section>
+
+  <!-- 4 CHECK -->
+  <section class="stage" id="check">
+    <div class="stage-head"><span class="eyebrow">Stage 4 · Check your predictions · 10 min</span><h2>How did your guesses hold up?</h2></div>
+    <p class="lead">Grade your <em>reason</em>, not just the letter. <span class="mono">+15 XP</span> for every honest self-grade.</p>
+    <div id="checkList" style="display:flex;flex-direction:column;gap:12px"></div>
+    <div class="card">
+      <h3>Case closed: why loops became teardrops</h3>
+      <p>At the top of a loop, the minimum safe speed is v = √(gr). A circular loop has a big radius at the top too, so the car needs a high speed there, and so an even higher speed entering the bottom. At the bottom, F<sub>N</sub> = mg + mv²/r: a high speed in a tight circle means a huge normal force, and that's the crushing feeling.</p>
+      <p>The teardrop (clothoid) loop has a <strong>small radius at the top</strong>, so a slower car still makes it over, since v²/r stays big enough. It has a <strong>large radius at the bottom</strong>, so the same speed gives a much smaller v²/r, and a gentler push into the seat. Same thrill at the top, without the whiplash at the bottom.</p>
+    </div>
+  </section>
+
+  <!-- 5 QUIZ -->
+  <section class="stage" id="quiz">
+    <div class="stage-head"><span class="eyebrow">Stage 5 · Quiz · 15 min</span><h2>Loop Run</h2></div>
+    <p class="lead">12 questions, including 2 FBD questions. The boss is Newton's own test of universal gravitation.</p>
+    <div id="quizBox"></div>
+  </section>
+
+  <!-- 6 FRQ -->
+  <section class="stage" id="frq">
+    <div class="stage-head"><span class="eyebrow">Stage 6 · FRQ playbook · read twice before the test</span><h2>Circular-motion points</h2></div>
+
+    <div class="card">
+      <h3>Same question, two answers</h3>
+      <p><em>A ball on a string moves in a vertical circle at constant speed. Is the tension greater at the top or the bottom? Justify.</em></p>
+      <div class="compare">
+        <div class="weak"><span class="pts">0 / 3</span><p>"The bottom, because the centrifugal force pulls it down there."</p><p class="note">Uses a fictitious force and never names Newton's 2nd law.</p></div>
+        <div class="strong"><span class="pts">3 / 3</span><p>"The bottom. The net force toward the center has to be mv²/r at both points, and that's the same size since the speed is constant. At the top, gravity points toward the center, so T = mv²/r − mg. At the bottom, gravity points away from the center, so T = mv²/r + mg. So the tension at the bottom is larger, by 2mg."</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>The 4-line derive for any circular problem</h3>
+      <ol class="steps">
+        <li>"Taking toward the center as positive, ΣF = ma<sub>c</sub> = mv²/r."</li>
+        <li>List the real forces with signs (e.g. F<sub>N</sub> − mg).</li>
+        <li>Set them equal and solve in symbols.</li>
+        <li>Check a limit (v → 0? r → ∞?) and make sure the sign makes sense.</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>The 7 circular-motion traps</h3>
+      <ul class="tight">
+        <li>Drawing a "centripetal force" or "centrifugal force" arrow on an FBD.</li>
+        <li>Saying a = 0 because the speed is constant. The direction changes!</li>
+        <li>An object released from a circle flying outward. It goes along the tangent.</li>
+        <li>Tension pointing up at the top of a vertical circle. A string always pulls toward the center.</li>
+        <li>Mixing up the top and bottom formulas.</li>
+        <li>"Doubling v doubles the force." It quadruples it (v²).</li>
+        <li>Using g = 9.8 for an orbit far from Earth. Use GM/r².</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Next: timed practice on paper</h3>
+      <p>Your <strong>Circular Motion FRQ Pack</strong> (4 FRQs) plus FRQ Set 1 Q4 (cars on a curve), Set 2 Q4 (orbits) and Set 3 Q1 (vertical circle). Then the circular questions in Quizzes A–C. They're all on the <a href="index.html">home page</a>.</p>
+    </div>
+  </section>
+
+  <section class="stage" id="results">
+    <div class="stage-head"><span class="eyebrow">Wrap-up</span><h2>Send your results</h2></div>
+    <p class="lead">Copy this summary and send it over.</p>
+    <pre class="copybox" id="summary"></pre>
+    <div class="row"><button type="button" class="btn" id="copyBtn">Copy summary</button><span class="note" id="copyMsg" aria-live="polite"></span>
+      <button type="button" class="btn ghost" id="wipeBtn">Start over</button><span class="note" id="wipeAsk" hidden>Erase all answers on this device? <button type="button" class="btn ghost" id="wipeYes">Yes, erase</button></span></div>
+    <div class="next-quest"><a href="tension-pulleys-quest.html">← Tension &amp; Pulleys</a><a href="index.html">All quests and printables →</a></div>
+  </section>
+</main>
+
+<script src="quest.js"></script>
+<script>
+(() => {
+const {arrow, $} = QuestKit;
+
+/* ---------- hook: circle vs teardrop loop ---------- */
+function loops(mode){
+  let s = `<line x1="20" y1="250" x2="620" y2="250" style="stroke:var(--muted)" stroke-width="2"/>`;
+  if (mode==="circle"){
+    s += `<circle cx="320" cy="150" r="98" fill="none" style="stroke:var(--ink)" stroke-width="5"/>`+
+      `<rect x="306" y="236" width="28" height="14" rx="4" style="fill:var(--accent)"/>`+arrow(320,236,320,150,"norm","huge F_N",330,170,"start")+
+      `<text x="320" y="36" text-anchor="middle" style="fill:var(--muted);font:700 12px var(--mono)">big radius at the top → needs a high speed</text>`;
+  } else {
+    s += `<path d="M 230 250 C 150 250, 190 70, 320 60 C 450 70, 490 250, 410 250" fill="none" style="stroke:var(--ink)" stroke-width="5"/>`+
+      `<rect x="306" y="236" width="28" height="14" rx="4" style="fill:var(--accent)"/>`+arrow(320,236,320,196,"norm","gentler F_N",330,212,"start")+
+      `<text x="320" y="36" text-anchor="middle" style="fill:var(--muted);font:700 12px var(--mono)">tight top, wide bottom</text>`;
+  }
+  $("#scene").innerHTML = s;
+  $("#sceneNote").textContent = mode==="circle" ? "Same radius everywhere. To survive the top, the car enters fast, and at the bottom a fast car in a tight circle needs a HUGE normal force." : "A clothoid (teardrop) loop: small radius at the top, so a slower car still makes it; wide curve at the bottom, so riders get a smaller push. Stage 4 has the math.";
+  document.querySelectorAll("#sceneMode button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.mode===mode));
+}
+document.querySelectorAll("#sceneMode button").forEach(b=>b.addEventListener("click",()=>loops(b.dataset.mode)));
+loops("circle");
+
+/* ---------- vertical circle widget ---------- */
+const G = 9.8; let phi = 0, lastT = null;   // phi = angle from the bottom, counter-clockwise
+function vals(){ return { v:+$("#vs").value, r:+$("#rs").value, m:+$("#ms").value }; }
+function vcLoop(t){
+  const {v,r,m} = vals();
+  if (lastT != null) phi += (v/r) * Math.min(0.05,(t-lastT)/1000) * 0.35;   // slowed down 0.35× so you can watch
+  lastT = t;
+  const cx = 230, cy = 160, R = 120, bx = cx + R*Math.sin(phi), by = cy + R*Math.cos(phi);
+  const T = m*v*v/r + m*G*Math.cos(phi), Ttop = m*v*v/r - m*G, Tbot = m*v*v/r + m*G;
+  $("#vv").textContent = v.toFixed(1); $("#rv").textContent = r.toFixed(2); $("#mv").textContent = m.toFixed(2);
+  $("#tTop").textContent = Ttop.toFixed(2)+" N"; $("#tBot").textContent = Tbot.toFixed(2)+" N"; $("#tNow").textContent = Math.max(0,T).toFixed(2)+" N";
+  $("#vMin").textContent = Math.sqrt(G*r).toFixed(2)+" m/s";
+  $("#vcWarn").innerHTML = Ttop < 0 ? `<span class="warn">At this speed the string would go slack near the top (T &lt; 0). The ball would leave the circle. You need v ≥ √(gr) = ${Math.sqrt(G*r).toFixed(2)} m/s at the top.</span>` : "";
+  const sc = 60/Math.max(Tbot, m*G), ux = (cx-bx)/R, uy = (cy-by)/R;
+  let s = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" style="stroke:var(--line)" stroke-width="2" stroke-dasharray="6 5"/><circle cx="${cx}" cy="${cy}" r="4" style="fill:var(--ink)"/>`+
+    `<line x1="${cx}" y1="${cy}" x2="${bx}" y2="${by}" style="stroke:var(--ink)" stroke-width="2"/><circle cx="${bx}" cy="${by}" r="10" style="fill:var(--ink)"/>`;
+  if (T > 0) s += arrow(bx,by,bx+ux*T*sc,by+uy*T*sc,"tens","T",bx+ux*(T*sc+16),by+uy*(T*sc+16));
+  s += arrow(bx,by,bx,by+m*G*sc,"grav","mg",bx+16,by+m*G*sc,"start");
+  s += `<text x="470" y="80" style="fill:var(--ink);font:700 13px var(--mono)">top:    T = mv²/r − mg</text><text x="470" y="250" style="fill:var(--ink);font:700 13px var(--mono)">bottom: T = mv²/r + mg</text>`;
+  $("#vc").innerHTML = s;
+  requestAnimationFrame(vcLoop);
+}
+requestAnimationFrame(vcLoop);
+
+/* ---------- predictions ---------- */
+const PRED = [
+  {id:"p1", q:"You whirl a ball on a string in a horizontal circle. The string snaps. Which way does the ball go?",
+   o:["Straight outward, away from the center","In a straight line along the tangent (the direction it was moving)","It keeps curving for a while, then straightens out"], a:1,
+   why:"With no force, Newton's 1st law takes over: it keeps the velocity it had at that instant, which was tangent to the circle. There's no outward force to throw it outward."},
+  {id:"p2", q:"A car drives around a flat, unbanked curve at constant speed. Which force points toward the center of the curve?",
+   o:["The engine force","Static friction from the road on the tires","The centripetal force, which is separate from the other forces","No force, since the speed is constant"], a:1,
+   why:"Gravity and the normal force are vertical. The only horizontal force is static friction (static, because the tires don't skid sideways). It IS the centripetal force here. On ice there's no friction, so the car goes straight."},
+  {id:"p3", q:"A car takes the same curve at TWICE the speed. The sideways force needed is…",
+   o:["The same","2 times as big","4 times as big","½ as big"], a:2,
+   why:"F = mv²/r, and v is squared: 2² = 4. That's why speed limits on curves matter so much, and why skids happen suddenly."},
+  {id:"p4", q:"A rider goes through the TOP of a loop, upside down, fast. Which forces act on the rider?",
+   o:["Gravity down, the seat pushing down, and an outward centrifugal force","Gravity down and the seat (normal force) pushing down","Only an upward force pressing them into the seat"], a:1,
+   why:"Both real forces point down, toward the center: mg + F<sub>N</sub> = mv²/r. Feeling 'pressed into the seat' is inertia, not a force. Your body wants to go straight while the seat curves it downward."},
+  {id:"p5", q:"Is the Moon falling toward Earth?",
+   o:["No, it's in perfect balance, with no net force","Yes, it's constantly accelerating toward Earth, but it moves sideways fast enough to keep missing","Only during an eclipse"], a:1,
+   why:"Gravity is the net force on the Moon, so it accelerates toward Earth all the time (a = v²/r ≈ 0.0027 m/s²). Its sideways speed keeps turning that 'fall' into a circle. That's an orbit."}
+];
+
+/* ---------- quiz ---------- */
+const QZ = [
+  {t:"mc", q:"A car drives around a circular track at a CONSTANT speed. Its acceleration is:",
+   o:["Zero","Toward the center of the circle","Along the direction of motion","Outward from the center"], a:1,
+   e:"The direction of the velocity keeps changing, so a ≠ 0. That change points toward the center: a<sub>c</sub> = v²/r, inward.",
+   tip:"In a justify, write: 'the velocity changes direction, so the object accelerates toward the center'."},
+  {t:"mc", q:"A car moves at 20 m/s around a curve of radius 50 m. Its centripetal acceleration is:",
+   o:["8.0 m/s²","0.4 m/s²","2.5 m/s²","1000 m/s²"], a:0,
+   e:"a = v²/r = 400/50 = 8.0 m/s².",
+   tip:"Units check: (m/s)²/m = m/s² ✓."},
+  {t:"fbd", q:"A car rounds a flat curve at constant speed (ignore air drag). Select every force acting on the car.",
+   o:[["grav","Gravity, down"],["norm","Normal force, up"],["fin","Static friction, toward the center"],["out","Centrifugal force, outward"],["cent","A separate centripetal force"]],
+   a:["grav","norm","fin"], fbd:[{d:"up",len:.75,k:"norm",t:"F_N"},{d:"down",len:.75,k:"grav",t:"F_g"},{d:"left",len:.5,k:"fric",t:"f_s"}],
+   e:"Three real forces. Friction is the centripetal force. Drawing it AND a 'centripetal' arrow counts the same force twice, and 'centrifugal' isn't a real force.",
+   tip:"On every circular FBD, ask: which of my real forces points toward the center?"},
+  {t:"mc", q:"An object moves in a circle of fixed radius. If its speed triples, the net force needed:",
+   o:["Triples","Increases 9 times","Stays the same","Increases 6 times"], a:1,
+   e:"F = mv²/r → 3² = 9.",
+   tip:"Write F ∝ v² and show the ratio. Graders love seeing the reasoning."},
+  {t:"mc", q:"A ball on a string moves counterclockwise in a horizontal circle. When it's at the far RIGHT of the circle, the string breaks. The ball moves:",
+   o:["Straight up the page (tangent)","Straight right (outward)","Straight left (toward the center)","Along a curve"], a:0,
+   e:"Counterclockwise at the far right, its velocity points up the page (tangent). With no force, the 1st law says it keeps that velocity in a straight line.",
+   tip:"Sketch the velocity arrow at that point. The answer is the direction of v, not of a."},
+  {t:"mc", q:"What is the minimum speed at the top of a vertical loop of radius 10 m for a car to stay on the track?",
+   o:["9.9 m/s","98 m/s","3.2 m/s","14 m/s"], a:0,
+   e:"At the minimum, F<sub>N</sub> = 0 and gravity alone provides the centripetal force: mg = mv²/r → v = √(gr) = √98 ≈ 9.9 m/s.",
+   tip:"'Minimum speed' or 'just barely' → set the normal force or tension to zero."},
+  {t:"fbd", q:"A ball on a string is at the BOTTOM of a vertical circle. Select every force on it.",
+   o:[["tens","Tension, up toward the center"],["grav","Gravity, down"],["cent","Centripetal force, up"],["out","Centrifugal force, down"]],
+   a:["tens","grav"], fbd:[{d:"up",len:.9,k:"tens",t:"T"},{d:"down",len:.45,k:"grav",t:"mg"}],
+   e:"Two forces: T up (longer) and mg down. The net force (T − mg) points up, toward the center, and that's the centripetal force.",
+   tip:"Arrow lengths: T must be longer than mg at the bottom, because the net force points up."},
+  {t:"mc", q:"A 0.50 kg ball on a 1.0 m string moves at 4.0 m/s at the bottom of a vertical circle. The tension is:",
+   o:["12.9 N","8.0 N","3.1 N","4.9 N"], a:0,
+   e:"T = mg + mv²/r = 4.9 + 0.5(16)/1.0 = 4.9 + 8.0 = 12.9 N. 8.0 N forgets gravity, and 3.1 N is the top-of-circle formula.",
+   tip:"Start with the symbols: T − mg = mv²/r. That's often a point on its own."},
+  {t:"mc", q:"An object goes around a circle of radius 2.0 m once every 2.0 s. Its centripetal acceleration is about:",
+   o:["20 m/s²","6.3 m/s²","3.1 m/s²","2.0 m/s²"], a:0,
+   e:"v = 2πr/T = 2π(2.0)/2.0 = 6.28 m/s, so a = v²/r = 39.5/2.0 ≈ 19.7 m/s².",
+   tip:"Given a period? Get v from v = 2πr/T first."},
+  {t:"mc", q:"Satellite 1 orbits closer to Earth than Satellite 2. Compared with Satellite 2, Satellite 1 moves:",
+   o:["Faster","Slower","At the same speed"], a:0,
+   e:"v = √(GM/r): a smaller r gives a larger v. Closer satellites must go faster to keep from falling in, because gravity pulls harder there.",
+   tip:"Derive v = √(GM/r) from GMm/r² = mv²/r. That's the whole point of a QQT part B."},
+  {t:"mc", q:"A car goes over the top of a hill of radius r at exactly v = √(gr). The normal force from the road is:",
+   o:["Zero","mg","2mg","mg/2"], a:0,
+   e:"mg − F<sub>N</sub> = mv²/r = m(gr)/r = mg → F<sub>N</sub> = 0. The car is just barely in contact: 'airtime'.",
+   tip:"Hilltop: the center is below, so mg points in (+) and F<sub>N</sub> points out (−)."},
+  {t:"mc", boss:true, q:"Newton's Moon test: the Moon orbits at about 60 Earth radii, so gravity there should be g/60² ≈ 0.0027 m/s². The Moon's actual centripetal acceleration (r = 3.84 × 10⁸ m, period 27.3 days) is…",
+   o:["About 0.0027 m/s², a match: the same gravity explains both","About 9.8 m/s²","About 0.27 m/s²","Zero, because the Moon's speed is constant"], a:0,
+   e:"T = 27.3 × 86,400 s = 2.36 × 10⁶ s. a = 4π²r/T² = 4π²(3.84 × 10⁸)/(2.36 × 10⁶)² ≈ 0.0027 m/s². It matches g/3600. Newton concluded that the force pulling apples down is the same one holding the Moon in orbit: universal gravitation.",
+   tip:"a<sub>c</sub> = 4π²r/T² comes from combining v = 2πr/T with a = v²/r. It's useful whenever you're given a period."}
+];
+
+Quest({key:"cmq-v1", title:"Circular Motion Quest", pred:PRED, quiz:QZ, pauseMax:6,
+  ranks:[[0,"Rookie"],[60,"Curve Spotter"],[100,"Loop Rider"],[140,"Orbit Apprentice"],[175,"Unit 2 Champion"]]});
+})();
+</script>
+</body></html>

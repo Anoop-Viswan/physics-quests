@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tension &amp; Pulleys Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="quest.css">
+</head><body>
+<nav class="bar" aria-label="Stages"><div class="bar-in">
+  <div class="levels" id="levels">
+    <a href="#hook" data-stage="hook">1 Hook</a><a href="#predict" data-stage="predict">2 Predict</a><a href="#learn" data-stage="learn">3 Learn</a>
+    <a href="#check" data-stage="check">4 Check</a><a href="#quiz" data-stage="quiz">5 Quiz</a><a href="#frq" data-stage="frq">6 FRQ</a>
+  </div><div class="xp" aria-live="polite"><span id="xp">0</span> XP</div></div></nav>
+
+<main class="wrap">
+  <header class="hero">
+    <span class="eyebrow">AP Physics 1 · Unit 2 · Topics 2.5 (connected systems), 2.8</span>
+    <h1>Tension &amp; Pulleys Quest</h1>
+    <p>Ropes, strings, pulleys and connected blocks: the "system, then isolate" skill that shows up in almost every Unit 2 FRQ.</p>
+    <div class="legend" aria-label="Force colour key">
+      <span><i style="background:var(--f-grav)"></i>Gravity</span><span><i style="background:var(--f-norm)"></i>Normal</span>
+      <span><i style="background:var(--f-fric)"></i>Friction</span><span><i style="background:var(--f-tens)"></i>Tension T</span><span><i style="background:var(--f-app)"></i>Applied</span>
+    </div>
+  </header>
+
+  <!-- 1 HOOK -->
+  <section class="stage" id="hook">
+    <div class="stage-head"><span class="eyebrow">Stage 1 · Hook · 5 min</span><h2>The rope that should have snapped</h2></div>
+    <div class="story">
+      <p>Field day. The tug-of-war rope has a tag sewn on: <strong>"Breaking strength: 800 N."</strong> Team Red can pull with 500 N. Team Blue can pull with 500 N.</p>
+      <p>Coach Dale frowns at the tag. <q>500 plus 500 is 1000 newtons. That's more than 800. This rope is going to snap and somebody's getting hurt. Cancel it!</q></p>
+      <p>Priya, who was half-listening in physics class, isn't so sure. <q>Coach, if one team tied their end to a tree instead and just the other team pulled with 500 N… would the rope feel 500 or 1000?</q></p>
+      <p>Coach Dale opens his mouth, then closes it.</p>
+      <p><strong>Does the rope feel 500 N or 1000 N? Does it snap?</strong> Lock in your guess in Stage 2.</p>
+    </div>
+    <svg class="scene" id="scene" viewBox="0 0 640 220" role="img" aria-label="Tug of war"></svg>
+    <div class="row seg" id="sceneMode">
+      <button type="button" data-mode="coach" aria-pressed="true">Coach's math</button>
+      <button type="button" data-mode="tree" aria-pressed="false">Priya's tree</button>
+      <button type="button" data-mode="cut" aria-pressed="false">Cut the rope in half</button>
+    </div>
+    <p class="note" id="sceneNote"></p>
+    <div class="trivia">
+      <div><b>A machine to slow down gravity</b><p>In 1784, George Atwood couldn't time a falling ball accurately, since things fall too fast for the clocks of his day. So he hung two nearly equal masses over a pulley. The pair accelerates at a tiny fraction of g, slow enough to measure. The "Atwood machine" is still in every AP exam.</p></div>
+      <div><b>Elevator cables</b><p>A loaded elevator's steel cables carry more than its weight while it speeds up going up, and less while it slows down. Engineers design for the biggest tension, not the weight.</p></div>
+    </div>
+  </section>
+
+  <!-- 2 PREDICT -->
+  <section class="stage" id="predict">
+    <div class="stage-head"><span class="eyebrow">Stage 2 · Predict · 10 min</span><h2>Guess first, then learn</h2></div>
+    <p class="lead">Pick an answer and write one sentence on <em>why</em>. <span class="mono">+10 XP</span> for each prediction you lock in.</p>
+    <div id="predList"></div>
+  </section>
+
+  <!-- 3 LEARN -->
+  <section class="stage" id="learn">
+    <div class="stage-head"><span class="eyebrow">Stage 3 · Learn · 35–45 min</span><h2>The ideas, one at a time</h2></div>
+
+    <div class="card">
+      <h3>A. What tension is</h3>
+      <ul class="tight">
+        <li>A rope can only <strong>pull</strong>, and always <strong>along the rope, away from the object</strong>.</li>
+        <li><strong>Ideal (massless) rope:</strong> the tension is the same all along it. Cut it anywhere, and each piece pulls the other with T.</li>
+        <li><strong>Ideal pulley</strong> (massless, frictionless): it changes the rope's direction but not its tension.</li>
+        <li>Tension isn't "the sum of the pulls". A rope pulled with 500 N at each end has T = 500 N, exactly as if one end were tied to a tree.</li>
+      </ul>
+      <a class="vid" href="https://www.youtube.com/watch?v=_uNW9Xd4GrY" target="_blank" rel="noopener"><span class="play"></span><span><strong>How to Solve Equilibrium Tension Problems | AP Physics 1</strong><small>The Physics Universe</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>B. The two-step method: SYSTEM, then ISOLATE</h3>
+      <ol class="steps">
+        <li><strong>System (for a):</strong> draw a box around all the connected objects. Ropes between them are internal, so T cancels. Use ΣF<sub>external along the rope</sub> = (total mass) × a.</li>
+        <li><strong>Isolate (for T):</strong> pick the simplest single object, draw its own FBD (now T is external to it) and write ΣF = ma.</li>
+        <li><strong>Check:</strong> use the other object to see if you get the same T. Ask whether T sits between the forces it has to fight.</li>
+      </ol>
+      <p class="note">Signs made simple: for each object, choose + as the direction it moves. "Down" for the falling block and "up" for the rising one are both +.</p>
+      <a class="vid" href="https://www.youtube.com/watch?v=XYYvTRloc-A" target="_blank" rel="noopener"><span class="play"></span><span><strong>First Steps to Solving a Pulley Problem</strong><small>The Physics Universe</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>C. Atwood and modified Atwood</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Setup</th><th>a</th><th>T</th></tr></thead>
+        <tbody>
+          <tr><td>Two hanging masses (m₂ &gt; m₁)</td><td class="mono">(m₂ − m₁)g / (m₁ + m₂)</td><td class="mono">2m₁m₂g / (m₁ + m₂)</td></tr>
+          <tr><td>m₁ on a table (friction μ<sub>k</sub>), m₂ hanging</td><td class="mono">(m₂ − μ<sub>k</sub>m₁)g / (m₁ + m₂)</td><td class="mono">m₂(g − a)</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Don't memorize these. Derive them in 3 lines with the system/isolate method. The table is just for checking.</p>
+      <div class="widget">
+        <div class="row seg" id="atMode"><button type="button" data-mode="hang" aria-pressed="true">Two hanging masses</button><button type="button" data-mode="table" aria-pressed="false">Table + hanging mass</button></div>
+        <svg id="atw" viewBox="0 0 640 300" role="img" aria-label="Atwood machine simulation"></svg>
+        <div class="sliders">
+          <label>m₁: <b id="m1v">3.0</b> kg<input type="range" id="m1" min="0.5" max="10" step="0.5" value="3"></label>
+          <label>m₂: <b id="m2v">5.0</b> kg<input type="range" id="m2" min="0.5" max="10" step="0.5" value="5"></label>
+          <label id="muWrap" hidden>μ (table): <b id="muv">0.20</b><input type="range" id="mu" min="0" max="0.8" step="0.05" value="0.2"></label>
+        </div>
+        <div class="row"><button type="button" class="btn ghost" id="atGo">Release</button><button type="button" class="btn ghost" id="atReset">Reset</button></div>
+        <div class="readout"><div>a<b id="aOut">–</b></div><div>T<b id="tOut">–</b></div><div>m₁g<b id="w1Out">–</b></div><div>m₂g<b id="w2Out">–</b></div></div>
+        <p class="note"><strong>Try this:</strong> (1) Hanging: make m₁ = m₂. What are a and T? (2) Make m₂ huge (10 kg) and m₁ tiny (0.5 kg). How does a compare with g? How does T compare with m₁g? (3) Table mode: find the m₂ that just stops the motion for μ = 0.40 and m₁ = 5 kg. (4) In every case, is T between the forces it fights?</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>D. Angled ropes in equilibrium</h3>
+      <div class="big-eq">2T sin θ = W → T = W / (2 sin θ)</div>
+      <p>For a weight hanging from two symmetric ropes at angle θ above the horizontal, only the vertical components hold it up. The flatter the ropes, the bigger the tension, and it heads toward infinity as θ → 0. That's why a clothesline with laundry always sags. It's FRQ Set 3, Q2.</p>
+    </div>
+
+    <div class="card">
+      <h3>E. Springs <span class="law">Topic 2.8 · check if it's on your test</span></h3>
+      <div class="big-eq">|F<sub>s</sub>| = k |Δx|</div>
+      <ul class="tight">
+        <li>An ideal spring pushes or pulls back toward its natural length, with a force proportional to the stretch or compression. k (N/m) is its stiffness.</li>
+        <li>A hanging mass at rest: kΔx = mg → Δx = mg/k. Double the mass, double the stretch.</li>
+        <li>A spring scale reads the tension in whatever it's connected to. Two 10 N weights over pulleys on either side of a scale → it reads 10 N, not 20 N.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>F. Pause-and-solve</h3>
+      <p>12 classic problems. Pause before each solution, then do system → isolate → check. Count your full solves.</p>
+      <a class="vid" href="https://www.youtube.com/watch?v=Kyfauo0exXg" target="_blank" rel="noopener"><span class="play"></span><span><strong>6 Pulley Problems You MUST Know for AP Physics 1</strong><small>The Physics Universe</small></span></a>
+      <a class="vid" href="https://www.youtube.com/watch?v=H_0mq3cxMwE" target="_blank" rel="noopener"><span class="play"></span><span><strong>6 Connected Objects Problems You MUST Know for AP Physics 1</strong><small>The Physics Universe</small></span></a>
+      <a class="vid" href="https://www.youtube.com/watch?v=8RDG_2ibl9s" target="_blank" rel="noopener"><span class="play"></span><span><strong>Inclined Plane with Pulley Problem and Solution</strong><small>The Physics Universe · bonus, the boss question's setup</small></span></a>
+      <div class="row"><label for="pauseScore">Solved before seeing the answer:</label>
+        <select id="pauseScore" style="font:inherit;padding:6px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)"></select><span class="note">of 12 (+5 XP each)</span></div>
+    </div>
+  </section>
+
+  <!-- 4 CHECK -->
+  <section class="stage" id="check">
+    <div class="stage-head"><span class="eyebrow">Stage 4 · Check your predictions · 10 min</span><h2>How did your guesses hold up?</h2></div>
+    <p class="lead">Grade your <em>reason</em>, not just the letter. <span class="mono">+15 XP</span> for every honest self-grade.</p>
+    <div id="checkList" style="display:flex;flex-direction:column;gap:12px"></div>
+    <div class="card">
+      <h3>Case closed: the rope survives</h3>
+      <p>Cut the rope (in your head) in the middle and look at the left half. Team Red pulls it left with 500 N. It isn't accelerating, so the right half must pull it right with 500 N. That pull IS the tension: <strong>T = 500 N</strong>, safely under 800 N. Team Blue is doing exactly what Priya's tree would do: holding the other end. The coach added two forces that act on <em>opposite ends</em> of the rope. Tension is the force across any cut, not the total of the pulls.</p>
+    </div>
+  </section>
+
+  <!-- 5 QUIZ -->
+  <section class="stage" id="quiz">
+    <div class="stage-head"><span class="eyebrow">Stage 5 · Quiz · 15 min</span><h2>Pulley Run</h2></div>
+    <p class="lead">12 questions, including 2 FBD questions and a boss. Paper ready: system first, then isolate.</p>
+    <div id="quizBox"></div>
+  </section>
+
+  <!-- 6 FRQ -->
+  <section class="stage" id="frq">
+    <div class="stage-head"><span class="eyebrow">Stage 6 · FRQ playbook · read twice before the test</span><h2>Connected-system points</h2></div>
+
+    <div class="card">
+      <h3>The "is T reasonable?" justification (TBR part D favourite)</h3>
+      <div class="compare">
+        <div class="weak"><span class="pts">0 / 2</span><p>"Yes, my tension matches my diagrams."</p></div>
+        <div class="strong"><span class="pts">2 / 2</span><p>"Yes. Block 1 accelerates upward, so its FBD needs T &gt; m₁g. Block 2 accelerates downward, so it needs T &lt; m₂g. My result T = 2m₁m₂g/(m₁ + m₂) lies between m₁g and m₂g (for 3 kg and 5 kg: 29 N &lt; 37 N &lt; 49 N), so it's consistent with both diagrams."</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>FBD rules for connected systems</h3>
+      <ul class="tight">
+        <li>One FBD per object. The weight of the hanging block never appears on the table block's FBD. It reaches the table block only through T.</li>
+        <li>Same rope = same T label on both diagrams, with equal-length arrows.</li>
+        <li>Relative lengths must match the motion: for the block accelerating up, T is longer than mg.</li>
+        <li>A "system" FBD only shows external forces. Leave out the tension between the blocks.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>The 6 tension traps</h3>
+      <ul class="tight">
+        <li>Adding the pulls at both ends (tug of war is 500 N, not 1000 N).</li>
+        <li>T = m₂g for a hanging block that's accelerating. It's only true at rest or at constant velocity.</li>
+        <li>Forgetting that every connected mass gets accelerated (all of them go in the denominator).</li>
+        <li>Using one + direction (up) for both blocks of an Atwood, then losing the signs.</li>
+        <li>Pushing with a rope. Ropes only pull.</li>
+        <li>cos instead of sin for the vertical component of an angled rope. Check which angle is given.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Next: timed practice on paper</h3>
+      <p>FRQ Set 1 Q2 (Atwood TBR), Set 2 Q1 (table + pulley MR), Set 3 Q2 (two cables TBR), plus connected-system MCQs in Quizzes A–C. They're on the <a href="index.html">home page</a>.</p>
+    </div>
+  </section>
+
+  <section class="stage" id="results">
+    <div class="stage-head"><span class="eyebrow">Wrap-up</span><h2>Send your results</h2></div>
+    <p class="lead">Copy this summary and send it over.</p>
+    <pre class="copybox" id="summary"></pre>
+    <div class="row"><button type="button" class="btn" id="copyBtn">Copy summary</button><span class="note" id="copyMsg" aria-live="polite"></span>
+      <button type="button" class="btn ghost" id="wipeBtn">Start over</button><span class="note" id="wipeAsk" hidden>Erase all answers on this device? <button type="button" class="btn ghost" id="wipeYes">Yes, erase</button></span></div>
+    <div class="next-quest"><a href="friction-inclines-quest.html">← Friction &amp; Inclines</a><a href="circular-motion-quest.html">Next: Circular Motion Quest →</a></div>
+  </section>
+</main>
+
+<script src="quest.js"></script>
+<script>
+(() => {
+const {arrow, $} = QuestKit;
+
+/* ---------- hook: tug of war ---------- */
+function person(x, col, flip){ const d = flip?-1:1;
+  return `<circle cx="${x}" cy="88" r="13" style="fill:${col};opacity:.85"/><line x1="${x}" y1="101" x2="${x-d*14}" y2="150" style="stroke:${col}" stroke-width="6" stroke-linecap="round"/>`+
+    `<line x1="${x-d*14}" y1="150" x2="${x-d*34}" y2="190" style="stroke:${col}" stroke-width="5" stroke-linecap="round"/><line x1="${x-d*14}" y1="150" x2="${x+d*4}" y2="190" style="stroke:${col}" stroke-width="5" stroke-linecap="round"/>`; }
+function tug(mode){
+  let s = `<line x1="20" y1="192" x2="620" y2="192" style="stroke:var(--muted)" stroke-width="2"/>`;
+  if (mode==="tree") s += `<rect x="40" y="40" width="26" height="152" style="fill:var(--f-fric);opacity:.6"/><circle cx="53" cy="40" r="34" style="fill:var(--f-tens);opacity:.35"/><text x="53" y="210" text-anchor="middle" style="fill:var(--muted);font:700 11px var(--mono)">tree</text>`;
+  else s += person(70,"var(--bad)",true)+person(110,"var(--bad)",true);
+  s += person(530,"var(--f-norm)")+person(570,"var(--f-norm)");
+  s += `<line x1="${mode==="tree"?66:120}" y1="122" x2="520" y2="122" style="stroke:var(--f-fric)" stroke-width="5"/>`;
+  if (mode==="coach") s += arrow(260,100,170,100,"acc","500 N",215,90)+arrow(380,100,470,100,"norm","500 N",425,90)+`<text x="320" y="60" text-anchor="middle" style="fill:var(--ink);font:700 15px var(--mono)">500 + 500 = 1000 N ?!</text>`;
+  if (mode==="tree") s += arrow(380,100,470,100,"norm","500 N",425,90)+`<text x="320" y="60" text-anchor="middle" style="fill:var(--ink);font:700 15px var(--mono)">the tree holds… how hard?</text>`;
+  if (mode==="cut") s += `<line x1="320" y1="104" x2="320" y2="140" style="stroke:var(--ink)" stroke-width="2" stroke-dasharray="4 3"/>`+
+    `<rect x="125" y="98" width="195" height="52" rx="8" fill="none" style="stroke:var(--accent)" stroke-width="2" stroke-dasharray="6 5"/>`+
+    arrow(200,122,140,122,"acc","500 N",170,141)+arrow(290,122,350,122,"tens","T",320,141)+
+    `<text x="320" y="40" text-anchor="middle" style="fill:var(--accent);font:700 13px var(--mono)">left half of rope: a = 0, so T = 500 N</text>`;
+  $("#scene").innerHTML = s;
+  $("#sceneNote").textContent = {coach:"The coach adds the two teams' pulls. But do those two forces even act on the same piece of rope in the same way?",
+    tree:"Replace Team Red with a tree. Blue pulls with 500 N, and the rope doesn't move, so the tree pulls back with 500 N. Is this rope any different from the tug-of-war rope?",
+    cut:"Imagine cutting the rope and look at the left half on its own. It's in equilibrium, so whatever pulls it right (the other half: the tension) must equal 500 N."}[mode];
+  document.querySelectorAll("#sceneMode button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.mode===mode));
+}
+document.querySelectorAll("#sceneMode button").forEach(b=>b.addEventListener("click",()=>tug(b.dataset.mode)));
+tug("coach");
+
+/* ---------- Atwood widget ---------- */
+const G = 9.8; let mode = "hang", y = 0, vel = 0, running = false, lastT = null;
+function solve(){
+  const m1 = +$("#m1").value, m2 = +$("#m2").value, mu = +$("#mu").value;
+  if (mode==="hang"){ const a = (m2-m1)*G/(m1+m2), T = 2*m1*m2*G/(m1+m2); return {m1,m2,mu,a,T}; }
+  const drive = m2*G, fric = mu*m1*G;
+  if (drive <= fric) return {m1,m2,mu,a:0,T:m2*G,stuck:true};
+  const a = (drive - fric)/(m1+m2); return {m1,m2,mu,a,T:m2*(G-a)};
+}
+function drawAt(){
+  const r = solve(); $("#m1v").textContent = r.m1.toFixed(1); $("#m2v").textContent = r.m2.toFixed(1); $("#muv").textContent = r.mu.toFixed(2);
+  $("#aOut").textContent = Math.abs(r.a).toFixed(2)+" m/s²"+(r.stuck?" (held by static friction*)":""); $("#tOut").textContent = r.T.toFixed(1)+" N";
+  $("#w1Out").textContent = (r.m1*G).toFixed(1)+" N"; $("#w2Out").textContent = (r.m2*G).toFixed(1)+" N";
+  const off = y*60, z = m => 22 + m*3.2, sc = 70/(Math.max(r.m1,r.m2)*G);
+  let s = "";
+  if (mode==="hang"){
+    s += `<line x1="250" y1="14" x2="390" y2="14" style="stroke:var(--ink)" stroke-width="3"/><line x1="320" y1="14" x2="320" y2="50" style="stroke:var(--ink)" stroke-width="2"/>`+
+      `<circle cx="320" cy="70" r="40" style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"/><circle cx="320" cy="70" r="4" style="fill:var(--ink)"/>`;
+    const y1 = 150 - off, y2 = 150 + off;   // m2 moves down when a>0
+    s += `<line x1="280" y1="70" x2="280" y2="${y1}" style="stroke:var(--f-tens)" stroke-width="2"/><line x1="360" y1="70" x2="360" y2="${y2}" style="stroke:var(--f-tens)" stroke-width="2"/>`;
+    [[280,y1,r.m1,"m₁"],[360,y2,r.m2,"m₂"]].forEach(([x,yy,m,l])=>{ const w=z(m);
+      s += `<rect x="${x-w/2}" y="${yy}" width="${w}" height="${w}" rx="4" style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"/><text x="${x}" y="${yy+w/2+5}" text-anchor="middle" style="fill:var(--ink);font:700 12px var(--mono)">${l}</text>`;
+      const sx = x<320 ? x-w/2-26 : x+w/2+26, cy = yy+w/2;
+      s += arrow(sx,cy,sx,cy-r.T*sc,"tens","T",sx+(x<320?-14:14),cy-r.T*sc,"middle")+arrow(sx,cy,sx,cy+m*G*sc,"grav",l+"g",sx+(x<320?-18:18),cy+m*G*sc+12,"middle"); });
+  } else {
+    s += `<rect x="40" y="120" width="380" height="16" style="fill:var(--accent-soft);stroke:var(--ink)" stroke-width="1.5"/><circle cx="440" cy="112" r="20" style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"/><circle cx="440" cy="112" r="3" style="fill:var(--ink)"/>`;
+    const w1 = z(r.m1), x1 = 120 + off, w2 = z(r.m2), y2 = 150 + off;
+    s += `<rect x="${x1-w1/2}" y="${120-w1}" width="${w1}" height="${w1}" rx="4" style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"/><text x="${x1}" y="${120-w1/2+5}" text-anchor="middle" style="fill:var(--ink);font:700 12px var(--mono)">m₁</text>`;
+    s += `<line x1="${x1+w1/2}" y1="${120-w1/2}" x2="440" y2="${120-w1/2}" style="stroke:var(--f-tens)" stroke-width="2"/><line x1="460" y1="112" x2="460" y2="${y2}" style="stroke:var(--f-tens)" stroke-width="2"/>`;
+    s += `<rect x="${460-w2/2}" y="${y2}" width="${w2}" height="${w2}" rx="4" style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"/><text x="460" y="${y2+w2/2+5}" text-anchor="middle" style="fill:var(--ink);font:700 12px var(--mono)">m₂</text>`;
+    const cy = y2 + w2/2; s += arrow(520,cy,520,cy-r.T*sc,"tens","T",540,cy-r.T*sc)+arrow(520,cy,520,cy+r.m2*G*sc,"grav","m₂g",546,cy+r.m2*G*sc);
+    if (r.mu>0) s += `<text x="230" y="160" text-anchor="middle" style="fill:var(--muted);font:11px var(--mono)">friction μ = ${r.mu.toFixed(2)}${r.stuck?" · *assumes μs = μk":""}</text>`;
+  }
+  $("#atw").innerHTML = s;
+}
+function atLoop(t){
+  if (running && lastT != null){ const dt = Math.min(0.05,(t-lastT)/1000), r = solve();
+    vel += r.a*dt; y += vel*dt*0.6; if (Math.abs(y) > 1.6){ y = Math.sign(y)*1.6; running = false; } }
+  lastT = t; drawAt(); requestAnimationFrame(atLoop);
+}
+$("#atGo").onclick = ()=>{ y = 0; vel = 0; running = true; };
+$("#atReset").onclick = ()=>{ y = 0; vel = 0; running = false; };
+document.querySelectorAll("#atMode button").forEach(b=>b.addEventListener("click",()=>{ mode = b.dataset.mode; y = 0; vel = 0; running = false;
+  $("#muWrap").hidden = mode!=="table"; document.querySelectorAll("#atMode button").forEach(x=>x.setAttribute("aria-pressed", x===b)); }));
+requestAnimationFrame(atLoop);
+
+/* ---------- predictions ---------- */
+const PRED = [
+  {id:"p1", q:"Tug of war: each team pulls its end with 500 N and nobody moves. The tension in the rope is…",
+   o:["0 N, because the pulls cancel","500 N","1000 N","250 N"], a:1,
+   why:"Look at any piece of rope: it's pulled with 500 N on each side, so T = 500 N. One team plays the role of a wall holding the other end. 'Cancel' describes the NET force on the rope (zero), not the tension inside it."},
+  {id:"p2", q:"Setup 1: a 10 kg block hangs from a rope tied to the ceiling. Setup 2: the rope runs over a pulley to ANOTHER 10 kg block hanging on the other side. Which rope has more tension?",
+   o:["Setup 1","Setup 2, twice as much","The same in both"], a:2,
+   why:"In both setups, the 10 kg block is at rest, so T = mg = 98 N. The second block does exactly the ceiling's job. It's the tree from the hook, again."},
+  {id:"p3", q:"An Atwood machine has two EQUAL masses. You give one a quick tap downward and let go. Afterward the blocks…",
+   o:["Stop right away","Keep moving at constant speed","Speed up"], a:1,
+   why:"Equal masses → the net force on the system is (m − m)g = 0 → a = 0. By Newton's 1st law they keep the velocity from your tap. T = mg the whole time."},
+  {id:"p4", q:"Block A slides on a frictionless table, pulled by a string over a pulley to hanging block B. How does the tension compare with B's weight?",
+   o:["T = m<sub>B</sub>g","T &lt; m<sub>B</sub>g","T &gt; m<sub>B</sub>g"], a:1,
+   why:"B accelerates DOWN, so the net force on B points down: m<sub>B</sub>g − T = m<sub>B</sub>a &gt; 0, so T &lt; m<sub>B</sub>g. If T were equal to B's weight, B couldn't accelerate."},
+  {id:"p5", q:"A picture hangs from a wire on one nail, with the wire making angle θ with the horizontal on each side. Making the wire FLATTER (smaller θ) makes the tension…",
+   o:["Bigger","Smaller","Unchanged, since the picture weighs the same"], a:0,
+   why:"Only the vertical parts hold the picture up: 2T sin θ = W. A smaller θ gives a smaller sin θ, so T has to be bigger. That's why a nearly straight wire can snap from a light picture."}
+];
+
+/* ---------- quiz ---------- */
+const QZ = [
+  {t:"mc", q:"Two dogs pull on opposite ends of a rope toy with 300 N each, and neither moves. The tension in the rope is:",
+   o:["300 N","600 N","0 N","150 N"], a:0,
+   e:"Each piece of rope is pulled with 300 N on each side, so T = 300 N. The dogs aren't 'adding up'. Each one is acting like a wall for the other.",
+   tip:"Tension = the force across a cut in the rope. Imagine the cut and draw an FBD of one piece."},
+  {t:"mc", q:"An Atwood machine holds 2.0 kg and 6.0 kg. What is the acceleration of the blocks?",
+   o:["4.9 m/s²","9.8 m/s²","2.5 m/s²","6.5 m/s²"], a:0,
+   e:"a = (6.0 − 2.0)(9.8)/(2.0 + 6.0) = 39.2/8 = 4.9 m/s². Check: it's less than g ✓.",
+   tip:"Write the system equation first: ΣF = (m₂ − m₁)g = (m₁ + m₂)a."},
+  {t:"fbd", q:"In an Atwood machine, the LIGHTER block accelerates upward. Select every force acting on it.",
+   o:[["tens","Tension, up"],["grav","Gravity, down"],["norm","Normal force, up"],["pulley","A force from the pulley"],["heavy","The weight of the heavier block, up"]],
+   a:["tens","grav"], fbd:[{d:"up",len:.85,k:"tens",t:"T"},{d:"down",len:.55,k:"grav",t:"mg"}],
+   e:"Only two forces, with T longer than mg because it accelerates up. The other block's weight is not a force on this block. It reaches this block only through the tension.",
+   tip:"Arrow lengths must match the acceleration: the block accelerating up has T longer than mg."},
+  {t:"mc", q:"A 3.0 kg block on a frictionless table is pulled by a string over a pulley to a hanging 1.0 kg block. What is the tension?",
+   o:["7.4 N","9.8 N","2.5 N","13 N"], a:0,
+   e:"a = m₂g/(m₁ + m₂) = 9.8/4 = 2.45 m/s². Table block: T = m₁a = 3.0 × 2.45 = 7.4 N. That's less than 9.8 N ✓, as it has to be.",
+   tip:"Isolate the table block for T. It has only one horizontal force, so T = m₁a in one line."},
+  {t:"mc", q:"Blocks A (1 kg), B (2 kg) and C (3 kg) are tied in a line on a frictionless floor: A–B–C. A 12 N force pulls C forward. What is the tension in the string between B and C?",
+   o:["6 N","2 N","10 N","12 N"], a:0,
+   e:"System: a = 12/6 = 2 m/s². The B–C string pulls A and B together (3 kg): T = 3 × 2 = 6 N.",
+   tip:"Pick the system that is BEHIND the string. That string is the only horizontal force on it."},
+  {t:"mc", q:"A 1000 kg elevator accelerates UPWARD at 1.0 m/s². What is the tension in its cable?",
+   o:["10,800 N","9800 N","8800 N","1000 N"], a:0,
+   e:"T − mg = ma → T = m(g + a) = 1000(10.8) = 10,800 N, more than the weight, because a points up.",
+   tip:"Same structure as the elevator scale: T replaces F<sub>N</sub>."},
+  {t:"mc", q:"A lamp of weight W hangs from two cables, each at 45° above the horizontal. The tension in each cable is:",
+   o:["0.71 W","0.50 W","W","1.41 W"], a:0,
+   e:"2T sin 45° = W → T = W/(2 × 0.707) = 0.71 W.",
+   tip:"Write the vertical equilibrium equation. It's the whole problem."},
+  {t:"fbd", q:"Block 1 slides on a FRICTIONLESS table, pulled by a string over a pulley to a hanging block 2. Select every force acting on block 1.",
+   o:[["grav","Gravity, down"],["norm","Normal force, up"],["tens","Tension, toward the pulley"],["w2","Weight of block 2"],["fric","Friction, backward"]],
+   a:["grav","norm","tens"], fbd:[{d:"up",len:.7,k:"norm",t:"F_N"},{d:"down",len:.7,k:"grav",t:"m₁g"},{d:"right",len:.5,k:"tens",t:"T"}],
+   e:"Block 2's weight acts on block 2. Block 1 only feels the string's tension. The table is frictionless, so there's no friction.",
+   tip:"Adding the other block's weight to this FBD is the most common lost point in pulley FRQs."},
+  {t:"mc", q:"An Atwood machine with two equal 4.0 kg masses is moving: one block goes up at a steady 0.5 m/s. The tension is:",
+   o:["39 N","0 N","78 N","More than 39 N, otherwise it wouldn't move"], a:0,
+   e:"Equal masses → a = 0 → T = mg = 4.0 × 9.8 = 39 N. Moving at constant velocity needs no net force.",
+   tip:"'Constant velocity' or 'equal masses' → write ΣF = 0 and finish in one line."},
+  {t:"mc", q:"You hold a spring scale with a 2.0 kg mass hanging from it, inside an elevator accelerating UP at 2.0 m/s². The scale reads:",
+   o:["23.6 N","19.6 N","15.6 N","4.0 N"], a:0,
+   e:"T − mg = ma → T = 2.0(9.8 + 2.0) = 23.6 N. A spring scale reads the tension in its hook.",
+   tip:"Scales and ropes behave identically: write ΣF = ma for the hanging mass."},
+  {t:"mc", q:"Block 1 on a frictionless table is connected over a pulley to hanging block 2. Which must be true about the tension T?",
+   o:["0 &lt; T &lt; m₂g","T = m₂g","T &gt; m₂g","T = m₁g"], a:0,
+   e:"T &gt; 0 because it accelerates block 1. T &lt; m₂g because block 2 accelerates down. In symbols, T = m₁m₂g/(m₁ + m₂), which is always less than m₂g.",
+   tip:"This 'bounds' reasoning is exactly what TBR part D asks you to justify."},
+  {t:"mc", boss:true, q:"A 2.0 kg cart on a frictionless 30° incline is tied by a string over a pulley at the TOP of the incline to a hanging 2.0 kg block. Released from rest, the hanging block…",
+   o:["accelerates down at 2.45 m/s²","accelerates down at 4.9 m/s²","stays at rest","accelerates up at 2.45 m/s²"], a:0,
+   e:"Along the string: the hanging block's weight (19.6 N) pulls one way, and the cart's down-slope component (2.0 × 9.8 × sin 30° = 9.8 N) pulls the other. Net force = 9.8 N on 4.0 kg, so a = 2.45 m/s², with the hanging block going down.",
+   tip:"Compare the two driving forces along the string FIRST. That tells you the direction before any algebra."}
+];
+
+Quest({key:"tpq-v1", title:"Tension & Pulleys Quest", pred:PRED, quiz:QZ, pauseMax:12,
+  ranks:[[0,"Rookie"],[60,"Rope Reader"],[100,"Pulley Pro"],[140,"System Builder"],[175,"Atwood Ready"]]});
+})();
+</script>
+</body></html>
