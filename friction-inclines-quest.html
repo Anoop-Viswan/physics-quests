@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Friction &amp; Inclines Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="quest.css">
+</head><body>
+<nav class="bar" aria-label="Stages"><div class="bar-in">
+  <div class="levels" id="levels">
+    <a href="#hook" data-stage="hook">1 Hook</a><a href="#predict" data-stage="predict">2 Predict</a><a href="#learn" data-stage="learn">3 Learn</a>
+    <a href="#check" data-stage="check">4 Check</a><a href="#quiz" data-stage="quiz">5 Quiz</a><a href="#frq" data-stage="frq">6 FRQ</a>
+  </div><div class="xp" aria-live="polite"><span id="xp">0</span> XP</div></div></nav>
+
+<main class="wrap">
+  <header class="hero">
+    <span class="eyebrow">AP Physics 1 · Unit 2 · Topic 2.7</span>
+    <h1>Friction &amp; Inclines Quest</h1>
+    <p>Static vs. kinetic friction, normal forces that aren't mg, and ramps. Ramps show up on almost every Unit 2 test, and the tilted-axes trick makes them easy.</p>
+    <div class="legend" aria-label="Force colour key">
+      <span><i style="background:var(--f-grav)"></i>Gravity F<sub>g</sub></span><span><i style="background:var(--f-norm)"></i>Normal F<sub>N</sub></span>
+      <span><i style="background:var(--f-fric)"></i>Friction f</span><span><i style="background:var(--f-app)"></i>Applied / push</span>
+    </div>
+  </header>
+
+  <!-- 1 HOOK -->
+  <section class="stage" id="hook">
+    <div class="stage-head"><span class="eyebrow">Stage 1 · Hook · 5 min</span><h2>The book that two cars couldn't pull apart</h2></div>
+    <div class="story">
+      <p>Maya bet her brother Leo $5 he couldn't pull apart two notebooks. Leo laughed. Then he watched her <em>interleave</em> them: page 1 of book A, then page 1 of book B, then page 2 of A, and so on, like shuffling a deck of cards. No glue, no tape.</p>
+      <p>Leo grabbed both spines and pulled. Nothing. He braced his feet on the table and pulled harder. The harder he pulled, the tighter the books seemed to grip. He paid the $5.</p>
+      <p>This isn't a party trick with a secret. TV's <em>MythBusters</em> tried it with two interleaved phone books. Strongmen failed. Two cars failed. In the end it took two <strong>military vehicles</strong> pulling in opposite directions to rip them apart.</p>
+      <p><strong>Each page is light and smooth. So where does a force big enough to beat two cars come from?</strong></p>
+    </div>
+    <svg class="scene" id="scene" viewBox="0 0 640 230" role="img" aria-label="Two interleaved books being pulled apart"></svg>
+    <div class="row seg" id="sceneMode">
+      <button type="button" data-mode="pull" aria-pressed="true">The pull</button>
+      <button type="button" data-mode="inside" aria-pressed="false">Zoom inside</button>
+    </div>
+    <p class="note" id="sceneNote"></p>
+    <div class="trivia">
+      <div><b>Friction is why you can walk</b><p>When you step, your shoe pushes BACK on the ground, and static friction pushes you FORWARD. On perfectly frictionless ice you couldn't take a single step forward.</p></div>
+      <div><b>Why anti-lock brakes win</b><p>A skidding tire uses kinetic friction. A rolling tire grips with static friction, which can be bigger. ABS stops the wheels from locking so the car can use the stronger static friction and stop in a shorter distance.</p></div>
+    </div>
+  </section>
+
+  <!-- 2 PREDICT -->
+  <section class="stage" id="predict">
+    <div class="stage-head"><span class="eyebrow">Stage 2 · Predict · 10 min</span><h2>Guess first, then learn</h2></div>
+    <p class="lead">Pick an answer and write one sentence on <em>why</em>. <span class="mono">+10 XP</span> for each prediction you lock in.</p>
+    <div id="predList"></div>
+  </section>
+
+  <!-- 3 LEARN -->
+  <section class="stage" id="learn">
+    <div class="stage-head"><span class="eyebrow">Stage 3 · Learn · 35–45 min</span><h2>The ideas, one at a time</h2></div>
+
+    <div class="card">
+      <h3>A. Static vs. kinetic friction <span class="law">Topic 2.7</span></h3>
+      <div class="big-eq">f<sub>s</sub> ≤ μ<sub>s</sub>F<sub>N</sub> &nbsp;·&nbsp; f<sub>k</sub> = μ<sub>k</sub>F<sub>N</sub></div>
+      <ul class="tight">
+        <li><strong>Static</strong> (surfaces not slipping): friction is <em>whatever it needs to be</em> to stop slipping, up to a maximum of μ<sub>s</sub>F<sub>N</sub>. Push with 10 N and it pushes back with 10 N. Push with 20 N and it pushes back with 20 N.</li>
+        <li><strong>Kinetic</strong> (sliding): friction is fixed at μ<sub>k</sub>F<sub>N</sub>, however fast it slides or however hard you push.</li>
+        <li>Usually μ<sub>k</sub> &lt; μ<sub>s</sub>. It's harder to <em>start</em> something sliding than to <em>keep</em> it sliding.</li>
+        <li>Friction always opposes <strong>slipping between the two surfaces</strong>. That's not always the same as opposing the motion: a crate on an accelerating truck is dragged FORWARD by friction.</li>
+        <li>Friction doesn't depend on contact area. A brick on its side or flat gives the same friction.</li>
+      </ul>
+      <a class="vid" href="https://www.youtube.com/watch?v=v-YfxCmBNvI" target="_blank" rel="noopener"><span class="play"></span><span><strong>Static vs Kinetic Friction: Dynamics</strong><small>The Physics Universe</small></span></a>
+      <a class="vid" href="https://www.youtube.com/watch?v=i-DdiI7gFoM" target="_blank" rel="noopener"><span class="play"></span><span><strong>Introduction to Static and Kinetic Friction by Bobby</strong><small>Flipping Physics</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>B. The normal force is NOT always mg</h3>
+      <p>F<sub>N</sub> is whatever the surface needs to push so the object doesn't sink into it. Find it from ΣF = 0 (or ma) <strong>perpendicular to the surface</strong>, every time.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Situation</th><th>F<sub>N</sub></th><th>So friction is…</th></tr></thead>
+        <tbody>
+          <tr><td>Flat floor, horizontal push</td><td>mg</td><td>μmg</td></tr>
+          <tr><td>Rope pulling at θ ABOVE the horizontal</td><td>mg − F sin θ</td><td>smaller</td></tr>
+          <tr><td>Handle pushing at θ BELOW the horizontal</td><td>mg + F sin θ</td><td>bigger</td></tr>
+          <tr><td>Ramp at angle θ</td><td>mg cos θ</td><td>μmg cos θ</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h3>C. Inclines: tilt your axes</h3>
+      <div class="big-eq">along: mg sin θ &nbsp;·&nbsp; perpendicular: mg cos θ</div>
+      <ol class="steps">
+        <li>Draw the FBD: mg straight DOWN, F<sub>N</sub> perpendicular to the ramp, friction along the ramp (opposite the slipping).</li>
+        <li>Tilt the axes: x along the ramp and y perpendicular. Now only gravity needs splitting.</li>
+        <li>The angle between mg and the y-axis equals the ramp angle θ. (Sanity check: at θ = 0, all of mg is "perpendicular", so cos 0 = 1 ✓.)</li>
+        <li>y: F<sub>N</sub> = mg cos θ. x: ΣF = mg sin θ − f = ma.</li>
+      </ol>
+      <div class="widget">
+        <svg id="ramp" viewBox="0 0 640 300" role="img" aria-label="Block on an adjustable ramp with force arrows"></svg>
+        <div class="sliders">
+          <label>Ramp angle θ: <b id="thv">20</b>°<input type="range" id="th" min="0" max="60" step="1" value="20"></label>
+          <label>μ<sub>s</sub>: <b id="usv">0.50</b><input type="range" id="us" min="0" max="1" step="0.05" value="0.5"></label>
+          <label>μ<sub>k</sub>: <b id="ukv">0.30</b><input type="range" id="uk" min="0" max="1" step="0.05" value="0.3"></label>
+          <label>Mass: <b id="mv">2.0</b> kg<input type="range" id="mm" min="0.5" max="10" step="0.5" value="2"></label>
+        </div>
+        <div class="row"><button type="button" class="btn ghost" id="rel">Release from rest at top</button><button type="button" class="btn ghost" id="kick">Give it a push down</button></div>
+        <div class="readout"><div>mg sin θ<b id="r1">–</b></div><div>max static<b id="r2">–</b></div><div>friction now<b id="r3">–</b></div><div>a (down +)<b id="r4">–</b></div><div>status<b id="r5">–</b></div></div>
+        <p class="note"><strong>Try this:</strong> (1) With μ<sub>s</sub> = 0.50, raise θ one degree at a time. At what angle does it start slipping? Compare with tan θ = 0.50. (2) Change the mass. Does the slip angle or the acceleration change? (3) Set θ so that tan θ = μ<sub>k</sub> (about 17° for 0.30) and give it a push. What does it do?</p>
+      </div>
+      <a class="vid" href="https://www.youtube.com/watch?v=nO2d6AIpvPw" target="_blank" rel="noopener"><span class="play"></span><span><strong>How to Solve Angles for Inclined Planes and Force Diagrams</strong><small>The Physics Universe</small></span></a>
+      <a class="vid" href="https://www.youtube.com/watch?v=Dlxgq7GZasc" target="_blank" rel="noopener"><span class="play"></span><span><strong>Why Does Mass Cancel on a Ramp? AP Physics 1 Dynamics</strong><small>The Physics Universe</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>D. Friction that makes things GO</h3>
+      <ul class="tight">
+        <li><strong>Walking / running:</strong> your foot pushes back on the ground, so static friction on you points forward.</li>
+        <li><strong>Car speeding up:</strong> the drive wheels push back on the road, so the road's static friction pushes the car forward. That's the external force on the car.</li>
+        <li><strong>Crate on an accelerating truck:</strong> static friction points forward, the direction of the crate's acceleration. Its maximum gives a<sub>max</sub> = μ<sub>s</sub>g.</li>
+        <li><strong>Car on a flat curve:</strong> static friction points sideways, toward the center (see Circular Motion Quest).</li>
+      </ul>
+      <a class="vid" href="https://www.youtube.com/watch?v=-agKmhBoivQ" target="_blank" rel="noopener"><span class="play"></span><span><strong>Steeper Ramp = More Friction? 🤔</strong><small>The Physics Universe · Short</small></span></a>
+    </div>
+
+    <div class="card">
+      <h3>E. Pause-and-solve</h3>
+      <p>Two "must know" videos, 11 problems in all. Pause before every solution, then sketch the FBD, tilt the axes and write the equations in symbols. Count your full solves.</p>
+      <a class="vid" href="https://www.youtube.com/watch?v=5ilMNwWMeB8" target="_blank" rel="noopener"><span class="play"></span><span><strong>5 Friction Problems You Must Know for AP Physics 1</strong><small>The Physics Universe</small></span></a>
+      <a class="vid" href="https://www.youtube.com/watch?v=1vpl9Pc30jg" target="_blank" rel="noopener"><span class="play"></span><span><strong>6 Inclined Plane Problems You MUST Know for AP Physics 1</strong><small>The Physics Universe</small></span></a>
+      <a class="vid" href="https://www.youtube.com/watch?v=bFV4oMDHVUY" target="_blank" rel="noopener"><span class="play"></span><span><strong>Newton's 2nd Law Problems with Kinetic Friction</strong><small>The Physics Universe · bonus</small></span></a>
+      <div class="row"><label for="pauseScore">Solved before seeing the answer:</label>
+        <select id="pauseScore" style="font:inherit;padding:6px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)"></select><span class="note">of 11 (+5 XP each)</span></div>
+    </div>
+  </section>
+
+  <!-- 4 CHECK -->
+  <section class="stage" id="check">
+    <div class="stage-head"><span class="eyebrow">Stage 4 · Check your predictions · 10 min</span><h2>How did your guesses hold up?</h2></div>
+    <p class="lead">Grade your <em>reason</em>, not just the letter. <span class="mono">+15 XP</span> for every honest self-grade.</p>
+    <div id="checkList" style="display:flex;flex-direction:column;gap:12px"></div>
+    <div class="card">
+      <h3>Case closed: the unbreakable books</h3>
+      <p>Each page touches its neighbours on both sides, and every contact is a friction surface. Hundreds of pages give <strong>hundreds of friction forces</strong>, all pointing against the pull. On top of that, the pages fan out from the spines at a slight angle, so pulling on the spines squeezes the pages together. That <strong>increases the normal force</strong> on every page, and so the maximum static friction too (f ≤ μ<sub>s</sub>F<sub>N</sub>). The harder you pull, the harder it grips. That's why Leo felt the books "fight back".</p>
+    </div>
+  </section>
+
+  <!-- 5 QUIZ -->
+  <section class="stage" id="quiz">
+    <div class="stage-head"><span class="eyebrow">Stage 5 · Quiz · 15 min</span><h2>Slip Run</h2></div>
+    <p class="lead">12 questions, including 2 FBD questions and a boss. Have paper ready for the ramp numbers.</p>
+    <div id="quizBox"></div>
+  </section>
+
+  <!-- 6 FRQ -->
+  <section class="stage" id="frq">
+    <div class="stage-head"><span class="eyebrow">Stage 6 · FRQ playbook · read twice before the test</span><h2>Ramp and friction points</h2></div>
+
+    <div class="card">
+      <h3>The ramp derive routine (works every time)</h3>
+      <ol class="steps">
+        <li><strong>FBD</strong> with F<sub>N</sub> perpendicular to the ramp. Friction points opposite the slipping (if it's at rest, opposite the way it <em>would</em> slip).</li>
+        <li><strong>Perpendicular:</strong> F<sub>N</sub> = mg cos θ (plus or minus any applied force components).</li>
+        <li><strong>Along:</strong> ΣF = ma with + in the direction of motion.</li>
+        <li><strong>Substitute</strong> f = μ<sub>k</sub>F<sub>N</sub> (sliding) or f = μ<sub>s</sub>F<sub>N</sub> ("about to slip", "maximum angle", "minimum force").</li>
+        <li><strong>Simplify.</strong> m usually cancels: a = g(sin θ − μ<sub>k</sub>cos θ). Then <strong>check limits</strong>: μ = 0 gives a = g sin θ ✓, and θ = 90° gives a = g ✓.</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>Static friction wording that earns the point</h3>
+      <div class="compare">
+        <div class="weak"><span class="pts">0 / 1</span><p>"Friction = μ<sub>s</sub>mg = 0.5 × 5 × 9.8 = 24.5 N" (for a box that isn't moving, pushed with 20 N).</p><p class="note">Treats the maximum as the actual value.</p></div>
+        <div class="strong"><span class="pts">1 / 1</span><p>"The box is at rest, so ΣF = 0 and static friction equals the push, 20 N. This is less than the maximum μ<sub>s</sub>F<sub>N</sub> = 24.5 N, so the box stays at rest."</p><p class="note">Uses equilibrium for the value and μ<sub>s</sub>F<sub>N</sub> only as the check.</p></div>
+      </div>
+      <p class="note">Only use μ<sub>s</sub>F<sub>N</sub> as the friction value when the question says "just about to slip", "maximum", "minimum force to start", or "steepest angle".</p>
+    </div>
+
+    <div class="card">
+      <h3>Same question, two answers</h3>
+      <p><em>A crate rides in a truck that is speeding up. Which way does friction on the crate point? Justify.</em></p>
+      <div class="compare">
+        <div class="weak"><span class="pts">0 / 2</span><p>"Backward, because friction opposes motion."</p></div>
+        <div class="strong"><span class="pts">2 / 2</span><p>"Forward. The crate accelerates forward with the truck, so by Newton's 2nd law the net force on it points forward. Static friction from the bed is the only horizontal force on the crate, so it must point forward."</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>The 7 friction &amp; ramp traps</h3>
+      <ul class="tight">
+        <li>Using μ<sub>s</sub>F<sub>N</sub> when the object is at rest and not about to slip.</li>
+        <li>F<sub>N</sub> = mg on a ramp, or with an angled rope. Re-derive it every time.</li>
+        <li>sin and cos swapped. Check it with θ = 0.</li>
+        <li>Drawing F<sub>N</sub> straight up on a ramp.</li>
+        <li>Adding a separate "down-the-ramp force". It's just mg sin θ, which is part of gravity.</li>
+        <li>"Friction always opposes motion." It opposes <em>slipping</em>.</li>
+        <li>Thinking heavier blocks slide faster down the same ramp. The mass cancels.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Next: timed practice on paper</h3>
+      <p>FRQ Set 1 Q1 (ramp MR) and Q3 (friction lab), FRQ Set 2 Q1 (table + friction) and Q2 (crate on truck), plus friction questions in Quizzes A–C. They're all on the <a href="index.html">home page</a>.</p>
+    </div>
+  </section>
+
+  <section class="stage" id="results">
+    <div class="stage-head"><span class="eyebrow">Wrap-up</span><h2>Send your results</h2></div>
+    <p class="lead">Copy this summary and send it over.</p>
+    <pre class="copybox" id="summary"></pre>
+    <div class="row"><button type="button" class="btn" id="copyBtn">Copy summary</button><span class="note" id="copyMsg" aria-live="polite"></span>
+      <button type="button" class="btn ghost" id="wipeBtn">Start over</button><span class="note" id="wipeAsk" hidden>Erase all answers on this device? <button type="button" class="btn ghost" id="wipeYes">Yes, erase</button></span></div>
+    <div class="next-quest"><a href="systems-gravity-quest.html">← Systems &amp; Gravity</a><a href="tension-pulleys-quest.html">Next: Tension &amp; Pulleys Quest →</a></div>
+  </section>
+</main>
+
+<script src="quest.js"></script>
+<script>
+(() => {
+const {arrow, $} = QuestKit;
+
+/* ---------- hook: interleaved books ---------- */
+function books(mode){
+  let s = `<rect x="70" y="70" width="40" height="110" rx="4" style="fill:var(--f-norm);opacity:.85"/><rect x="530" y="70" width="40" height="110" rx="4" style="fill:var(--f-app);opacity:.85"/>`;
+  for (let i=0;i<9;i++){ const y = 78 + i*11;
+    s += `<line x1="110" y1="${y}" x2="${380 + (i%2?0:10)}" y2="${y+ (i%2?0:2)}" style="stroke:var(--f-norm)" stroke-width="4" stroke-linecap="round"/>`;
+    s += `<line x1="530" y1="${y+5}" x2="${260 - (i%2?0:10)}" y2="${y+5}" style="stroke:var(--f-app)" stroke-width="4" stroke-linecap="round"/>`; }
+  s += `<text x="90" y="200" text-anchor="middle" style="fill:var(--muted);font:700 12px var(--mono)">book A</text><text x="550" y="200" text-anchor="middle" style="fill:var(--muted);font:700 12px var(--mono)">book B</text>`;
+  if (mode==="pull") s += arrow(70,125,20,125,"app","pull",40,112)+arrow(570,125,625,125,"app","pull",600,112);
+  else { s += `<rect x="255" y="70" width="135" height="110" rx="8" fill="none" style="stroke:var(--accent)" stroke-width="2" stroke-dasharray="6 5"/>`;
+    for (let i=0;i<4;i++){ const y = 84 + i*22; s += arrow(330,y,300,y,"fric","",0,0)+arrow(310,y+6,340,y+6,"fric","",0,0); }
+    s += `<text x="322" y="60" text-anchor="middle" style="fill:var(--f-fric);font:700 12px var(--mono)">friction at EVERY page contact</text>`; }
+  $("#scene").innerHTML = s;
+  $("#sceneNote").textContent = mode==="pull" ? "Pages alternate: A, B, A, B… Each one only overlaps its neighbours by a few centimetres." : "Zoomed in: every page touches two pages of the other book. Each contact adds a small friction force, and hundreds of them add up. Stage 4 explains why pulling harder makes it grip harder.";
+  document.querySelectorAll("#sceneMode button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.mode===mode));
+}
+document.querySelectorAll("#sceneMode button").forEach(b=>b.addEventListener("click",()=>books(b.dataset.mode)));
+books("pull");
+
+/* ---------- ramp lab ---------- */
+const G = 9.8; let s = 0.15, v = 0, lastT = null, fNow = 0, aNow = 0;   // s = distance down the slope as a fraction of ramp length, v in m/s
+const L = 4.0;   // ramp length in m (for animation)
+function params(){ return { th:+$("#th").value*Math.PI/180, us:+$("#us").value, uk:+$("#uk").value, m:+$("#mm").value }; }
+function physics(dt){
+  const {th,us,uk,m} = params(), down = m*G*Math.sin(th), N = m*G*Math.cos(th);
+  if (Math.abs(v) < 1e-4){ v = 0;
+    if (down <= us*N + 1e-9){ fNow = down; aNow = 0; return "stuck (static)"; }
+  }
+  fNow = uk*N; aNow = (down - fNow)/m;
+  const nv = v + aNow*dt;
+  if (v > 0 && nv <= 0){ v = 0; aNow = 0; fNow = Math.min(down, us*N); return "stopped"; }
+  v = nv; s += v*dt/L;
+  if (s >= 0.92){ s = 0.92; v = 0; return "at the bottom"; }
+  return "sliding (kinetic)";
+}
+let status = "stuck (static)";
+function draw(){
+  const {th,us,uk,m} = params();
+  $("#thv").textContent = Math.round(th*180/Math.PI); $("#usv").textContent = us.toFixed(2); $("#ukv").textContent = uk.toFixed(2); $("#mv").textContent = m.toFixed(1);
+  const x0 = 60, y0 = 260, len = 500, top = [x0, y0 - len*Math.sin(th)], bot = [x0 + len*Math.cos(th), y0];
+  const px = top[0] + s*len*Math.cos(th), py = top[1] + s*len*Math.sin(th);
+  const deg = th*180/Math.PI, ux = Math.cos(th), uy = Math.sin(th), nx = Math.sin(th), ny = -Math.cos(th);
+  const cx = px + nx*22, cy = py + ny*22, sc = 75/(m*G);   // arrow scale: mg is always drawn 75 px, other forces relative to it
+  let svg = `<polygon points="${x0},${y0} ${bot[0]},${bot[1]} ${x0},${top[1]}" style="fill:var(--accent-soft);stroke:var(--ink)" stroke-width="2"/>`+
+    `<text x="${bot[0]-70}" y="${y0-8}" style="fill:var(--ink);font:700 14px var(--mono)">θ</text>`+
+    `<g transform="translate(${px},${py}) rotate(${deg})"><rect x="-26" y="-44" width="52" height="44" rx="4" style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"/></g>`;
+  const mg = m*G, N = mg*Math.cos(th);
+  svg += arrow(cx,cy,cx,cy+mg*sc,"grav","mg",cx+18,cy+mg*sc,"start");
+  svg += arrow(cx,cy,cx+nx*N*sc,cy+ny*N*sc,"norm","F_N",cx+nx*(N*sc+16),cy+ny*(N*sc+16));
+  if (fNow > 0.01) svg += arrow(cx,cy,cx-ux*fNow*sc,cy-uy*fNow*sc,"fric","f",cx-ux*(fNow*sc+16),cy-uy*(fNow*sc+16)-4);
+  $("#ramp").innerHTML = svg;
+  $("#r1").textContent = (mg*Math.sin(th)).toFixed(1)+" N"; $("#r2").textContent = (us*N).toFixed(1)+" N"; $("#r3").textContent = fNow.toFixed(1)+" N";
+  $("#r4").textContent = aNow.toFixed(2)+" m/s²"; $("#r5").textContent = status;
+}
+function loop(t){ if (lastT != null) status = physics(Math.min(0.05,(t-lastT)/1000)); lastT = t; draw(); requestAnimationFrame(loop); }
+$("#rel").onclick = ()=>{ s = 0.05; v = 0; };
+$("#kick").onclick = ()=>{ if (s > 0.85) s = 0.05; v = 2.0; };
+["th","us","uk","mm"].forEach(id=>$("#"+id).addEventListener("input",()=>{ if ($("#uk").valueAsNumber > $("#us").valueAsNumber){ $("#uk").value = $("#us").value; } }));
+requestAnimationFrame(loop);
+
+/* ---------- predictions ---------- */
+const PRED = [
+  {id:"p1", q:"A box rests on the floor. The maximum static friction is 30 N. You push it horizontally with 20 N and it doesn't move. The friction force is…",
+   o:["30 N","20 N","10 N","0 N, since it isn't moving"], a:1,
+   why:"Static friction is only as big as it needs to be. The box is at rest, so ΣF = 0, and friction exactly matches your 20 N. 30 N is the <em>limit</em>, not the value."},
+  {id:"p2", q:"A brick slides across a floor lying flat on its big face. Turned on its narrow side (a smaller contact area), the kinetic friction is…",
+   o:["Bigger, because the pressure is higher","Smaller, because there's less area touching","About the same"], a:2,
+   why:"f<sub>k</sub> = μ<sub>k</sub>F<sub>N</sub> has no area in it. Less area means more pressure on each bit of contact, and the two effects roughly cancel. (A useful model, not a perfect law, but it's the one the AP exam uses.)"},
+  {id:"p3", q:"You start walking forward from rest. The friction force from the ground on your shoe points…",
+   o:["Backward, since friction opposes motion","Forward","There's no friction, because your foot doesn't slide"], a:1,
+   why:"Your foot pushes BACK on the ground, and static friction on your foot points forward (it opposes the slipping that would happen). It's the external force that accelerates you. No slipping doesn't mean no friction: that's exactly when static friction acts."},
+  {id:"p4", q:"A 1 kg block and a 5 kg block of the same material are released together on the same rough ramp. Which reaches the bottom first?",
+   o:["The 5 kg block","The 1 kg block","They arrive together"], a:2,
+   why:"For both blocks a = g(sin θ − μ<sub>k</sub>cos θ). Every force is proportional to m (mg sin θ and μmg cos θ), and so is the inertia. The mass cancels, just like in free fall."},
+  {id:"p5", q:"A block rests on a ramp. You slowly tilt the ramp steeper, but it hasn't slipped yet. The static friction force…",
+   o:["Increases","Decreases, because the normal force gets smaller","Stays the same"], a:0,
+   why:"While it's at rest, f<sub>s</sub> = mg sin θ, which grows with θ. The <em>maximum</em> available (μ<sub>s</sub>mg cos θ) shrinks. When the growing need meets the shrinking limit (tan θ = μ<sub>s</sub>), the block slips."}
+];
+
+/* ---------- quiz ---------- */
+const QZ = [
+  {t:"mc", q:"A box at rest has a maximum static friction of 25 N. You push it horizontally with 15 N. The friction force is:",
+   o:["15 N","25 N","10 N","40 N"], a:0,
+   e:"It's at rest, so friction balances the push: 15 N. 25 N would push the box backward toward you!",
+   tip:"Write 'at rest → ΣF = 0 → f<sub>s</sub> = F<sub>push</sub>', then check it against μ<sub>s</sub>F<sub>N</sub>."},
+  {t:"mc", q:"A 10 kg box slides across a level floor with μ<sub>k</sub> = 0.40. The kinetic friction force is:",
+   o:["39 N","4.0 N","98 N","25 N"], a:0,
+   e:"f<sub>k</sub> = μ<sub>k</sub>mg = 0.40 × 10 × 9.8 = 39 N. 4.0 N used mass instead of weight.",
+   tip:"Always find F<sub>N</sub> first. On a level floor with a horizontal push, F<sub>N</sub> = mg."},
+  {t:"fbd", q:"A block slides DOWN a rough ramp. Select every force acting on it.",
+   o:[["grav","Gravity, straight down"],["norm","Normal force, perpendicular to the ramp"],["fup","Friction, up the ramp"],["fdown","Friction, down the ramp"],["normup","Normal force, straight up"],["slope","A separate 'down-the-ramp' force"]],
+   a:["grav","norm","fup"], fbd:[{d:270,len:.8,k:"grav",t:"F_g"},{d:120,len:.7,k:"norm",t:"F_N"},{d:30,len:.45,k:"fric",t:"f"}],
+   e:"Three forces. Friction opposes the sliding, so it points up the ramp. F<sub>N</sub> is perpendicular to the surface. The 'down-the-ramp force' is just the mg sin θ part of gravity, not another force.",
+   tip:"Draw gravity straight down even on a ramp. Graders take the point if you draw its components as extra forces."},
+  {t:"mc", q:"A 4.0 kg block rests on a 30° ramp. What is the normal force?",
+   o:["34 N","39 N","20 N","45 N"], a:0,
+   e:"F<sub>N</sub> = mg cos θ = 4.0 × 9.8 × cos 30° = 34 N. 20 N used sin; 39 N is mg.",
+   tip:"Check with θ = 0: then F<sub>N</sub> should equal mg, and cos 0 = 1 ✓."},
+  {t:"mc", q:"A block slides down a FRICTIONLESS 30° ramp. Its acceleration is:",
+   o:["4.9 m/s²","9.8 m/s²","8.5 m/s²","0"], a:0,
+   e:"a = g sin θ = 9.8 × 0.5 = 4.9 m/s². 8.5 is g cos 30°.",
+   tip:"Write the general result first (a = g sin θ) and then plug in. The symbolic step is usually its own point."},
+  {t:"mc", q:"A rope pulls a 10 kg box across a floor (μ<sub>k</sub> = 0.30) with 50 N at 30° ABOVE the horizontal. The kinetic friction is about:",
+   o:["22 N","29 N","37 N","15 N"], a:0,
+   e:"F<sub>N</sub> = mg − F sin 30° = 98 − 25 = 73 N, so f = 0.30 × 73 = 22 N. 29 N assumed F<sub>N</sub> = mg.",
+   tip:"An angled pull changes F<sub>N</sub>. Show the ΣF<sub>y</sub> = 0 line in your work."},
+  {t:"fbd", q:"A person starts walking forward from rest on a level sidewalk. Select every force on the person.",
+   o:[["grav","Gravity, down"],["norm","Normal force, up"],["ffwd","Static friction, forward"],["fback","Friction, backward"],["legs","'Force of the legs', forward"]],
+   a:["grav","norm","ffwd"], fbd:[{d:"up",len:.75,k:"norm",t:"F_N"},{d:"down",len:.75,k:"grav",t:"F_g"},{d:"right",len:.45,k:"fric",t:"f_s"}],
+   e:"The legs push on the ground (that force acts on the ground). Its reaction, static friction from the ground, pushes the person forward. Internal muscle forces never go on an FBD.",
+   tip:"Every FBD arrow must come from an outside object. 'Legs', 'engine' and 'muscles' aren't outside objects."},
+  {t:"mc", q:"A block sits on a board, and you tilt the board slowly. μ<sub>s</sub> = 0.50. At about what angle does the block start to slip?",
+   o:["27°","30°","45°","60°"], a:0,
+   e:"At the slipping point, mg sin θ = μ<sub>s</sub>mg cos θ → tan θ = μ<sub>s</sub> = 0.50 → θ ≈ 26.6°. The mass cancels.",
+   tip:"'Just about to slip' is the magic phrase. Only then do you set f<sub>s</sub> = μ<sub>s</sub>F<sub>N</sub>."},
+  {t:"mc", q:"A crate rides on a flatbed truck (μ<sub>s</sub> = 0.40). What is the largest acceleration the truck can have without the crate sliding?",
+   o:["3.9 m/s²","0.40 m/s²","9.8 m/s²","It depends on the crate's mass"], a:0,
+   e:"Static friction is the only horizontal force on the crate: μ<sub>s</sub>mg = ma<sub>max</sub> → a<sub>max</sub> = μ<sub>s</sub>g = 3.9 m/s². The mass cancels.",
+   tip:"Friction points FORWARD here, in the direction of the crate's acceleration. Say that explicitly in a justify."},
+  {t:"mc", q:"A block is shoved UP a rough ramp, slows down, stops, then slides back DOWN. How does the size of its acceleration compare on the way up and on the way down?",
+   o:["Larger going up","Larger going down","The same both ways"], a:0,
+   e:"Going up: gravity's slope part AND friction both point down the slope, so a = g(sin θ + μcos θ). Going down: friction flips to point up the slope, so a = g(sin θ − μcos θ). The block takes less time going up than coming down.",
+   tip:"Re-draw the FBD every time the motion changes direction, because friction flips."},
+  {t:"mc", q:"Why can anti-lock brakes (ABS) stop a car in a shorter distance than locked, skidding wheels?",
+   o:["Rolling tires use static friction, whose maximum is larger than kinetic friction","ABS increases the normal force","Skidding tires have no friction","ABS makes the car lighter"], a:0,
+   e:"A skidding tire slides, so it gets kinetic friction μ<sub>k</sub>F<sub>N</sub>. A rolling tire's contact patch doesn't slip, so it can get up to μ<sub>s</sub>F<sub>N</sub>, which is bigger. A bigger stopping force gives a bigger deceleration and a shorter distance.",
+   tip:"In 'explain' questions, compare the two maximum friction forces using μ<sub>s</sub> &gt; μ<sub>k</sub>."},
+  {t:"mc", boss:true, q:"A block is launched UP a 30° ramp at 6.0 m/s. μ<sub>k</sub> = 0.20. How far up the ramp does it slide before stopping?",
+   o:["2.7 m","3.7 m","1.8 m","5.5 m"], a:0,
+   e:"Going up, both parts point down the slope: a = g(sin 30° + 0.20 cos 30°) = 9.8(0.500 + 0.173) = 6.6 m/s². Then v² = v₀² − 2ad → d = 36 / (2 × 6.6) = 2.7 m. 3.7 m ignores friction.",
+   tip:"A two-step FRQ: dynamics (ΣF = ma) gives a, then kinematics gives the distance. Label each step."}
+];
+
+Quest({key:"fiq-v1", title:"Friction & Inclines Quest", pred:PRED, quiz:QZ, pauseMax:11,
+  ranks:[[0,"Rookie"],[60,"Grip Finder"],[100,"Ramp Rider"],[140,"Friction Apprentice"],[175,"Slope Ready"]]});
+})();
+</script>
+</body></html>
