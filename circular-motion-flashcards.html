@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Circular Motion Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="quest.css">
+<style>
+/* Deck: one big card that flips; 3 Leitner boxes (Again → Almost → Got it) decide how soon a card comes back. */
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.deck-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:.85rem;color:var(--muted)}
+.boxes{display:flex;gap:8px;flex-wrap:wrap}
+.boxes span{padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--bg);font-variant-numeric:tabular-nums}
+.boxes .b1{color:var(--bad)} .boxes .b2{color:var(--xp)} .boxes .b3{color:var(--ok)}
+.flip{perspective:1400px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.flip-in{position:relative;min-height:300px;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:2px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:12px;background:var(--paper);overflow:auto}
+.face.back{transform:rotateY(180deg);border-color:var(--accent)}
+.face .kind{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+.kind.myth{color:var(--bad)} .kind.which{color:var(--f-tens)} .kind.scale{color:var(--xp)} .kind.concept{color:var(--accent)} .kind.frq{color:var(--f-app)}
+.face .front-q{font-family:var(--display);font-size:clamp(1.25rem,3.6vw,1.6rem);font-weight:600;line-height:1.25}
+.face .hint{margin-top:auto;color:var(--muted);font-size:.85rem}
+.face .ans{font-size:1.08rem}
+.face .ans b{color:var(--accent)}
+.face svg{max-width:220px;height:auto;align-self:center}
+.rate{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.rate .btn{padding:12px 8px}
+.rate .again{background:var(--bad)} .rate .almost{background:var(--xp)} .rate .got{background:var(--ok)}
+.done-box{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding:24px 0}
+.keys{font-size:.82rem;color:var(--muted)}
+.keys kbd{font-family:var(--mono);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--bg)}
+@media (prefers-reduced-motion:reduce){.flip-in{transition:none}}
+</style>
+</head><body>
+<nav class="bar" aria-label="Deck"><div class="bar-in">
+  <div class="levels"><a href="index.html">← All quests</a><a href="circular-motion-quest.html">Circular Quest</a><a href="circular-motion-predict.html">Predict &amp; Reveal</a><a href="circular-motion-cheat-sheet.html">Cheat sheet</a></div>
+  <div class="xp" aria-live="polite"><span id="xp">0</span> XP</div></div></nav>
+
+<main class="wrap">
+  <header class="hero">
+    <span class="eyebrow">AP Physics 1 · Topic 2.9 · Power-up</span>
+    <h1>Circular Motion Flashcards</h1>
+    <p>About 30 cards: big ideas, "which force is pulling inward?", scaling tricks, FRQ wording, and the myths that cost points. Ten minutes a day beats one long cram.</p>
+  </header>
+
+  <section class="stage">
+    <div class="stage-head"><span class="eyebrow">How it works</span><h2>Answer in your head, then flip</h2></div>
+    <ul class="tight">
+      <li>Say your answer <em>out loud</em> (or write it), then tap the card to flip it.</li>
+      <li>Rate yourself honestly. <b style="color:var(--bad)">Again</b> = the card comes back in a few cards. <b style="color:var(--xp)">Almost</b> = it comes back later. <b style="color:var(--ok)">Got it</b> = done for today, and tomorrow it shows up after the harder ones.</li>
+      <li>The deck saves on this device. Over a few days, the hard cards rise to the top and the easy ones fade.</li>
+    </ul>
+    <p class="keys">Keyboard: <kbd>Space</kbd> flip · <kbd>1</kbd> Again · <kbd>2</kbd> Almost · <kbd>3</kbd> Got it</p>
+  </section>
+
+  <section class="stage" id="deck">
+    <div class="filters seg" id="filters" aria-label="Card type"></div>
+    <div class="deck-top"><span id="pos"></span>
+      <div class="boxes" aria-label="Leitner boxes"><span class="b1">Again <b id="n1">0</b></span><span class="b2">Almost <b id="n2">0</b></span><span class="b3">Got it <b id="n3">0</b></span></div></div>
+    <div class="meter"><i id="meter"></i></div>
+    <div id="stageArea"></div>
+    <div class="row"><button type="button" class="btn ghost" id="shuffleBtn">Shuffle</button><button type="button" class="btn ghost" id="resetBtn">Reset deck</button><span class="note" id="resetAsk" hidden>Forget all ratings on this device? <button type="button" class="btn ghost" id="resetYes">Yes, reset</button></span></div>
+  </section>
+
+  <div class="next-quest"><a href="circular-motion-quest.html">← Circular Motion Quest</a><a href="circular-motion-predict.html">Predict &amp; Reveal challenges →</a></div>
+</main>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+/* Mini SVGs reused on cards. */
+const ar = (x1,y1,x2,y2,c) => { const a=Math.atan2(y2-y1,x2-x1),h=10; return `<line x1="${x1}" y1="${y1}" x2="${x2-6*Math.cos(a)}" y2="${y2-6*Math.sin(a)}" style="stroke:${c}" stroke-width="4" stroke-linecap="round"/><polygon points="${x2},${y2} ${x2-h*Math.cos(a-.42)},${y2-h*Math.sin(a-.42)} ${x2-h*Math.cos(a+.42)},${y2-h*Math.sin(a+.42)}" style="fill:${c}"/>`; };
+const T = (x,y,t,c,anc="start") => `<text x="${x}" y="${y}" text-anchor="${anc}" style="fill:${c};font:700 13px var(--mono)">${t}</text>`;
+const svg = b => `<svg viewBox="0 0 220 160" role="img" aria-label="diagram">${b}</svg>`;
+const CIRC = `<circle cx="100" cy="80" r="60" fill="none" style="stroke:var(--line)" stroke-width="2" stroke-dasharray="5 5"/><circle cx="100" cy="80" r="3" style="fill:var(--ink)"/>`;
+const VA = svg(CIRC+`<circle cx="160" cy="80" r="8" style="fill:var(--ink)"/>`+ar(160,80,160,22,"var(--f-norm)")+T(166,32,"v","var(--f-norm)")+ar(160,80,112,80,"var(--bad)")+T(118,72,"a","var(--bad)"));
+const SNAP = svg(CIRC+`<circle cx="160" cy="80" r="8" style="fill:var(--ink)"/><line x1="160" y1="72" x2="160" y2="10" style="stroke:var(--ok)" stroke-width="3" stroke-dasharray="6 4"/>`+T(166,22,"✓ tangent","var(--ok)")+`<line x1="168" y1="80" x2="215" y2="80" style="stroke:var(--bad)" stroke-width="3" stroke-dasharray="6 4"/>`+T(170,100,"✗ outward","var(--bad)"));
+const TOP = svg(CIRC+`<circle cx="100" cy="20" r="8" style="fill:var(--ink)"/>`+ar(100,20,100,62,"var(--f-tens)")+T(106,48,"T","var(--f-tens)")+ar(100,20,100,52,"var(--f-grav)")+T(80,48,"mg","var(--f-grav)","end")+T(140,24,"both point","var(--muted)")+T(140,40,"to center","var(--muted)"));
+const BANK = svg(`<polygon points="20,140 200,140 200,70" style="fill:var(--bg);stroke:var(--line)" stroke-width="2"/><rect x="104" y="96" width="30" height="16" rx="3" transform="rotate(-21 119 104)" style="fill:var(--accent)"/>`+ar(119,104,95,42,"var(--f-norm)")+T(70,40,"F_N","var(--f-norm)")+ar(119,104,119,150,"var(--f-grav)")+T(126,156,"mg","var(--f-grav)")+`<line x1="119" y1="104" x2="95" y2="104" style="stroke:var(--f-norm)" stroke-width="2" stroke-dasharray="4 3"/>`+T(14,100,"← center","var(--muted)"));
+
+/* kinds: concept · myth · which (which real force is centripetal) · scale · frq */
+const CARDS = [
+ {id:"c1",k:"concept",q:"A car goes around a circular track at a constant 20 m/s. Is it accelerating?",a:"<b>Yes.</b> Acceleration is any change in <em>velocity</em>, and velocity includes direction. The direction keeps turning, so a = v²/r, pointing toward the center.",img:VA},
+ {id:"c2",k:"concept",q:"Which way do the velocity and the acceleration point in uniform circular motion?",a:"<b>v is tangent</b> to the circle (the way it's moving right now). <b>a points to the center.</b> They're always at 90°, so the speed never changes, only the direction.",img:VA},
+ {id:"c3",k:"concept",q:"The string snaps. Which way does the ball go?",a:"<b>Straight along the tangent</b>, the direction it was already moving (Newton's 1st law). It does NOT fly outward along the radius.",img:SNAP},
+ {id:"c4",k:"concept",q:"What does \"centripetal force\" actually mean?",a:"It's a <b>job title, not a new force</b>: the <em>net</em> inward force, ΣF<sub>in</sub> = mv²/r. Some real force (tension, friction, gravity, normal) or a combination does the job."},
+ {id:"c5",k:"concept",q:"Write v, f and a in terms of the period T and radius r.",a:"<b>v = 2πr / T</b> · <b>f = 1/T</b> · <b>a = v²/r = 4π²r / T²</b>. Given a period? Find v first."},
+ {id:"c6",k:"concept",q:"What's the minimum speed at the top of a vertical loop (or for water to stay in a swung bucket)?",a:"Set the normal force (or tension) to zero, so gravity alone supplies the centripetal force: mg = mv²/r → <b>v<sub>min</sub> = √(gr)</b>. Mass cancels."},
+ {id:"c7",k:"concept",q:"Ball on a string, vertical circle, constant speed. Where is the tension biggest, and by how much?",a:"<b>Bottom.</b> Top: T + mg = mv²/r. Bottom: T − mg = mv²/r. Same mv²/r, so T<sub>bottom</sub> − T<sub>top</sub> = <b>2mg</b>."},
+ {id:"c8",k:"concept",q:"Driving over the top of a hill: heavier, lighter, or the same? Why?",a:"<b>Lighter.</b> The center is below you: mg − F<sub>N</sub> = mv²/r, so F<sub>N</sub> &lt; mg. At v = √(gr), F<sub>N</sub> = 0, and that's airtime."},
+ {id:"c9",k:"concept",q:"Bottom of a dip (or the bottom of a loop): heavier or lighter?",a:"<b>Heavier.</b> The center is above you: F<sub>N</sub> − mg = mv²/r, so F<sub>N</sub> &gt; mg. That's the \"pressed into the seat\" feeling."},
+ {id:"c10",k:"concept",q:"Why are astronauts on the ISS \"weightless\"?",a:"<b>They're in free fall</b>, not out of gravity. Gravity up there is still about 90% of g. They and the station fall together, so the floor doesn't push on them (F<sub>N</sub> = 0)."},
+ {id:"c11",k:"concept",q:"Max speed for a car on a flat curve with friction coefficient μ<sub>s</sub>?",a:"μ<sub>s</sub>mg = mv²/r → <b>v<sub>max</sub> = √(μ<sub>s</sub>gr)</b>. Mass cancels, so a truck and a bike have the same limit."},
+ {id:"c12",k:"concept",q:"Derive the orbital speed of a satellite at radius r from Earth's center.",a:"GMm/r² = mv²/r → <b>v = √(GM/r)</b>. The satellite's mass cancels. Remember that r is measured from Earth's <em>center</em>, not the surface."},
+ {id:"m1",k:"myth",q:"MYTH OR TRUTH? \"In a sharp turn, centrifugal force throws you against the car door.\"",a:"<b>Myth.</b> There's no outward force. Your body keeps going straight (inertia) while the car turns under you, so the door runs into <em>you</em> and pushes you <em>inward</em>."},
+ {id:"m2",k:"myth",q:"MYTH OR TRUTH? \"Constant speed means the net force is zero.\"",a:"<b>Myth</b> (for circles). Constant <em>speed</em> ≠ constant <em>velocity</em>. In a circle, ΣF = mv²/r toward the center, never zero."},
+ {id:"m3",k:"myth",q:"MYTH OR TRUTH? \"On my FBD I should add a centripetal-force arrow.\"",a:"<b>Myth, and it costs points.</b> Draw only real forces. Adding an extra \"F<sub>c</sub>\" arrow counts the same force twice."},
+ {id:"m4",k:"myth",q:"MYTH OR TRUTH? \"At the top of a vertical circle, the string's tension points up.\"",a:"<b>Myth.</b> A string can only pull toward the thing it's tied to: the center. At the top, that's <b>down</b>.",img:TOP},
+ {id:"m5",k:"myth",q:"MYTH OR TRUTH? \"Upside down at the top of a loop, there must be an upward force holding you in.\"",a:"<b>Myth.</b> Both real forces (gravity and the seat/track) point <b>down</b>, toward the center. You stay in because you're moving fast enough that you'd go straight (tangent) if the track weren't bending you down."},
+ {id:"m6",k:"myth",q:"MYTH OR TRUTH? \"The Moon doesn't fall because Earth's gravity and its motion balance out.\"",a:"<b>Myth.</b> Nothing balances. Gravity is the only (net) force, so the Moon is <em>always falling</em> toward Earth. It just moves sideways fast enough to keep missing."},
+ {id:"m7",k:"myth",q:"MYTH OR TRUTH? \"A heavier satellite needs a faster speed to stay in the same orbit.\"",a:"<b>Myth.</b> v = √(GM/r): the satellite's mass cancels. A wrench and the ISS in the same orbit move at the same speed."},
+ {id:"w1",k:"which",q:"Car on a FLAT curve. Which real force points toward the center?",a:"<b>Static friction</b> from the road on the tires, pointing sideways toward the center. It's static because the tires don't skid sideways. On ice there's no friction, so the car goes straight."},
+ {id:"w2",k:"which",q:"Ball on a string, whirled in a horizontal circle on a frictionless table. Which force is centripetal?",a:"<b>Tension.</b> Gravity and the table's normal force are vertical and cancel."},
+ {id:"w3",k:"which",q:"The Moon or a satellite in a circular orbit. Which force is centripetal?",a:"<b>Gravity</b>, the only force acting: GMm/r² = mv²/r."},
+ {id:"w4",k:"which",q:"Car on a BANKED curve, no friction. Where does the inward force come from?",a:"The <b>normal force is tilted</b>, so its horizontal part points toward the center: F<sub>N</sub> sinθ = mv²/r, and F<sub>N</sub> cosθ = mg. That only works at one \"design speed\".",img:BANK},
+ {id:"w5",k:"which",q:"Rider at the TOP of a loop, inside the track. Which forces point to the center?",a:"<b>Gravity AND the normal force, both down</b>: mg + F<sub>N</sub> = mv²/r. The faster the car, the harder the track pushes."},
+ {id:"w6",k:"which",q:"Clothes in a spinning washer drum (vertical wall). What pushes them toward the center?",a:"<b>The normal force from the drum wall.</b> The water escapes through the holes because nothing pushes <em>it</em> inward, so it goes off along the tangent."},
+ {id:"s1",k:"scale",q:"Same curve, the car goes 2× faster. The force needed is…?",a:"<b>4×.</b> F = mv²/r, and v is squared. Triple the speed → 9×."},
+ {id:"s2",k:"scale",q:"Same speed, the curve's radius is cut in half. The force needed is…?",a:"<b>2×.</b> F ∝ 1/r at a fixed speed. Tight turns are harder."},
+ {id:"s3",k:"scale",q:"Same PERIOD (e.g. two horses on one merry-go-round), the outer horse is at 2× the radius. Its acceleration is…?",a:"<b>2×, not ½.</b> Same period → v = 2πr/T is 2× bigger, so a = v²/r = 4π²r/T² ∝ r. Watch what's being held constant!"},
+ {id:"s4",k:"scale",q:"A satellite moves to an orbit 4× farther from Earth's center. Its speed becomes…?",a:"<b>½.</b> v = √(GM/r) → √(1/4) = ½. Farther orbits are slower, with longer periods."},
+ {id:"f1",k:"frq",q:"Start any circular-motion derivation with what sentence?",a:"<b>\"Taking toward the center as positive, ΣF = ma<sub>c</sub> = mv²/r.\"</b> Then list the real forces with signs, then solve in symbols before plugging in numbers."},
+ {id:"f2",k:"frq",q:"\"Justify why the tension is greater at the bottom.\" What three things must a full-credit answer have?",a:"<b>(1) Name the law</b> (Newton's 2nd: the net force toward the center = mv²/r), <b>(2) which way gravity points at each spot</b> (toward the center at the top, away at the bottom), and <b>(3) the link</b>: so T must be bigger at the bottom to make the same net force."},
+ {id:"f3",k:"frq",q:"\"Minimum speed\", \"just barely\", or \"loses contact\". What do you set to zero?",a:"<b>The normal force or the tension.</b> Then gravity alone is the centripetal force."}
+];
+const KINDS = [["all","All"],["concept","Big ideas"],["which","Which force?"],["myth","Myths"],["scale","Scaling"],["frq","FRQ wording"]];
+const LABEL = {concept:"Big idea",myth:"Myth or truth",which:"Which force is centripetal?",scale:"Scaling",frq:"FRQ wording"};
+
+/* State: box per card (0 = new, 1 Again, 2 Almost, 3 Got it), the day it was last rated, XP. */
+const KEY = "cm-flash-v1";
+let S = {box:{}, xp:0, filter:"all"};
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
+
+/* Session queue: new + Again first, then Almost, then yesterday's Got-it cards. A rating re-inserts the card: Again 3 back, Almost 8 back, Got it leaves. */
+let queue = [], seen = 0, flipped = false;
+function build(shuffle){
+  const pool = CARDS.filter(c => S.filter==="all" || c.k===S.filter);
+  const rank = c => ({0:0,1:0,2:1,3:2})[S.box[c.id]||0];
+  queue = pool.map(c=>c.id);
+  if (shuffle) for (let i=queue.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [queue[i],queue[j]]=[queue[j],queue[i]]; }
+  queue.sort((a,b)=>rank(byId[a])-rank(byId[b]));
+  seen = 0; flipped = false; render();
+}
+const byId = Object.fromEntries(CARDS.map(c=>[c.id,c]));
+
+function render(){
+  const pool = CARDS.filter(c => S.filter==="all" || c.k===S.filter);
+  [1,2,3].forEach(n => $("#n"+n).textContent = pool.filter(c=>(S.box[c.id]||0)===n).length);
+  $("#xp").textContent = S.xp;
+  const total = seen + queue.length;
+  $("#meter").style.width = (total? seen/total*100 : 100) + "%";
+  if (!queue.length){
+    $("#pos").textContent = "Session done";
+    const got = pool.filter(c=>S.box[c.id]===3).length;
+    $("#stageArea").innerHTML = `<div class="done-box"><span class="eyebrow">Deck cleared</span><span class="score"><span class="num">${got} / ${pool.length}</span></span><p>cards at "Got it". ${got===pool.length?"Clean deck. Try the Predict &amp; Reveal challenges next.":"Come back tomorrow and the tricky ones will be waiting first."}</p><button type="button" class="btn" id="againBtn">Go again</button></div>`;
+    $("#againBtn").onclick = () => build(true);
+    return;
+  }
+  const c = byId[queue[0]];
+  $("#pos").textContent = `Card ${seen+1} of ${total} · ${LABEL[c.k]}`;
+  $("#stageArea").innerHTML = `
+    <div class="flip ${flipped?"on":""}" id="card" role="button" tabindex="0" aria-label="Flashcard. Press to flip." aria-pressed="${flipped}">
+      <div class="flip-in">
+        <div class="face front"><span class="kind ${c.k}">${LABEL[c.k]}</span><p class="front-q">${c.q}</p><p class="hint">Answer in your head, then tap to flip</p></div>
+        <div class="face back"><span class="kind ${c.k}">Answer</span><p class="ans">${c.a}</p>${c.img||""}</div>
+      </div></div>
+    <div class="rate" ${flipped?"":"hidden"} id="rate">
+      <button type="button" class="btn again" data-r="1">Again</button><button type="button" class="btn almost" data-r="2">Almost</button><button type="button" class="btn got" data-r="3">Got it</button></div>`;
+  const card = $("#card");
+  const fit = () => { const f = card.querySelector(flipped?".back":".front"); card.querySelector(".flip-in").style.minHeight = Math.max(300, f.scrollHeight+4)+"px"; };
+  card.onclick = flip; card.onkeydown = e => { if (e.key==="Enter"){ e.preventDefault(); flip(); } };
+  document.querySelectorAll("#rate button").forEach(b => b.onclick = () => rate(+b.dataset.r));
+  requestAnimationFrame(fit);
+}
+function flip(){ flipped = !flipped; const card = $("#card"); card.classList.toggle("on", flipped); card.setAttribute("aria-pressed", flipped);
+  $("#rate").hidden = !flipped; const f = card.querySelector(flipped?".back":".front"); card.querySelector(".flip-in").style.minHeight = Math.max(300, f.scrollHeight+4)+"px"; }
+function rate(r){
+  if (!flipped) return;
+  const id = queue.shift(); S.box[id] = r; S.xp += r===3?5:2;
+  if (r===1) queue.splice(Math.min(3, queue.length), 0, id);
+  else if (r===2) queue.splice(Math.min(8, queue.length), 0, id);
+  else seen++;
+  flipped = false; save(); render();
+}
+
+$("#filters").innerHTML = KINDS.map(([k,l]) => `<button type="button" data-k="${k}" aria-pressed="${S.filter===k}">${l}</button>`).join("");
+document.querySelectorAll("#filters button").forEach(b => b.onclick = () => { S.filter = b.dataset.k; save();
+  document.querySelectorAll("#filters button").forEach(x => x.setAttribute("aria-pressed", x.dataset.k===S.filter)); build(false); });
+$("#shuffleBtn").onclick = () => build(true);
+$("#resetBtn").onclick = () => { $("#resetAsk").hidden = false; };
+$("#resetYes").onclick = () => { S.box = {}; S.xp = 0; save(); $("#resetAsk").hidden = true; build(false); };
+document.addEventListener("keydown", e => {
+  if (e.target.closest && e.target.closest("button:not(#card),textarea,input")) return;
+  if (e.key===" "){ if (!$("#card")) return; e.preventDefault(); flip(); }
+  else if (["1","2","3"].includes(e.key)) rate(+e.key);
+});
+build(false);
+})();
+</script>
+</body></html>

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Predict and Reveal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="quest.css">
+<style>
+/* Each challenge: story → still frame → lock a prediction → the animation plays the truth. */
+.chal{display:flex;flex-direction:column;gap:14px}
+.chal .scene{display:block}
+.locked-note{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.reveal-box{display:flex;flex-direction:column;gap:10px;border-top:1px dashed var(--line);padding-top:14px}
+.irl{border-left:3px solid var(--xp);padding-left:10px;font-size:.95rem}
+.res td:first-child{min-width:150px}
+.res td small{display:block;color:var(--muted)}
+.when{font-family:var(--mono);font-size:.72rem;font-weight:700;padding:1px 7px;border-radius:99px;white-space:nowrap;display:inline-block;margin:1px 0}
+.when.pre{background:var(--accent-soft);color:var(--accent)} .when.dur{background:var(--ok-soft);color:var(--ok)} .when.test{background:var(--bad-soft);color:var(--bad)}
+.mission{border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.mission ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:4px}
+</style>
+</head><body>
+<nav class="bar" aria-label="Challenges"><div class="bar-in">
+  <div class="levels" id="levels"></div>
+  <div class="xp" aria-live="polite"><span id="xp">0</span> XP</div></div></nav>
+
+<main class="wrap">
+  <header class="hero">
+    <span class="eyebrow">AP Physics 1 · Topic 2.9 · Power-up</span>
+    <h1>Predict &amp; Reveal</h1>
+    <p>Six circular-motion puzzles. For each one: read the story, <strong>commit to a prediction</strong> and a reason, and only then press play. Your brain learns most from the moment it's surprised, but only if it guessed first.</p>
+    <p class="note"><span class="mono">+10 XP</span> for every locked prediction · <span class="mono">+10 XP</span> more when you call it right. Progress saves on this device.</p>
+  </header>
+
+  <div id="chals" style="display:flex;flex-direction:column;gap:28px"></div>
+
+  <section class="stage" id="missions">
+    <div class="stage-head"><span class="eyebrow">Sim missions · 20–30 min · after the challenges</span><h2>Break the physics yourself</h2></div>
+    <p class="lead">Free simulators, no account needed. Each mission is predict-then-test again: write the guess down <em>before</em> you click.</p>
+    <div class="mission"><h3>Mission 1 · PhET "Gravity and Orbits": switch gravity off</h3>
+      <ol><li>Open the <a href="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_all.html" target="_blank" rel="noopener">sim</a> → <b>Model</b>. Tick <b>Velocity</b> and <b>Gravity Force</b>, and press play.</li>
+        <li><b>Predict:</b> if you untick <b>Gravity</b> mid-orbit, which way does the planet go? Now test it. (Same idea as Challenge 1.)</li>
+        <li><b>Predict:</b> how do the velocity and gravity arrows sit relative to each other? Check: they stay at 90° in a circular orbit.</li>
+        <li><b>Predict:</b> double the star's mass. Does the planet stay in a circle? Why not? (Hint: GM/r² went up, but v²/r didn't.)</li></ol></div>
+    <div class="mission"><h3>Mission 2 · Physics Classroom Concept Builders: the direction game</h3>
+      <ol><li><a href="https://www.physicsclassroom.com/concept-builder/circular-and-satellite-motion/circular-logic/launch" target="_blank" rel="noopener">Circular Logic</a>: pick the directions of v, a and F<sub>net</sub> until it says you've mastered it. It keeps giving you questions until you're consistent, so it works like a game with levels.</li>
+        <li><a href="https://www.physicsclassroom.com/concept-builder/circular-and-satellite-motion/forces-free-body-diagrams-circular-motion/launch" target="_blank" rel="noopener">Forces and FBDs in Circular Motion</a>: the FBD drill for loops, hills and curves.</li>
+        <li>Choose <b>Guest</b> (you don't need a login). Progress isn't saved, so finish one in a sitting (about 10–15 min each).</li></ol></div>
+    <div class="mission"><h3>Mission 3 · Physics Classroom Interactive: design a roller coaster</h3>
+      <ol><li><a href="https://www.physicsclassroom.com/interactive/circular-and-satellite-motion/roller-coaster-design/launch" target="_blank" rel="noopener">Roller Coaster Design</a>: change the loop and hill sizes and watch the g-forces on the rider.</li>
+        <li><b>Predict first:</b> where will the rider feel heaviest? Lightest? Then test whether a smaller loop radius at the top makes things better or worse. (Look back at the 1895 Flip Flap story in the Quest.)</li></ol></div>
+  </section>
+
+  <section class="stage" id="resources">
+    <div class="stage-head"><span class="eyebrow">Resource pack · all free · links checked Oct 26, 2026</span><h2>The best of the internet, in order</h2></div>
+    <p class="lead">You don't need all of it. <span class="when pre">BEFORE</span> = watch before the Quest for the "aha". <span class="when dur">DURING</span> = alongside the Learn stage. <span class="when test">TEST PREP</span> = the night before or the morning of.</p>
+    <div class="tbl"><table class="res">
+      <thead><tr><th>Resource</th><th>Why it helps</th><th>Time</th><th>When</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://www.youtube.com/watch?v=jtg8q5rrZoU" target="_blank" rel="noopener">Centripetal Force Introduction and Demonstration</a><small>Flipping Physics</small></td><td>A real demo, then the "it's a net force, not a new force" idea. Funny, slow, and clear.</td><td>5 min</td><td><span class="when pre">BEFORE</span></td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=Zulw5bQ18Kk" target="_blank" rel="noopener">Why Water Stays in a Bucket in a Vertical Circle</a><small>Flipping Physics</small></td><td>Kills the "centrifugal force holds it in" myth with a live demo (Challenge 2).</td><td>4 min</td><td><span class="when pre">BEFORE</span></td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=bYqNjPIpEcY" target="_blank" rel="noopener">Speed and Velocity for Circular Motion</a><small>The Physics Universe</small></td><td>Constant speed but changing velocity, plus v = 2πr/T. AP-aligned.</td><td>3 min</td><td><span class="when dur">DURING</span></td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=RHmrcxQCbwg" target="_blank" rel="noopener">Centripetal Acceleration Introduction</a><small>Flipping Physics</small></td><td>Why a = v²/r points to the center, explained with pictures, not just algebra.</td><td>6 min</td><td><span class="when dur">DURING</span></td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=2RQKmu-UEe0" target="_blank" rel="noopener">Analyzing Water in a Bucket in a Vertical Circle</a><small>Flipping Physics</small></td><td>The top/bottom FBD method, step by step. Exactly what an FRQ wants.</td><td>6 min</td><td><span class="when dur">DURING</span></td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=zfYBV3O7l58" target="_blank" rel="noopener">Tension in a Vertical Circle</a><small>The Physics Universe</small></td><td>The T<sub>top</sub> vs T<sub>bottom</sub> derivation, AP style.</td><td>9 min</td><td><span class="when dur">DURING</span></td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=NH72nlsr_D4" target="_blank" rel="noopener">Maximum Speed of a Car at the Top of a Hill</a><small>Flipping Physics</small></td><td>Hilltop airtime and F<sub>N</sub> = 0 (Challenge 3).</td><td>4 min</td><td><span class="when dur">DURING</span></td></tr>
+        <tr><td><a href="https://www.physicsclassroom.com/concept-builder/circular-and-satellite-motion/circular-logic/launch" target="_blank" rel="noopener">Circular Logic concept builder</a><small>The Physics Classroom</small></td><td>The most game-like: it drills directions until you're consistent. Guest mode works, with no account.</td><td>10–15 min</td><td><span class="when dur">DURING</span> <span class="when test">TEST PREP</span></td></tr>
+        <tr><td><a href="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_all.html" target="_blank" rel="noopener">Gravity and Orbits</a><small>PhET (HTML5)</small></td><td>See v ⟂ F in an orbit, and switch gravity off to watch it go tangent.</td><td>10 min</td><td><span class="when dur">DURING</span></td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=3hUqzUqTYeQ" target="_blank" rel="noopener">6 Circular Motion Problems You MUST Know</a><small>The Physics Universe</small></td><td>The pause-and-solve set. Pause before each solution, and do it on paper.</td><td>23 min (~45 with pauses)</td><td><span class="when test">TEST PREP</span></td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=2p-sSRU6WJI" target="_blank" rel="noopener">AP Physics 1 Unit 2b Review</a><small>Flipping Physics · <a href="https://www.flippingphysics.com/ap-physics-1-unit-2b-review.html" target="_blank" rel="noopener">free notes</a></small></td><td>Gravitation, springs and circular motion in one pass, built for the 2025+ AP exam. Print the free notes.</td><td>14 min</td><td><span class="when test">TEST PREP</span></td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=wVFaWWyQi0c" target="_blank" rel="noopener">Circular Motion and Gravitation Review</a><small>The Physics Universe</small></td><td>A second voice on the same review, if one explanation didn't land.</td><td>16 min</td><td><span class="when test">TEST PREP</span></td></tr>
+        <tr><td><a href="https://www.khanacademy.org/science/ap-college-physics-1/xf557a762645cccc5:force-and-translational-dynamics/xf557a762645cccc5:circular-motion" target="_blank" rel="noopener">Khan Academy: Circular motion lesson + practice</a><small>Khan Academy</small></td><td>Extra MCQ reps with hints ("get 3 of 4 to level up"). Practice works without logging in.</td><td>15 min</td><td><span class="when test">TEST PREP</span></td></tr>
+      </tbody></table></div>
+  </section>
+
+  <section class="stage" id="results">
+    <div class="stage-head"><span class="eyebrow">Wrap-up</span><h2>Send your results</h2></div>
+    <pre class="copybox" id="summary"></pre>
+    <div class="row"><button type="button" class="btn" id="copyBtn">Copy summary</button><span class="note" id="copyMsg" aria-live="polite"></span>
+      <button type="button" class="btn ghost" id="wipeBtn">Start over</button><span class="note" id="wipeAsk" hidden>Erase all predictions on this device? <button type="button" class="btn ghost" id="wipeYes">Yes, erase</button></span></div>
+    <div class="next-quest"><a href="circular-motion-flashcards.html">← Flashcards</a><a href="circular-motion-cheat-sheet.html">One-page cheat sheet →</a></div>
+  </section>
+</main>
+
+<script src="quest.js"></script>
+<script>
+(() => {
+const {arrow, $} = QuestKit;
+const esc = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const txt = (x,y,t,col="var(--muted)",anc="middle",sz=15) => `<text x="${x}" y="${y}" text-anchor="${anc}" style="fill:${col};font:700 ${sz}px var(--mono)">${t}</text>`;
+const G = 9.8;
+
+/* ---------- scenes: each returns still() for the pre-reveal frame and play(variant) which animates the answer ---------- */
+let raf = null; const stop = () => { if (raf) cancelAnimationFrame(raf); raf = null; };
+function loop(step){ stop(); let last = null; const f = t => { const dt = last==null?0:Math.min(.04,(t-last)/1000); last = t; if (step(dt) !== false) raf = requestAnimationFrame(f); else raf = null; }; raf = requestAnimationFrame(f); }
+
+/* 1 · sling release: ball goes CCW; released at the far right it leaves along the tangent (straight up the page). */
+function sceneSling(svg){
+  const cx=320, cy=160, R=100;
+  const base = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" style="stroke:var(--line)" stroke-width="2" stroke-dasharray="6 5"/><circle cx="${cx}" cy="${cy}" r="5" style="fill:var(--ink)"/>`;
+  return {
+    still(){ svg.innerHTML = base + `<line x1="${cx}" y1="${cy}" x2="${cx+R}" y2="${cy}" style="stroke:var(--ink)" stroke-width="2"/><circle cx="${cx+R}" cy="${cy}" r="10" style="fill:var(--ink)"/>`+
+      `<path d="M ${cx+R} ${cy} L ${cx+R+170} ${cy}" style="stroke:var(--muted)" stroke-width="2" stroke-dasharray="5 5" fill="none"/>`+txt(cx+R+175,cy+4,"A","var(--muted)","start",14)+
+      `<path d="M ${cx+R} ${cy} L ${cx+R} ${cy-140}" style="stroke:var(--muted)" stroke-width="2" stroke-dasharray="5 5" fill="none"/>`+txt(cx+R+10,cy-128,"B","var(--muted)","start",14)+
+      `<path d="M ${cx+R} ${cy} Q ${cx+R+10} ${cy-110} ${cx+R+140} ${cy-130}" style="stroke:var(--muted)" stroke-width="2" stroke-dasharray="5 5" fill="none"/>`+txt(cx+R+146,cy-128,"C","var(--muted)","start",14)+
+      txt(cx,cy+R+28,"moving counter-clockwise · the string snaps HERE →")+txt(150,40,"top view","var(--muted)","middle",12); },
+    play(){ let th = 0, released = false, px, py, trail = ""; const w = 2.4, V = w*R;
+      loop(dt => { let s = base;
+        if (!released){ th += w*dt; if (th >= 4*Math.PI){ released = true; px = cx+R; py = cy; } }
+        if (!released){ const bx = cx+R*Math.cos(th), by = cy-R*Math.sin(th);
+          s += `<line x1="${cx}" y1="${cy}" x2="${bx}" y2="${by}" style="stroke:var(--ink)" stroke-width="2"/><circle cx="${bx}" cy="${by}" r="10" style="fill:var(--ink)"/>`+arrow(bx,by,bx-50*Math.sin(th),by-50*Math.cos(th),"norm","v",bx-62*Math.sin(th),by-62*Math.cos(th)); }
+        else { py -= V*dt; trail = `<line x1="${cx+R}" y1="${cy}" x2="${px}" y2="${py}" style="stroke:var(--ok)" stroke-width="3" stroke-dasharray="7 5"/>`;
+          s += trail + `<circle cx="${px}" cy="${py}" r="10" style="fill:var(--ink)"/>`+txt(cx+R+14,cy-40,"straight line, along the tangent","var(--ok)","start",13)+txt(cx+R+14,cy-22,"(no outward force exists)","var(--ok)","start",12); }
+        svg.innerHTML = s; return !(released && py < -20); }); }
+  };
+}
+
+/* 2 · bucket in a vertical circle at constant speed; 1 m radius. The water leaves when gravity's inward part exceeds v²/r. */
+function sceneBucket(svg){
+  const cx=320, cy=150, R=110, SC=R/1.0;
+  const base = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" style="stroke:var(--line)" stroke-width="2" stroke-dasharray="6 5"/><circle cx="${cx}" cy="${cy}" r="5" style="fill:var(--ink)"/>`;
+  const bucket = (phi) => { const bx = cx+R*Math.sin(phi), by = cy+R*Math.cos(phi), deg = -phi*180/Math.PI;
+    return `<line x1="${cx}" y1="${cy}" x2="${bx}" y2="${by}" style="stroke:var(--ink)" stroke-width="2"/>`+
+      `<g transform="translate(${bx} ${by}) rotate(${deg})"><path d="M -16 -14 L 16 -14 L 12 12 L -12 12 Z" style="fill:none;stroke:var(--ink)" stroke-width="3"/></g>`; };
+  const water = (x,y) => `<circle cx="${x}" cy="${y}" r="9" style="fill:var(--f-norm);opacity:.85"/>`;
+  return {
+    variants:[["fast","Fast · 4.0 m/s"],["slow","Slow · 2.5 m/s"]],
+    still(){ svg.innerHTML = base + bucket(Math.PI) + water(cx, cy-R+3) + txt(cx, cy-R-24, "top of the swing · r = 1.0 m") + txt(150,40,"side view","var(--muted)","middle",12)+txt(cx,290,"√(gr) = 3.1 m/s at the top"); },
+    play(v){ const vs = v==="slow"?2.5:4.0, w = vs/1.0, slow = .55; let phi = 0, free = null, out = false, msg = "", trail = [];
+      loop(dt => { dt *= slow; phi += w*dt; let s = base + bucket(phi);
+        const need = vs*vs/1.0, gIn = -G*Math.cos(phi);
+        if (!free && gIn > need){ free = { phi, x:(R*Math.sin(phi)), y:(R*Math.cos(phi)), vx:vs*SC*Math.cos(phi), vy:-vs*SC*Math.sin(phi) }; msg = `water leaves at ${Math.round(phi*180/Math.PI)}° from the bottom`; }
+        if (free){ if (cy+free.y < 320){ free.vy += G*SC*dt; free.x += free.vx*dt; free.y += free.vy*dt; trail.push((cx+free.x).toFixed(1)+" "+(cy+free.y).toFixed(1)); }
+          s += `<polyline points="${trail.join(" ")}" fill="none" style="stroke:var(--f-norm)" stroke-width="2" stroke-dasharray="4 4"/>` + water(cx+free.x, cy+free.y); out = phi > free.phi + 2*Math.PI; }
+        else s += water(cx+(R-3)*Math.sin(phi), cy+(R-3)*Math.cos(phi));
+        s += txt(cx, 22, `needed at top: v²/r = ${need.toFixed(1)} m/s² · gravity gives ${G} m/s²`, vs*vs>=G?"var(--ok)":"var(--bad)");
+        if (msg) s += txt(cx, 292, msg, "var(--bad)");
+        else if (phi > Math.PI*1.05) s += txt(cx, 292, "water stays in: the bucket must push to supply the extra", "var(--ok)");
+        svg.innerHTML = s; return !(out || phi > 4*Math.PI); }); }
+  };
+}
+
+/* 3 · hilltop: constant speed over a 20 m-radius crest (±20°), with approach ramps. F_N = m(g cosθ − v²/r); if that's < 0, the car flies. */
+function sceneHill(svg){
+  const R=300, SC=15, C=[320,390], A=20*Math.PI/180, L=220, arcLen=R*2*A;
+  const P0 = [C[0]-R*Math.sin(A), C[1]-R*Math.cos(A)], P1 = [C[0]+R*Math.sin(A), C[1]-R*Math.cos(A)];
+  const S0 = [P0[0]-L*Math.cos(A), P0[1]+L*Math.sin(A)], S1 = [P1[0]+L*Math.cos(A), P1[1]+L*Math.sin(A)];
+  const road = `<path d="M ${S0[0]} ${S0[1]} L ${P0[0]} ${P0[1]} A ${R} ${R} 0 0 1 ${P1[0]} ${P1[1]} L ${S1[0]} ${S1[1]} L ${S1[0]} 300 L ${S0[0]} 300 Z" style="fill:var(--bg);stroke:var(--ink)" stroke-width="3"/>`;
+  function at(s){ /* position, tangent angle, and θ on the arc (null on the ramps) */
+    if (s < L) return {x:S0[0]+s*Math.cos(A), y:S0[1]-s*Math.sin(A), ang:-A, th:null};
+    if (s < L+arcLen){ const th = -A + (s-L)/R; return {x:C[0]+R*Math.sin(th), y:C[1]-R*Math.cos(th), ang:th, th}; }
+    const d = s-L-arcLen; return {x:P1[0]+d*Math.cos(A), y:P1[1]+d*Math.sin(A), ang:A, th:null}; }
+  const roadY = x => { if (x < P0[0]) return S0[1] - (x-S0[0])*Math.tan(A); if (x > P1[0]) return P1[1] + (x-P1[0])*Math.tan(A); return C[1]-Math.sqrt(R*R-(x-C[0])**2); };
+  const car = (x,y,ang) => `<g transform="translate(${x} ${y}) rotate(${ang*180/Math.PI})"><rect x="-18" y="-16" width="36" height="14" rx="4" style="fill:var(--accent)"/><circle cx="-10" cy="-2" r="4" style="fill:var(--ink)"/><circle cx="10" cy="-2" r="4" style="fill:var(--ink)"/></g>`;
+  return {
+    variants:[["8","Cruise · 8 m/s"],["12","Fast · 12 m/s"],["16","Too fast · 16 m/s"]],
+    still(){ const p = at(L+arcLen/2); svg.innerHTML = road + car(p.x,p.y,0) + txt(320,24,"hill crest: radius 20 m · √(gr) = 14 m/s") + arrow(p.x,p.y-10,p.x,p.y+40,"grav","mg",p.x+14,p.y+40,"start"); },
+    play(v){ const vs = +v; let s = 0, fly = null, landed = false, minN = 1;
+      loop(dt => { let out = road, p;
+        if (!fly){ s += vs*SC*dt; p = at(s);
+          const nRel = p.th==null ? Math.cos(A) : (G*Math.cos(p.th) - vs*vs/20)/G;   /* F_N / mg */
+          if (nRel < 0){ fly = {x:p.x, y:p.y, vx:vs*SC*Math.cos(p.ang), vy:vs*SC*Math.sin(p.ang), ang:p.ang}; }
+          else { minN = Math.min(minN, nRel); out += car(p.x,p.y,p.ang) + arrow(p.x,p.y-10,p.x,p.y-10-60*nRel,"norm","F_N",p.x+12,p.y-50*nRel-14,"start") + arrow(p.x,p.y-10,p.x,p.y+40,"grav","mg",p.x+12,p.y+42,"start");
+            out += txt(320,24,`F_N = ${nRel.toFixed(2)} × mg`, nRel<.4?"var(--bad)":"var(--ink)"); } }
+        if (fly){ fly.vy += G*SC*dt; fly.x += fly.vx*dt; fly.y += fly.vy*dt;
+          if (fly.y >= roadY(fly.x)){ landed = true; fly.y = roadY(fly.x); }
+          out += car(fly.x, fly.y, fly.ang) + txt(320,24,"AIRTIME: the road can't pull down, so F_N = 0 and the car leaves the road","var(--bad)"); }
+        if (!fly && s >= 2*L+arcLen-2) out += txt(320,46,`lowest F_N on the crest: ${minN.toFixed(2)} mg`,"var(--ok)");
+        svg.innerHTML = out; return !(landed || s >= 2*L+arcLen || (fly && fly.x > 660)); }); }
+  };
+}
+
+/* 4 · Newton's cannon: 1/r² gravity toward Earth's center, launched sideways from a mountain. */
+function sceneCannon(svg){
+  const cx=320, cy=155, RE=80, r0=112, GM = Math.pow(2*Math.PI*r0/4,2)*r0, vc = Math.sqrt(GM/r0);
+  const base = `<circle cx="${cx}" cy="${cy}" r="${RE}" style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="2"/><path d="M ${cx-20} ${cy-RE+3} L ${cx} ${cy-r0+4} L ${cx+20} ${cy-RE+3} Z" style="fill:var(--muted)"/>`+txt(cx,cy+6,"Earth","var(--accent)","middle",14);
+  return {
+    variants:[["slow","Slow"],["faster","Faster"],["orbit","Fast enough"]],
+    still(){ svg.innerHTML = base + `<circle cx="${cx}" cy="${cy-r0}" r="6" style="fill:var(--ink)"/>` + arrow(cx,cy-r0,cx+60,cy-r0,"app","launch",cx+66,cy-r0+4,"start") + txt(110,40,"no air resistance","var(--muted)","middle",12); },
+    play(v){ const k = v==="slow"?.55:v==="faster"?.82:1.0; let x=0, y=-r0, vx=vc*k, vy=0, pts=[[x,y]], t=0, hit=false;
+      loop(dt => { for (let i=0;i<8;i++){ const h = dt/8, r = Math.hypot(x,y), a = GM/(r*r*r); vx -= a*x*h; vy -= a*y*h; x += vx*h; y += vy*h; t += h; if (Math.hypot(x,y) <= RE){ hit = true; break; } }
+        pts.push([x,y]); if (pts.length > 400) pts.shift();
+        const path = pts.map((p,i)=>(i?"L":"M")+(cx+p[0]).toFixed(1)+" "+(cy+p[1]).toFixed(1)).join(" ");
+        const r = Math.hypot(x,y);
+        let s = base + `<path d="${path}" fill="none" style="stroke:var(--ok)" stroke-width="2.5"/><circle cx="${cx+x}" cy="${cy+y}" r="6" style="fill:var(--ink)"/>` + arrow(cx+x,cy+y,cx+x-28*x/r,cy+y-28*y/r,"grav","",0,0);
+        s += txt(cx, 296, hit ? "falls and hits the ground, farther around each time" : (k===1 && t>1 ? "still falling: the ground curves away as fast as it falls. That's an orbit." : "falling…"), hit?"var(--bad)":"var(--ok)");
+        svg.innerHTML = s; return !(hit || t > 9); }); }
+  };
+}
+
+/* 5 · two satellites start lined up; ω ∝ r^-1.5 (from v = √(GM/r)). */
+function sceneRace(svg){
+  const cx=320, cy=150, r1=70, r2=130, w1=1.6, w2=w1*Math.pow(r1/r2,1.5);
+  const base = `<circle cx="${cx}" cy="${cy}" r="${r1}" fill="none" style="stroke:var(--line)" stroke-width="2" stroke-dasharray="5 5"/><circle cx="${cx}" cy="${cy}" r="${r2}" fill="none" style="stroke:var(--line)" stroke-width="2" stroke-dasharray="5 5"/><circle cx="${cx}" cy="${cy}" r="28" style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="2"/>`;
+  const sat = (r,th,col,lab) => { const x = cx+r*Math.cos(th), y = cy-r*Math.sin(th); return `<rect x="${x-7}" y="${y-7}" width="14" height="14" rx="3" style="fill:${col}"/>`+txt(x+12,y-10,lab,col,"start",12); };
+  return {
+    still(){ svg.innerHTML = base + sat(r1,0,"var(--f-tens)","inner") + sat(r2,0,"var(--f-app)","outer") + `<line x1="${cx+28}" y1="${cy}" x2="${cx+r2+30}" y2="${cy}" style="stroke:var(--muted)" stroke-dasharray="3 4"/>` + txt(cx+r2+34,cy+4,"start","var(--muted)","start"); },
+    play(){ let t = 0;
+      loop(dt => { t += dt; const a1 = w1*t, a2 = w2*t, x1 = cx+r1*Math.cos(a1), y1 = cy-r1*Math.sin(a1), x2 = cx+r2*Math.cos(a2), y2 = cy-r2*Math.sin(a2);
+        const v1 = 46, v2 = 46*Math.sqrt(r1/r2);
+        let s = base + `<line x1="${cx+28}" y1="${cy}" x2="${cx+r2+30}" y2="${cy}" style="stroke:var(--muted)" stroke-dasharray="3 4"/>` + sat(r1,a1,"var(--f-tens)","inner") + sat(r2,a2,"var(--f-app)","outer");
+        s += arrow(x1,y1,x1-v1*Math.sin(a1),y1-v1*Math.cos(a1),"tens","",0,0) + arrow(x2,y2,x2-v2*Math.sin(a2),y2-v2*Math.cos(a2),"app","",0,0);
+        s += txt(20,24,`inner laps: ${Math.floor(a1/(2*Math.PI))}`,"var(--f-tens)","start",13)+txt(20,44,`outer laps: ${Math.floor(a2/(2*Math.PI))}`,"var(--f-app)","start",13)+txt(620,24,"arrow length = speed","var(--muted)","end");
+        svg.innerHTML = s; return t < 2*Math.PI/w2*1.05; }); }
+  };
+}
+
+/* 6 · merry-go-round: same ω for both riders, so a = ω²r grows with r. */
+function sceneCarousel(svg){
+  const cx=320, cy=150, R=125, r1=55, r2=115, w=1.3;
+  const frame = th => { const dot = (r,col,lab) => { const x = cx+r*Math.cos(th), y = cy-r*Math.sin(th), a = r*0.55, v = r*0.5;
+      return arrow(x,y,x-a*Math.cos(th),y+a*Math.sin(th),"grav","",0,0)+arrow(x,y,x-v*Math.sin(th),y-v*Math.cos(th),"norm","",0,0)+`<circle cx="${x}" cy="${y}" r="9" style="fill:${col}"/>`+txt(x+12,y+20,lab,col,"start"); };
+    return `<circle cx="${cx}" cy="${cy}" r="${R}" style="fill:var(--bg);stroke:var(--ink)" stroke-width="2"/><line x1="${cx}" y1="${cy}" x2="${cx+R*Math.cos(th)}" y2="${cy-R*Math.sin(th)}" style="stroke:var(--line)" stroke-width="2"/><circle cx="${cx}" cy="${cy}" r="5" style="fill:var(--ink)"/>`+dot(r1,"var(--f-tens)","inner")+dot(r2,"var(--f-app)","outer"); };
+  return {
+    still(){ svg.innerHTML = frame(0.5) + txt(110,40,"top view · spins together","var(--muted)","middle",12); },
+    play(){ let th = .5, t = 0; loop(dt => { th += w*dt; t += dt; svg.innerHTML = frame(th) + txt(20,24,"blue = v (tangent)","var(--f-norm)","start") + txt(20,44,"red = a (toward the center)","var(--f-grav)","start") + txt(620,24,"outer: 2× the radius → 2× v, 2× a","var(--ok)","end"); return t < 12; }); }
+  };
+}
+
+const CH = [
+  {id:"sling", t:"The hammer throw", scene:sceneSling,
+   story:"Olympic hammer throwers spin a 7 kg ball on a wire, faster and faster, then let go. Officials stand in a safety cage with one open side. Which way should that opening face? It all depends on which way the hammer flies when it's released.",
+   q:"The ball moves counter-clockwise. The string snaps exactly at the moment shown. Which path does the ball take?",
+   o:["A: straight outward, away from the center","B: straight up the page, along the tangent","C: it curves for a bit, then straightens out"], a:1,
+   why:"Once the string snaps, there's <b>no force</b> on the ball (in the top view). Newton's 1st law: it keeps the velocity it had at that instant, which was <b>tangent</b> to the circle. Nothing pushes it outward, because \"centrifugal force\" doesn't exist. And nothing makes it curve, because curving needs a force.",
+   irl:"That's why sparks fly off a grinding wheel along tangent lines, and why a car that hits ice on a curve slides off straight, not outward."},
+  {id:"bucket", t:"The water bucket dare", scene:sceneBucket,
+   story:"Someone swings a full bucket of water in a vertical circle over their head and dares you to try. If they go fast enough, not a drop falls out, even upside down. People say \"centrifugal force holds the water in.\" So what happens if they swing slowly?",
+   q:"The bucket goes around at a constant 2.5 m/s on a 1.0 m rope. What happens to the water?",
+   o:["Nothing. The circular motion always keeps the water pressed into the bucket","Near the top, the water leaves the bucket and falls in a curved path","The water drops straight down, right at the bottom of the swing"], a:1,
+   why:"At the top, the water needs a net force of mv²/r toward the center (down). Gravity alone supplies mg. If <b>v²/r &lt; g</b> (here 6.25 &lt; 9.8), gravity pulls the water down <em>harder than the circle needs</em>, and the bucket can't pull it back up, since a bucket can only push. So the water separates and falls along a projectile curve. Fast (4 m/s, v²/r = 16 &gt; g): gravity isn't enough, so the bucket bottom pushes down to supply the rest, and the water stays in.",
+   irl:"Minimum speed at the top: v = √(gr). It's the same formula for a roller coaster car at the top of a loop."},
+  {id:"hill", t:"Airtime on the hill", scene:sceneHill,
+   story:"Roller coaster fans love \"airtime hills\", humps where you float out of your seat. Rally cars sometimes fly right off the crest of a hill. What's actually going on with the force from the track or the road?",
+   q:"A car drives over a hill crest at faster and faster speeds. The normal force from the road on the car…",
+   o:["…increases. Faster means pressed down harder","…decreases, and at some speed reaches zero","…stays equal to mg, because the road is solid"], a:1,
+   why:"The center of the hill's circle is <b>below</b> the car, so the net force must point down: <b>mg − F<sub>N</sub> = mv²/r</b>, giving F<sub>N</sub> = mg − mv²/r. Faster → bigger mv²/r → <b>smaller F<sub>N</sub></b>. At v = √(gr), F<sub>N</sub> = 0. Any faster, and the road would have to <em>pull</em> the car down, which it can't. The car leaves the road. Try all three speeds.",
+   irl:"Feeling \"light\" = a smaller normal force. Your weight (mg) never changed."},
+  {id:"cannon", t:"Newton's cannon", scene:sceneCannon,
+   story:"In the 1680s, Isaac Newton imagined a cannon on top of an impossibly tall mountain, firing sideways with no air in the way. Each time he gave the ball more powder, it landed farther around the Earth. Then he asked: what if you keep going?",
+   q:"Fire it fast enough (no air resistance). What happens?",
+   o:["It always falls back to Earth eventually. Gravity always wins","It keeps falling, but the Earth curves away just as fast, so it circles forever","It escapes in a straight line, because it's too fast for gravity"], a:1,
+   why:"Gravity never switches off, so the ball is <b>always falling</b>. At the right speed (GMm/r² = mv²/r → <b>v = √(GM/r)</b>), the ground curves away beneath it exactly as fast as it falls. That <em>is</em> an orbit. The Moon and the ISS are doing the same thing right now. (Much faster still, it would escape, but that's not a straight line either: gravity still bends the path.)",
+   irl:"Low Earth orbit speed: about 7.7 km/s, which circles the planet in about 90 minutes."},
+  {id:"race", t:"Satellite race", scene:sceneRace,
+   story:"Two satellites line up side by side, one in a low orbit and one in a higher orbit. A bet: which one gets back to the start line first?",
+   q:"Which satellite completes a lap first?",
+   o:["The inner one. It's faster AND has a shorter path","They tie. Gravity treats them the same","The outer one. It has to move faster to stay up that high"], a:0,
+   why:"From GMm/r² = mv²/r: <b>v = √(GM/r)</b>, so <b>smaller r → faster</b>. Gravity is stronger close in, so the satellite needs more speed to keep \"missing\" the Earth. Shorter path + higher speed = much shorter period (T² ∝ r³, Kepler's 3rd law). Here the outer radius is 1.86×, so the period is 1.86<sup>1.5</sup> ≈ 2.5× longer.",
+   irl:"The ISS laps Earth in 90 minutes. GPS satellites (higher) take 12 hours. The Moon (much higher) takes 27 days."},
+  {id:"carousel", t:"Merry-go-round trap", scene:sceneCarousel,
+   story:"Two friends ride the same merry-go-round: one on an inner horse, one on the outer edge. The formula says a = v²/r, and a smaller r means a bigger a… right?",
+   q:"Which rider has the bigger centripetal acceleration?",
+   o:["The inner rider, because r is smaller and a = v²/r","The outer rider","They're the same, because they spin together"], a:1,
+   why:"Watch what's <b>held constant</b>. On one merry-go-round they share the same <b>period</b>, not the same speed. The outer rider covers 2× the distance per lap, so v = 2πr/T is 2× bigger. Then a = v²/r = <b>4π²r/T²</b>, which grows <em>with</em> r. 2× the radius → 2× the acceleration. a = v²/r only says \"smaller r → bigger a\" when v is fixed (like the same car on a tighter curve).",
+   irl:"AP loves this trap in MCQs. Before you use a proportion, write which variable is held constant."}
+];
+
+/* ---------- state + render ---------- */
+const KEY = "cm-predict-v1";
+let S = {p:{}, xp:0};
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} $("#xp").textContent = S.xp; renderNav(); renderSummary(); };
+const scenes = {};
+
+function renderNav(){ $("#levels").innerHTML = `<a href="index.html">← Home</a>` + CH.map((c,i)=>`<a href="#ch-${c.id}" class="${S.p[c.id]&&S.p[c.id].locked?"done":""}">${i+1} ${c.t.split(" ").slice(-1)[0]}</a>`).join("") + `<a href="#missions">Sims</a><a href="#resources">Resources</a>`; }
+
+function renderChal(c, n){
+  const st = S.p[c.id] || {}, locked = !!st.locked, right = locked && st.c===c.a;
+  const el = $("#ch-"+c.id);
+  el.innerHTML = `<div class="stage-head"><span class="eyebrow">Challenge ${n+1} of ${CH.length}</span><h2>${c.t}</h2></div>
+    <p class="story">${c.story}</p>
+    <svg class="scene" id="sv-${c.id}" viewBox="0 0 640 300" role="img" aria-label="${c.t} animation"></svg>
+    <p class="qtext"><strong>${c.q}</strong></p>
+    <div class="opts">${c.o.map((o,i)=>`<button type="button" class="opt ${locked&&i===c.a?"right":""} ${locked&&i===st.c&&!right?"wrong":""}" data-i="${i}" aria-pressed="${st.c===i}" ${locked?"disabled":""}><span class="k">${"ABC"[i]}</span><span>${o}</span></button>`).join("")}</div>
+    ${locked?`<p class="yours">Your reason: ${st.why?esc(st.why):"<em>(none written)</em>"}</p>`:`<label class="note" for="w-${c.id}">Why? One sentence. Writing it down is the point.</label><textarea id="w-${c.id}">${esc(st.why||"")}</textarea>
+      <div class="row"><button type="button" class="btn lock" ${st.c==null?"disabled":""}>Lock in &amp; reveal</button><span class="locked-note">no peeking: the animation only unlocks after you commit</span></div>`}
+    ${locked?`<div class="reveal-box"><span class="verdict ${right?"ok":"no"}">${right?"You called it · +20 XP":"Surprise! Good: this is where learning happens · +10 XP"}</span>
+      <div class="row seg">${(c.scene(null).variants||[["", "▶ Play"]]).map(([k,l])=>`<button type="button" data-v="${k}">▶ ${l.replace("▶ ","")}</button>`).join("")}</div>
+      <p>${c.why}</p><p class="irl"><b>Real life:</b> ${c.irl}</p></div>`:""}`;
+  stop(); scenes[c.id] = c.scene($("#sv-"+c.id)); scenes[c.id].still();
+  el.querySelectorAll(".opt").forEach(b => b.onclick = () => { if (locked) return; const cur = S.p[c.id] || {}; cur.c = +b.dataset.i; cur.why = (el.querySelector("textarea")||{}).value || cur.why; S.p[c.id] = cur; save(); renderChal(c,n); });
+  const ta = el.querySelector("textarea"); if (ta) ta.oninput = () => { S.p[c.id] = Object.assign(S.p[c.id]||{}, {why: ta.value}); save(); };
+  const lb = el.querySelector(".lock"); if (lb) lb.onclick = () => { const cur = S.p[c.id]; cur.locked = true; S.xp += 10 + (cur.c===c.a?10:0); save(); renderChal(c,n); playFirst(c); };
+  el.querySelectorAll(".seg button").forEach(b => b.onclick = () => { el.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed", x===b)); scenes[c.id].play(b.dataset.v); });
+}
+function playFirst(c){ const b = $("#ch-"+c.id+" .seg button"); if (b) b.click(); }
+
+function renderSummary(){
+  const lines = [`Predict & Reveal (circular motion) · ${new Date().toLocaleDateString()} · ${S.xp} XP`, ""];
+  CH.forEach((c,i)=>{ const st = S.p[c.id]; lines.push(`C${i+1} ${c.t}: ${st&&st.locked?("ABC"[st.c]+(st.c===c.a?" ✓":" ✗ (answer "+"ABC"[c.a]+")")+" | why: "+(st.why||"–")):"not done"}`); });
+  $("#summary").textContent = lines.join("\n");
+}
+
+$("#chals").innerHTML = CH.map(c=>`<section class="stage chal" id="ch-${c.id}"></section>`).join("");
+CH.forEach(renderChal);
+$("#copyBtn").onclick = async ()=>{ const t = $("#summary").textContent;
+  try { await navigator.clipboard.writeText(t); $("#copyMsg").textContent = "Copied."; }
+  catch(e){ const r = document.createRange(); r.selectNodeContents($("#summary")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("#copyMsg").textContent = "Text selected. Press Copy."; } };
+$("#wipeBtn").onclick = ()=>{ $("#wipeAsk").hidden = false; };
+$("#wipeYes").onclick = ()=>{ stop(); try{localStorage.removeItem(KEY);}catch(e){} location.reload(); };
+save();
+})();
+</script>
+</body></html>
