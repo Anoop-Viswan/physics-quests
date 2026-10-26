@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Circular Motion Visual Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="quest.css">
+<style>
+/* Three US-letter poster pages: big pictures, few words. Force colours match the quests (gravity red, normal blue, friction amber, tension green). */
+:root{--sun:#fff4d6;--sky:#e6f0fb;--mint:#e3f4ea;--rose:#fbe9e5;--lilac:#ece9fb}
+body{background:var(--bg)}
+.tools{max-width:8.5in;margin:16px auto 0;padding:0 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.page{box-sizing:border-box;width:100%;max-width:8.5in;margin:14px auto 28px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:.36in .42in .26in;display:flex;flex-direction:column;gap:9px;color:var(--ink);font-size:12px;line-height:1.36}
+.band{border-radius:14px;padding:10px 16px;color:#fff;background:linear-gradient(120deg,#3b3fb6,#6a3fb6);display:flex;justify-content:space-between;align-items:center;gap:14px}
+.band.b2{background:linear-gradient(120deg,#1f6fc8,#2f8a3a)} .band.b3{background:linear-gradient(120deg,#c2412d,#b7791f)}
+.band h1{font-size:26px;line-height:1.05;color:#fff} .band p{font-size:12.5px;opacity:.92;max-width:44ch;margin-top:3px}
+.band .num{font-family:var(--display);font-weight:800;font-size:44px;line-height:1;opacity:.35}
+.page h2{font-family:var(--display);font-size:17px;font-weight:800;margin:0}
+.page svg{display:block;width:100%;height:auto;margin:0 auto}
+#track{max-height:2.95in} #sling,#myth{max-height:2.3in} .scn svg{max-height:1.3in} #loop{max-height:2.55in}
+#scale,#period,#hill,#orbit{max-height:1.98in} #recipe{max-height:1.18in}
+.panel{border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.sun{background:var(--sun)} .sky{background:var(--sky)} .mint{background:var(--mint)} .rose{background:var(--rose)} .lilac{background:var(--lilac)}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px} .row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.idea{display:flex;gap:10px;align-items:flex-start}
+.idea .ic{flex:none;width:58px}
+.idea b{font-family:var(--display);font-size:15px;display:block}
+.eq{font-family:var(--mono);font-weight:700;font-size:15px;background:#fff;border-radius:8px;padding:3px 8px;align-self:flex-start;border:1.5px solid var(--line)}
+.scn{border:2px solid var(--line);border-radius:12px;padding:8px 10px;display:flex;flex-direction:column;gap:4px;min-width:0;border-top-width:7px}
+.scn b{font-family:var(--display);font-size:14.5px}
+.chip{font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;color:#fff;align-self:flex-start}
+.scn small{color:var(--muted);font-size:11px;line-height:1.28}
+.trap{display:grid;grid-template-columns:1fr 18px 1fr;gap:6px;align-items:center;font-size:11.5px}
+.trap .x{background:var(--rose);border-radius:8px;padding:3px 8px} .trap .ok{background:var(--mint);border-radius:8px;padding:3px 8px}
+.trap .x b{color:var(--bad)} .trap .ok b{color:var(--ok)}
+.foot{margin-top:auto;display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:5px;font-family:var(--mono);font-size:10px;color:var(--muted)}
+@media (max-width:640px){.row2,.row3{grid-template-columns:1fr}.page{padding:16px}.band h1{font-size:24px}.band .num{display:none}}
+@media print{
+  @page{size:letter;margin:0}
+  body{background:#fff}
+  .tools{display:none!important}
+  .page{margin:0;border:0;border-radius:0;max-width:none;width:8.5in;height:11in;overflow:hidden;break-after:page}
+  .page:last-child{break-after:auto}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head><body>
+<div class="tools">
+  <a class="btn ghost" href="index.html" style="text-decoration:none">← Home</a>
+  <button type="button" class="btn" onclick="print()">Print / Save as PDF</button>
+  <a class="btn ghost" href="printables/circular-motion-visual-guide.pdf" style="text-decoration:none">PDF ↓</a>
+  <span class="note">3 pages, printed in color if you can.</span>
+</div>
+
+<!-- PAGE 1 -->
+<article class="page">
+  <div class="band"><div><h1>Circular Motion:<br>The Big Idea</h1><p>Going around a circle means you are <b>always turning</b>, so you are <b>always accelerating</b>, even at a steady speed.</p></div><span class="num">01</span></div>
+
+  <div class="panel sky"><h2>Same speed. Different direction. → Accelerating!</h2><svg id="track" viewBox="0 0 640 300" role="img" aria-label="Car going around a circular track with velocity tangent and acceleration toward the center at four positions"></svg></div>
+
+  <div class="row3">
+    <div class="panel lilac idea"><svg class="ic" id="ic1" viewBox="0 0 60 60"></svg><div><b>Velocity → tangent</b>Points the way you're going right now: along the edge of the circle.</div></div>
+    <div class="panel rose idea"><svg class="ic" id="ic2" viewBox="0 0 60 60"></svg><div><b>Acceleration → center</b>"Centripetal" = center-seeking.<div class="eq" style="margin-top:4px">a = v²/r</div></div></div>
+    <div class="panel mint idea"><svg class="ic" id="ic3" viewBox="0 0 60 60"></svg><div><b>Net force → center</b>Some real force must pull inward.<div class="eq" style="margin-top:4px">ΣF = mv²/r</div></div></div>
+  </div>
+
+  <div class="row2">
+    <div class="panel sun"><h2>Let go! Which way does it fly?</h2><svg id="sling" viewBox="0 0 320 230" role="img" aria-label="Released ball flies along the tangent, not outward"></svg>
+      <p>No string = no force = <b>straight line</b> (Newton's 1st law), along the <b>tangent</b>. Never straight outward.</p></div>
+    <div class="panel rose"><h2>"Centrifugal force" is a myth</h2><svg id="myth" viewBox="0 0 320 230" role="img" aria-label="Passenger keeps going straight while the car turns; the door pushes them inward"></svg>
+      <p>The car turns, but your body wants to keep going <b>straight</b>. The door runs into you and pushes you <b>inward</b>. Nothing pushes you out.</p></div>
+  </div>
+  <div class="foot"><span>Physics Quests · Circular Motion Visual Guide</span><span>Page 1 of 3</span></div>
+</article>
+
+<!-- PAGE 2 -->
+<article class="page">
+  <div class="band b2"><div><h1>Who's Pulling<br>Toward the Center?</h1><p>"Centripetal force" is a <b>job</b>, not a new force. In every problem, find the <b>real</b> force (or forces) doing that job.</p></div><span class="num">02</span></div>
+  <div class="row3" id="scenes"></div>
+  <div class="panel lilac"><h2>The loop: heavy at the bottom, light at the top</h2><svg id="loop" viewBox="0 0 640 250" role="img" aria-label="Roller coaster loop: big normal force at the bottom, small at the top"></svg></div>
+  <div class="foot"><span>Physics Quests · Circular Motion Visual Guide</span><span>Page 2 of 3</span></div>
+</article>
+
+<!-- PAGE 3 -->
+<article class="page">
+  <div class="band b3"><div><h1>Numbers, Patterns<br>&amp; Test Traps</h1><p>Squares, periods, hills and orbits, plus the recipe that earns FRQ points.</p></div><span class="num">03</span></div>
+  <div class="row2">
+    <div class="panel sun"><h2>Speed is SQUARED</h2><svg id="scale" viewBox="0 0 320 200" role="img" aria-label="Doubling speed needs four times the force"></svg></div>
+    <div class="panel sky"><h2>One lap, one period</h2><svg id="period" viewBox="0 0 320 200" role="img" aria-label="One lap is 2 pi r and takes T seconds"></svg></div>
+  </div>
+  <div class="row2">
+    <div class="panel mint"><h2>Hill = lighter · Dip = heavier</h2><svg id="hill" viewBox="0 0 320 190" role="img" aria-label="On a hilltop the normal force is smaller than weight; in a dip it is larger"></svg></div>
+    <div class="panel lilac"><h2>Closer orbit = faster</h2><svg id="orbit" viewBox="0 0 320 190" role="img" aria-label="Inner satellite moves faster than outer satellite"></svg></div>
+  </div>
+  <div class="panel rose"><h2>The 4-step recipe (works every time)</h2><svg id="recipe" viewBox="0 0 640 112" role="img" aria-label="Four steps: real-force FBD, find the center, sum of forces equals m v squared over r, solve and check"></svg></div>
+  <div style="display:flex;flex-direction:column;gap:5px" id="traps"><h2>Trap → Truth</h2></div>
+  <div class="foot"><span>Physics Quests · Circular Motion Visual Guide</span><span>Page 3 of 3</span></div>
+</article>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const C = {grav:"#d2452f", norm:"#1f6fc8", fric:"#b97a06", tens:"#2f8a3a", ink:"#15212c", muted:"#566775", ok:"#1f8a4c", bad:"#c2412d", acc:"#3b3fb6", road:"#c9d3db", vel:"#1f6fc8"};
+/* thick poster arrow */
+const A = (x1,y1,x2,y2,c,w=5) => { const a = Math.atan2(y2-y1,x2-x1), h = 4+w*2.2, s = .45;
+  return `<line x1="${x1}" y1="${y1}" x2="${x2-h*.7*Math.cos(a)}" y2="${y2-h*.7*Math.sin(a)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/><polygon points="${x2},${y2} ${x2-h*Math.cos(a-s)},${y2-h*Math.sin(a-s)} ${x2-h*Math.cos(a+s)},${y2-h*Math.sin(a+s)}" fill="${c}"/>`; };
+const T = (x,y,t,c=C.ink,sz=14,anc="middle",wt=700,fam="var(--body)") => `<text x="${x}" y="${y}" text-anchor="${anc}" fill="${c}" style="font:${wt} ${sz}px ${fam}">${t}</text>`;
+const M = (x,y,t,c=C.ink,sz=13,anc="middle") => T(x,y,t,c,sz,anc,700,"var(--mono)");
+const dash = (x1,y1,x2,y2,c,w=3) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}" stroke-dasharray="8 6" stroke-linecap="round"/>`;
+/* top-view car pointing along +x before rotation */
+const carTop = (x,y,deg,col="#3b3fb6",s=1) => `<g transform="translate(${x} ${y}) rotate(${deg}) scale(${s})"><rect x="-22" y="-12" width="44" height="24" rx="7" fill="${col}"/><rect x="2" y="-9" width="11" height="18" rx="3" fill="#cfe0ff"/><rect x="-16" y="-9" width="8" height="18" rx="3" fill="#cfe0ff" opacity=".8"/><rect x="-18" y="-15" width="9" height="4" rx="2" fill="#15212c"/><rect x="9" y="-15" width="9" height="4" rx="2" fill="#15212c"/><rect x="-18" y="11" width="9" height="4" rx="2" fill="#15212c"/><rect x="9" y="11" width="9" height="4" rx="2" fill="#15212c"/></g>`;
+/* side-view car sitting on (x,y), tilted deg */
+const carSide = (x,y,deg=0,col="#3b3fb6",s=1) => `<g transform="translate(${x} ${y}) rotate(${deg}) scale(${s})"><path d="M -26 -8 L -24 -18 L -12 -18 L -6 -28 L 12 -28 L 20 -18 L 26 -16 L 26 -8 Z" fill="${col}"/><path d="M -4 -26 L 10 -26 L 16 -19 L -8 -19 Z" fill="#cfe0ff"/><circle cx="-15" cy="-6" r="6" fill="#15212c"/><circle cx="15" cy="-6" r="6" fill="#15212c"/><circle cx="-15" cy="-6" r="2.5" fill="#c9d3db"/><circle cx="15" cy="-6" r="2.5" fill="#c9d3db"/></g>`;
+const person = (x,y,col="#b7791f",s=1) => `<g transform="translate(${x} ${y}) scale(${s})"><circle cx="0" cy="-26" r="7" fill="${col}"/><path d="M 0 -19 L 0 0 M 0 -14 L -9 -6 M 0 -14 L 9 -6 M 0 0 L -7 13 M 0 0 L 7 13" stroke="${col}" stroke-width="4" stroke-linecap="round" fill="none"/></g>`;
+const earth = (x,y,r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#9cc7f2"/><path d="M ${x-r*.6} ${y-r*.2} q ${r*.3} ${-r*.5} ${r*.6} ${-r*.2} q ${r*.2} ${r*.3} ${-r*.1} ${r*.5} q ${-r*.4} ${r*.1} ${-r*.5} ${-r*.3} Z M ${x+r*.15} ${y+r*.25} q ${r*.4} ${-r*.2} ${r*.55} ${r*.15} q ${-r*.15} ${r*.35} ${-r*.45} ${r*.2} Z" fill="#5fae6b"/>`;
+
+/* ---------- PAGE 1 ---------- */
+(() => { const cx = 220, cy = 150, R = 105; let s = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${C.road}" stroke-width="42"/><circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="12 10"/><circle cx="${cx}" cy="${cy}" r="${R-36}" fill="#d9f0dd"/>`;
+  s += `<circle cx="${cx}" cy="${cy}" r="5" fill="${C.ink}"/>` + M(cx, cy+22, "center", C.muted, 13);
+  [30, 120, 210, 300].forEach(d => { const th = d*Math.PI/180, x = cx+R*Math.cos(th), y = cy-R*Math.sin(th), vx = -Math.sin(th), vy = -Math.cos(th), ux = (cx-x)/R, uy = (cy-y)/R;
+    s += carTop(x, y, Math.atan2(vy,vx)*180/Math.PI, "#3b3fb6", .9) + A(x+vx*24, y+vy*24, x+vx*78, y+vy*78, C.vel, 5) + A(x+ux*16, y+uy*16, x+ux*62, y+uy*62, C.bad, 5); });
+  s += `<g transform="translate(395 40)"><rect width="225" height="220" rx="14" fill="#fff" stroke="${C.road}" stroke-width="2"/>`+
+    A(20,40,80,40,C.vel,6)+T(92,46,"velocity v",C.vel,16,"start")+T(92,64,"tangent: the way it's going",C.muted,12,"start",400)+
+    A(20,104,80,104,C.bad,6)+T(92,110,"acceleration a",C.bad,16,"start")+T(92,128,"always toward the center",C.muted,12,"start",400)+
+    `<line x1="18" y1="150" x2="207" y2="150" stroke="${C.road}" stroke-width="2"/>`+T(112,176,"The speedometer never",C.ink,14)+T(112,196,"changes. The direction does.",C.ink,14)+`</g>`;
+  s += M(cx,24,"v ⟂ a, always 90°",C.acc,14);
+  $("#track").innerHTML = s;
+  $("#ic1").innerHTML = `<circle cx="26" cy="34" r="20" fill="none" stroke="#a7a9e6" stroke-width="3"/><circle cx="46" cy="34" r="5" fill="${C.ink}"/>`+A(46,34,46,4,C.vel,4);
+  $("#ic2").innerHTML = `<circle cx="30" cy="30" r="22" fill="none" stroke="#efb3a7" stroke-width="3"/><circle cx="52" cy="30" r="5" fill="${C.ink}"/>`+A(52,30,32,30,C.bad,4)+`<circle cx="30" cy="30" r="3" fill="${C.ink}"/>`;
+  $("#ic3").innerHTML = `<circle cx="30" cy="30" r="22" fill="none" stroke="#9fd8b4" stroke-width="3"/><circle cx="30" cy="30" r="4" fill="${C.ink}"/><line x1="30" y1="30" x2="52" y2="30" stroke="${C.tens}" stroke-width="2"/><circle cx="52" cy="30" r="6" fill="${C.ink}"/>`+A(46,40,32,40,C.tens,4);
+  /* sling: athlete at center, ball released at the right */
+  let g = `<circle cx="120" cy="125" r="75" fill="none" stroke="${C.road}" stroke-width="3" stroke-dasharray="7 6"/>` + person(120,138,"#b7791f",1.1) + `<line x1="120" y1="112" x2="195" y2="125" stroke="${C.ink}" stroke-width="2" stroke-dasharray="3 3"/><circle cx="195" cy="125" r="11" fill="${C.ink}"/>`;
+  g += A(195,110,195,18,C.ok,6) + T(212,40,"✓ tangent",C.ok,17,"start",800);
+  g += dash(210,125,300,125,C.bad,4) + T(300,150,"✗ outward",C.bad,15,"end",800);
+  g += `<path d="M 205 115 Q 225 60 290 70" fill="none" stroke="${C.muted}" stroke-width="3" stroke-dasharray="6 5"/>` + T(300,95,"✗ curving",C.muted,13,"end",700);
+  g += M(120,222,"top view · spinning counter-clockwise",C.muted,11);
+  $("#sling").innerHTML = g;
+  /* myth: right turn (heading up, curving right). The body keeps going straight; the left door pushes the rider right, toward the center. */
+  let m = `<path d="M 70 230 L 70 140 Q 70 40 180 40 L 320 40" fill="none" stroke="${C.road}" stroke-width="54"/><path d="M 70 230 L 70 140 Q 70 40 180 40 L 320 40" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="10 9"/>`;
+  m += carTop(70, 150, -90, "#3b3fb6", 1.25) + dash(70, 118, 70, 6, C.ink, 3) + `<text transform="translate(34 150) rotate(-90)" fill="${C.ink}" style="font:700 12px var(--body)">body keeps going straight ↑</text>`;
+  m += `<circle cx="180" cy="140" r="5" fill="${C.ink}"/>` + T(180,128,"center of the turn",C.muted,11,"middle",700) + A(98,150,150,150,C.norm,5);
+  m += `<g transform="translate(250 180)"><rect x="-62" y="-36" width="124" height="80" rx="12" fill="#fff" stroke="${C.road}" stroke-width="2"/><rect x="-46" y="-12" width="8" height="48" rx="3" fill="#3b3fb6"/>${person(8,26,"#b7791f",.8)}`+A(-36,12,-6,12,C.norm,5)+T(0,-20,"left door → you",C.norm,11.5,"middle",800)+`</g>`;
+  m += M(316,86,"top view · turning right",C.muted,11,"end");
+  $("#myth").innerHTML = m;
+})();
+
+/* ---------- PAGE 2 ---------- */
+(() => {
+  const SC = [
+    {t:"Ball on a string", f:"Tension", c:C.tens, eq:"T = mv²/r", n:"Top view: the string pulls the ball toward your hand.",
+     s:`<circle cx="120" cy="78" r="58" fill="none" stroke="${C.road}" stroke-width="3" stroke-dasharray="6 5"/><circle cx="120" cy="78" r="9" fill="#b7791f"/><line x1="120" y1="78" x2="178" y2="78" stroke="${C.ink}" stroke-width="2.5"/><circle cx="178" cy="78" r="11" fill="${C.ink}"/>`+A(166,78,134,78,C.tens,6)+T(150,66,"T",C.tens,16)+A(178,64,178,20,C.vel,4)+T(190,30,"v",C.vel,14,"start")},
+    {t:"Car on a flat curve", f:"Static friction", c:C.fric, eq:"f<sub>s</sub> = mv²/r", n:"Rear view. On ice there's no friction, so the car slides straight.",
+     s:`<rect x="10" y="118" width="220" height="16" fill="${C.road}"/>`+M(40,148,"← center",C.muted,12)+`<g transform="translate(120 92)"><rect x="-34" y="-26" width="68" height="34" rx="9" fill="#3b3fb6"/><rect x="-24" y="-20" width="48" height="13" rx="4" fill="#cfe0ff"/><rect x="-36" y="6" width="14" height="20" rx="4" fill="${C.ink}"/><rect x="22" y="6" width="14" height="20" rx="4" fill="${C.ink}"/></g>`+A(118,116,52,116,C.fric,6)+T(70,108,"f_s",C.fric,15)+A(150,84,150,22,C.norm,4)+T(162,34,"N",C.norm,14,"start")+A(170,84,170,140,C.grav,4)+T(182,140,"mg",C.grav,13,"start")},
+    {t:"Banked curve", f:"Part of the normal force", c:C.norm, eq:"N sinθ = mv²/r", n:"The tilted road leans N toward the center: no friction needed at the design speed.",
+     s:`<polygon points="10,140 230,140 230,58" fill="${C.road}"/><g transform="translate(130 101) rotate(-20.4)"><rect x="-24" y="-22" width="48" height="22" rx="6" fill="#3b3fb6"/><rect x="-26" y="-4" width="10" height="10" rx="3" fill="${C.ink}"/><rect x="16" y="-4" width="10" height="10" rx="3" fill="${C.ink}"/></g>`+A(126,92,100,22,C.norm,6)+T(88,22,"N",C.norm,16,"end")+dash(126,92,100,92,C.norm,3)+A(100,92,64,92,C.norm,3)+M(30,80,"← in",C.norm,12)+A(140,96,140,146,C.grav,4)+T(152,146,"mg",C.grav,13,"start")},
+    {t:"Moon or satellite", f:"Gravity", c:C.grav, eq:"GMm/r² = mv²/r", n:"Always falling toward Earth, moving sideways fast enough to keep missing.",
+     s:earth(105,78,30)+`<circle cx="105" cy="78" r="72" fill="none" stroke="${C.road}" stroke-width="3" stroke-dasharray="6 5"/><g transform="translate(177 78)"><rect x="-8" y="-8" width="16" height="16" rx="3" fill="#6b7280"/><rect x="-24" y="-4" width="14" height="8" fill="#1f6fc8"/><rect x="10" y="-4" width="14" height="8" fill="#1f6fc8"/></g>`+A(166,78,140,78,C.grav,6)+T(152,66,"F_g",C.grav,14)+A(177,64,177,16,C.vel,4)+T(189,26,"v",C.vel,14,"start")},
+    {t:"Top of a coaster loop", f:"Gravity + normal (both ↓)", c:C.acc, eq:"N + mg = mv²/r", n:"Upside down, both forces point down to the center. Fast = the track pushes harder.",
+     s:`<circle cx="120" cy="84" r="54" fill="none" stroke="${C.ink}" stroke-width="5"/><circle cx="120" cy="84" r="3" fill="${C.ink}"/>`+carSide(120,33,180,"#3b3fb6",.85)+A(110,52,110,86,C.norm,5)+T(102,80,"N",C.norm,14,"end")+A(130,52,130,96,C.grav,5)+T(138,96,"mg",C.grav,13,"start")+M(120,154,"↓ center is below the car",C.muted,11)},
+    {t:"Washing-machine spin", f:"Normal force from the wall", c:C.norm, eq:"N = mv²/r", n:"The wall pushes clothes inward. Water has nothing pushing it, so it escapes through the holes along the tangent.",
+     s:`<circle cx="110" cy="78" r="60" fill="#eef3f6" stroke="${C.ink}" stroke-width="5"/>`+[0,40,80,120,160,200,240,280,320].map(d=>{const a=d*Math.PI/180;return `<circle cx="${110+60*Math.cos(a)}" cy="${78-60*Math.sin(a)}" r="3" fill="#fff"/>`;}).join("")+`<rect x="150" y="62" width="14" height="32" rx="5" fill="#b7791f"/>`+A(150,78,112,78,C.norm,5)+T(130,70,"N",C.norm,14)+`<circle cx="182" cy="40" r="5" fill="#6faaff"/><circle cx="192" cy="22" r="4" fill="#6faaff"/>`+dash(172,64,196,10,"#6faaff",2)+T(200,14,"water",C.vel,12,"start")}
+  ];
+  $("#scenes").innerHTML = SC.map(s => `<div class="scn" style="border-top-color:${s.c}"><b>${s.t}</b><svg viewBox="0 0 240 158" role="img" aria-label="${s.t}">${s.s}</svg><span class="chip" style="background:${s.c}">${s.f}</span><span class="eq" style="font-size:13px">${s.eq}</span><small>${s.n}</small></div>`).join("");
+  /* loop: rider at top and bottom with scale-style "feels like" meters */
+  const cx = 150, cy = 125, R = 92;
+  let s = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${C.ink}" stroke-width="7"/><line x1="10" y1="${cy+R+3}" x2="290" y2="${cy+R+3}" stroke="${C.ink}" stroke-width="7"/><circle cx="${cx}" cy="${cy}" r="4" fill="${C.ink}"/>` + M(cx+30, cy+4, "center", C.muted, 12);
+  s += carSide(cx, cy-R+7, 180, "#c2412d", .85) + A(cx-10, cy-R+14, cx-10, cy-R+44, C.norm, 5) + A(cx+10, cy-R+14, cx+10, cy-R+56, C.grav, 5);
+  s += carSide(cx, cy+R-3, 0, "#c2412d", .85) + A(cx-10, cy+R-24, cx-10, cy+R-84, C.norm, 6) + A(cx+12, cy+R-14, cx+12, cy+R+14, C.grav, 5);
+  const meter = (x,y,frac,lab,col,eq,feel) => `<g transform="translate(${x} ${y})"><rect width="300" height="96" rx="12" fill="#fff"/>`+T(14,24,lab,C.ink,15,"start",800)+M(14,46,eq,col,14,"start")+`<rect x="14" y="60" width="200" height="16" rx="8" fill="#eef3f6"/><rect x="14" y="60" width="${200*frac}" height="16" rx="8" fill="${col}"/>`+T(224,74,feel,col,13,"start",800)+`</g>`;
+  s += meter(325, 18, .3, "TOP: both forces point down", C.norm, "N + mg = mv²/r", "feel light");
+  s += meter(325, 132, .95, "BOTTOM: N must beat gravity", C.bad, "N − mg = mv²/r", "feel HEAVY");
+  s += M(cx, 18, "N (blue) · mg (red)", C.muted, 12);
+  $("#loop").innerHTML = s;
+})();
+
+/* ---------- PAGE 3 ---------- */
+(() => {
+  /* scaling: block counts show F ∝ v² and F ∝ 1/r */
+  const blocks = (x,y,n,col) => Array.from({length:n},(_,i)=>`<rect x="${x+(i%5)*15}" y="${y+Math.floor(i/5)*15}" width="13" height="13" rx="3" fill="${col}"/>`).join("");
+  let s = "";
+  [[1,"speed v","1×",C.muted],[2,"speed 2v","4×",C.bad],[3,"speed 3v","9×",C.bad]].forEach(([k,lab,f,col],i)=>{ const y = 14+i*62;
+    s += carTop(34,y+16,0,"#3b3fb6",.8) + A(56,y+16,56+k*22,y+16,C.vel,4) + T(16,y+46,lab,C.ink,13,"start",800) + T(138,y+20,"→",C.muted,22) + blocks(160,y,k*k,col) + T(316,y+20,f+" force",col,15,"end",800); });
+  $("#scale").innerHTML = s;
+  /* period: one lap ribbon + stopwatch */
+  let p = `<circle cx="95" cy="100" r="62" fill="none" stroke="${C.road}" stroke-width="12"/><path d="M 157 100 A 62 62 0 1 1 156.9 99" fill="none" stroke="${C.acc}" stroke-width="5" stroke-dasharray="10 6"/><circle cx="157" cy="100" r="8" fill="${C.ink}"/>`+M(95,96,"one lap",C.acc,12)+M(95,114,"= 2πr",C.acc,15);
+  p += `<g transform="translate(250 70)"><circle r="30" fill="#fff" stroke="${C.ink}" stroke-width="4"/><rect x="-5" y="-42" width="10" height="9" rx="2" fill="${C.ink}"/><line x1="0" y1="0" x2="14" y2="-18" stroke="${C.bad}" stroke-width="4" stroke-linecap="round"/><circle r="3" fill="${C.ink}"/></g>`+T(250,124,"takes T seconds",C.ink,13,"middle",800);
+  p += `<rect x="186" y="140" width="128" height="52" rx="10" fill="#fff"/>`+M(250,162,"v = 2πr / T",C.acc,15)+M(250,183,"f = 1 / T",C.muted,13);
+  $("#period").innerHTML = p;
+  /* hill vs dip */
+  let h = `<path d="M 6 120 Q 80 30 154 120" fill="none" stroke="${C.ink}" stroke-width="5"/>`+carSide(80,76,0,"#3b3fb6",.8)+A(70,70,70,48,C.norm,5)+T(60,50,"N",C.norm,14,"end")+A(90,70,90,118,C.grav,5)+T(98,116,"mg",C.grav,13,"start")+T(80,146,"N < mg",C.norm,15,"middle",800)+T(80,166,"lighter · airtime at √(gr)",C.muted,11,"middle",700);
+  h += `<path d="M 166 40 Q 240 140 314 40" fill="none" stroke="${C.ink}" stroke-width="5"/>`+carSide(240,90,0,"#3b3fb6",.8)+A(230,84,230,22,C.norm,5)+T(220,30,"N",C.norm,14,"end")+A(250,84,250,118,C.grav,5)+T(258,118,"mg",C.grav,13,"start")+T(240,146,"N > mg",C.bad,15,"middle",800)+T(240,166,"heavier",C.muted,11,"middle",700);
+  $("#hill").innerHTML = h;
+  /* orbits */
+  let o = earth(120,95,26)+`<circle cx="120" cy="95" r="50" fill="none" stroke="${C.road}" stroke-width="3" stroke-dasharray="5 5"/><circle cx="120" cy="95" r="86" fill="none" stroke="${C.road}" stroke-width="3" stroke-dasharray="5 5"/>`;
+  o += `<rect x="163" y="88" width="14" height="14" rx="3" fill="${C.tens}"/>`+A(170,86,170,30,C.tens,5)+T(178,40,"fast",C.tens,13,"start",800);
+  o += `<rect x="199" y="88" width="14" height="14" rx="3" fill="#8a46cc"/>`+A(206,86,206,52,"#8a46cc",5)+T(214,62,"slow",C.muted,13,"start",800);
+  o += `<rect x="226" y="112" width="90" height="70" rx="10" fill="#fff"/>`+M(271,136,"v = √(GM/r)",C.acc,13)+T(271,156,"ISS: 90 min",C.ink,11.5)+T(271,172,"Moon: 27 days",C.ink,11.5);
+  $("#orbit").innerHTML = o;
+  /* recipe flow */
+  const steps = [["1","Draw REAL forces","no F_c arrow"],["2","Find the center","+ = toward it"],["3","ΣF = mv²/r","in +, out −"],["4","Solve, then check","symbols first"]];
+  let r = ""; steps.forEach(([n,a,b],i)=>{ const x = 10+i*158; r += `<rect x="${x}" y="10" width="140" height="92" rx="14" fill="#fff" stroke="${C.bad}" stroke-width="2"/><circle cx="${x+26}" cy="38" r="17" fill="${C.bad}"/>`+T(x+26,44,n,"#fff",17,"middle",800)+T(x+50,44,a.split(" ")[0],C.ink,14,"start",800)+T(x+70,70,a.split(" ").slice(1).join(" "),C.ink,14,"middle",800)+M(x+70,92,b,C.muted,11);
+    if (i<3) r += A(x+142,56,x+156,56,C.bad,3); });
+  $("#recipe").innerHTML = r;
+  const TR = [["\"Centrifugal force pushes me out\"","Inertia: you keep going straight"],["Constant speed → a = 0","Direction changes → a = v²/r inward"],["Let go → flies outward","Flies along the tangent"],["String tension points up at the top","A string always pulls toward the center"],["2× speed → 2× force","2× speed → 4× force (v²)"]];
+  $("#traps").innerHTML += TR.map(([x,ok])=>`<div class="trap"><span class="x"><b>✗</b> ${x}</span><span style="text-align:center;font-weight:800;color:var(--muted)">→</span><span class="ok"><b>✓</b> ${ok}</span></div>`).join("");
+})();
+})();
+</script>
+</body></html>
