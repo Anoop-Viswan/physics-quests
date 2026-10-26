@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Circular Motion Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="quest.css">
+<style>
+/* One US-letter page. Always light (data-theme) so it prints the same on every device; panels collapse to one column on phones. */
+.tools{max-width:8.5in;margin:16px auto 0;padding:0 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sheet{box-sizing:border-box;max-width:8.5in;margin:12px auto 40px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:.34in .4in .26in;display:flex;flex-direction:column;gap:7px;font-size:10px;line-height:1.33;color:var(--ink)}
+.sheet h1{font-size:22px;letter-spacing:-.01em}
+.sheet h2{font-family:var(--display);font-size:12.5px;font-weight:800;margin:0 0 4px;color:var(--accent);text-transform:uppercase;letter-spacing:.04em}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:2.5px solid var(--ink);padding-bottom:6px}
+.top p{font-size:11px;color:var(--muted);max-width:52ch}
+.g{display:grid;gap:7px}
+.g2{grid-template-columns:1.05fr 1fr} .g3{grid-template-columns:repeat(3,1fr)}
+.box{border:1.5px solid var(--line);border-radius:8px;padding:7px 9px;min-width:0}
+.box.key{border-color:var(--accent);background:var(--accent-soft)}
+.eqs{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;align-items:baseline}
+.eqs b{font-family:var(--mono);font-size:13px;white-space:nowrap}
+.eqs span{color:var(--muted)}
+.sheet ol,.sheet ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:2px}
+.sheet table{font-size:10px} .sheet th,.sheet td{padding:1.5px 5px} .sheet th{font-size:9px}
+.panel{border:1.5px solid var(--line);border-radius:8px;padding:5px 7px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.panel b{font-family:var(--display);font-size:11.5px}
+.panel svg{width:100%;height:auto;max-height:80px}
+.panel .eq{font-family:var(--mono);font-weight:700;font-size:10.5px}
+.panel small{color:var(--muted);font-size:9.5px;line-height:1.3}
+.myth li b{color:var(--bad)}
+.foot{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:4px;font-family:var(--mono);font-size:9px;color:var(--muted)}
+.big svg{width:100%;height:auto;max-height:118px}
+@media (max-width:640px){.g2,.g3{grid-template-columns:1fr}.sheet{padding:16px;font-size:13px}.sheet table{font-size:12px}}
+@media print{
+  @page{size:letter;margin:0}
+  body{background:#fff}
+  .tools,.no-print{display:none!important}
+  .sheet{margin:0;border:0;border-radius:0;max-width:none;width:8.5in;min-height:11in}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head><body>
+<div class="tools no-print">
+  <a class="btn ghost" href="index.html" style="text-decoration:none">← Home</a>
+  <button type="button" class="btn" onclick="print()">Print / Save as PDF</button>
+  <a class="btn ghost" href="printables/circular-motion-cheat-sheet.pdf" style="text-decoration:none">PDF ↓</a>
+  <span class="note">Tape it above your desk. Read it before every practice set.</span>
+</div>
+
+<article class="sheet">
+  <div class="top">
+    <div><span class="eyebrow">AP Physics 1 · Topic 2.9 (+2.6 orbits)</span><h1>Circular Motion on One Page</h1></div>
+    <p>One idea runs all of it: <b>find the net force toward the center and set it equal to mv²/r.</b> "Centripetal" is a job title, not a new force.</p>
+  </div>
+
+  <div class="g g2">
+    <div class="box big"><h2>The picture to remember</h2><svg id="bigSvg" viewBox="0 0 330 150" role="img" aria-label="Velocity tangent, acceleration toward center, released object goes along tangent"></svg></div>
+    <div class="box key"><h2>Equations: know what each one means</h2>
+      <div class="eqs">
+        <b>a<sub>c</sub> = v²/r</b><span>points to the center · constant speed still accelerates</span>
+        <b>ΣF<sub>in</sub> = mv²/r</b><span>Newton's 2nd law along the radius: + toward the center</span>
+        <b>v = 2πr/T</b><span>one lap (circumference) per period T</span>
+        <b>f = 1/T</b><span>laps per second (Hz)</span>
+        <b>a<sub>c</sub> = 4π²r/T²</b><span>use this when you're given a period</span>
+        <b>v = √(GM/r)</b><span>circular orbit · r from the planet's center</span>
+        <b>v<sub>min</sub> = √(gr)</b><span>top of a loop/bucket, when N or T = 0</span>
+      </div></div>
+  </div>
+
+  <div class="g g2">
+    <div class="box"><h2>The 4-step recipe (every problem)</h2>
+      <ol><li><b>FBD of real forces only</b> (gravity, normal, tension, friction). No F<sub>c</sub> arrow.</li>
+        <li><b>Find the center.</b> Choose + toward the center.</li>
+        <li><b>ΣF<sub>in</sub> = mv²/r</b>: forces pointing in are +, out are −.</li>
+        <li><b>Solve in symbols, then check a limit</b> (v→0? r→∞? does the sign make sense?).</li></ol></div>
+    <div class="box"><h2>Who does the centripetal job?</h2>
+      <table><thead><tr><th>Situation</th><th>Real force(s) pointing in</th></tr></thead><tbody>
+        <tr><td>Ball on a string (horizontal)</td><td>Tension</td></tr>
+        <tr><td>Car on a flat curve</td><td>Static friction (sideways)</td></tr>
+        <tr><td>Banked curve, no friction</td><td>Horizontal part of the normal force</td></tr>
+        <tr><td>Satellite / Moon</td><td>Gravity</td></tr>
+        <tr><td>Top of a loop (inside)</td><td>Gravity + normal, both down</td></tr>
+        <tr><td>Spinning washer drum</td><td>Normal force from the wall</td></tr></tbody></table></div>
+  </div>
+
+  <div class="g g3" id="panels"></div>
+
+  <div class="g g3">
+    <div class="box"><h2>Scaling: ask "what's held constant?"</h2>
+      <table><thead><tr><th>Change</th><th>Fixed</th><th>F or a</th></tr></thead><tbody>
+        <tr><td>v × 2</td><td>r</td><td><b>× 4</b></td></tr>
+        <tr><td>v × 3</td><td>r</td><td><b>× 9</b></td></tr>
+        <tr><td>r × ½</td><td>v</td><td><b>× 2</b></td></tr>
+        <tr><td>r × 2</td><td>T (same ride)</td><td><b>× 2</b></td></tr>
+        <tr><td>orbit r × 4</td><td>planet</td><td>v × ½</td></tr></tbody></table></div>
+    <div class="box myth"><h2>Myths that cost points</h2>
+      <ul><li><b>✗ "Centrifugal force"</b>: you feel inertia, not an outward force.</li>
+        <li><b>✗ Constant speed → a = 0</b>: the direction changes, so a = v²/r.</li>
+        <li><b>✗ Released → flies outward</b>: it goes along the tangent.</li>
+        <li><b>✗ Tension points up at the top</b>: a string always pulls toward the center.</li>
+        <li><b>✗ Astronauts have no gravity</b>: they're in free fall (about 0.9 g).</li>
+        <li><b>✗ Heavier satellite → faster</b>: m cancels in v = √(GM/r).</li></ul></div>
+    <div class="box key"><h2>FRQ sentences that score</h2>
+      <ul><li>"Taking toward the center as positive, <b>ΣF = mv²/r</b> (Newton's 2nd law)."</li>
+        <li>"At the top, gravity points <b>toward</b> the center; at the bottom it points <b>away</b>, so…"</li>
+        <li>"<b>Just barely</b> / minimum speed → set F<sub>N</sub> (or T) = 0."</li>
+        <li>"The velocity changes <b>direction</b>, so the object accelerates toward the center."</li>
+        <li>Proportions: <b>write the equation, then the ratio</b> (F ∝ v² → 2² = 4).</li></ul></div>
+  </div>
+
+  <div class="foot"><span>Physics Quests · Circular Motion Cheat Sheet</span><span>Page 1 of 1</span></div>
+</article>
+
+<script src="quest.js"></script>
+<script>
+(() => {
+const {arrow, $} = QuestKit;
+const t = (x,y,s,c="var(--muted)",a="middle",z=11) => `<text x="${x}" y="${y}" text-anchor="${a}" style="fill:${c};font:700 ${z}px var(--mono)">${s}</text>`;
+const dot = (x,y) => `<circle cx="${x}" cy="${y}" r="7" style="fill:var(--ink)"/>`;
+
+/* big picture: v tangent, a inward, the release path along the tangent */
+$("#bigSvg").innerHTML = `<circle cx="95" cy="78" r="58" fill="none" style="stroke:var(--line)" stroke-width="2" stroke-dasharray="5 4"/><circle cx="95" cy="78" r="3" style="fill:var(--ink)"/>`+t(95,94,"center")+
+  dot(153,78)+arrow(153,78,153,20,"norm","v",162,30,"start")+arrow(153,78,112,78,"grav","a",122,70)+
+  `<line x1="215" y1="128" x2="215" y2="14" style="stroke:var(--ok)" stroke-width="2.5" stroke-dasharray="6 4"/>`+dot(215,128)+
+  t(225,52,"string snaps →","var(--ok)","start")+t(225,66,"goes STRAIGHT","var(--ok)","start")+t(225,80,"along the tangent","var(--ok)","start")+
+  t(225,108,"✗ never outward","var(--bad)","start")+t(10,146,"v ⟂ a · speed constant, direction turning","var(--muted)","start");
+
+/* six FBD panels; the center direction is marked with a dashed "→ center" cue */
+const P = [
+  {h:"Top of a loop (inside)", eq:"N + mg = mv²/r", n:"Both forces point down (in). N = 0 → v<sub>min</sub> = √(gr).",
+   s:`<path d="M 30 100 A 50 50 0 0 1 130 100" fill="none" style="stroke:var(--ink)" stroke-width="3"/>`+dot(80,58)+arrow(74,58,74,96,"norm","N",68,94,"end")+arrow(86,58,86,104,"grav","mg",92,104,"start")+t(80,116,"center below ↓")},
+  {h:"Bottom of a loop / dip", eq:"N − mg = mv²/r", n:"N > mg: you feel heavier. A ball on a string at the bottom: T − mg = mv²/r.",
+   s:`<path d="M 30 20 A 50 50 0 0 0 130 20" fill="none" style="stroke:var(--ink)" stroke-width="3"/>`+dot(80,62)+arrow(80,62,80,8,"norm","N",90,14,"start")+arrow(80,62,80,92,"grav","mg",90,96,"start")+t(146,52,"↑ center","var(--muted)","middle",10)},
+  {h:"Hilltop (outside)", eq:"mg − N = mv²/r", n:"N < mg: lighter. N = 0 at v = √(gr) → airtime.",
+   s:`<path d="M 20 100 A 80 80 0 0 1 140 100" fill="none" style="stroke:var(--ink)" stroke-width="3"/>`+dot(80,40)+arrow(80,40,80,22,"norm","N",90,24,"start")+arrow(80,40,80,84,"grav","mg",90,84,"start")+t(80,112,"↓ center below")},
+  {h:"Flat curve (rear view)", eq:"f<sub>s</sub> = mv²/r", n:"v<sub>max</sub> = √(μ<sub>s</sub>gr), and mass cancels. On ice the car goes straight.",
+   s:`<line x1="10" y1="88" x2="150" y2="88" style="stroke:var(--ink)" stroke-width="3"/><rect x="62" y="56" width="36" height="26" rx="5" style="fill:var(--accent)"/>`+arrow(80,70,80,20,"norm","N",90,26,"start")+arrow(80,70,80,112,"grav","mg",90,112,"start")+arrow(70,86,26,86,"fric","f_s",34,80)+t(30,104,"← center","var(--muted)","middle",10)},
+  {h:"Banked curve, no friction", eq:"N sinθ = mv²/r · N cosθ = mg", n:"Divide: tanθ = v²/(gr). There's one \"design speed\".",
+   s:`<polygon points="10,104 150,104 150,50" style="fill:var(--bg);stroke:var(--line)" stroke-width="2"/><rect x="72" y="66" width="28" height="15" rx="3" transform="rotate(-21 86 74)" style="fill:var(--accent)"/>`+arrow(86,74,64,16,"norm","N",54,20,"end")+arrow(86,74,86,114,"grav","mg",96,114,"start")+t(22,64,"← center","var(--muted)","middle",10)},
+  {h:"Circular orbit", eq:"GMm/r² = mv²/r → v = √(GM/r)", n:"Gravity is the only force. Closer → faster, shorter T (T² ∝ r³).",
+   s:`<circle cx="70" cy="60" r="42" fill="none" style="stroke:var(--line)" stroke-width="2" stroke-dasharray="4 4"/><circle cx="70" cy="60" r="14" style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="2"/>`+dot(112,60)+arrow(112,60,112,14,"norm","v",120,22,"start")+arrow(112,60,88,60,"grav","",0,0)+t(122,84,"F_g → center","var(--f-grav)","middle",10)}
+];
+$("#panels").innerHTML = P.map(p=>`<div class="panel"><b>${p.h}</b><svg viewBox="0 0 160 118" role="img" aria-label="${p.h} free-body diagram">${p.s}</svg><span class="eq">${p.eq}</span><small>${p.n}</small></div>`).join("");
+})();
+</script>
+</body></html>
