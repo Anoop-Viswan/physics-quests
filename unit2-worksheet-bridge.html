@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Unit 2 Worksheet Bridge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="quest.css">
+<style>
+/* Five US-letter pages that bridge the class forces worksheet to the site: decoder, stack-and-add, circular gaps, thresholds + angles, practice. Same poster style as the circular visual guide. */
+:root{--sun:#fff4d6;--sky:#e6f0fb;--mint:#e3f4ea;--rose:#fbe9e5;--lilac:#ece9fb}
+body{background:var(--bg)}
+.tools{max-width:8.5in;margin:16px auto 0;padding:0 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.page{box-sizing:border-box;width:100%;max-width:8.5in;margin:14px auto 28px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:.36in .42in .26in;display:flex;flex-direction:column;gap:9px;color:var(--ink);font-size:12px;line-height:1.38}
+.band{border-radius:14px;padding:10px 16px;color:#fff;background:linear-gradient(120deg,#3b3fb6,#6a3fb6);display:flex;justify-content:space-between;align-items:center;gap:14px}
+.band.b2{background:linear-gradient(120deg,#2f8a3a,#1f6fc8)} .band.b3{background:linear-gradient(120deg,#1f6fc8,#6a3fb6)} .band.b4{background:linear-gradient(120deg,#c2412d,#b7791f)} .band.b5{background:linear-gradient(120deg,#15212c,#3b3fb6)}
+.band h1{font-size:25px;line-height:1.05;color:#fff} .band p{font-size:12.5px;opacity:.93;max-width:50ch;margin-top:3px}
+.band .num{font-family:var(--display);font-weight:800;font-size:44px;line-height:1;opacity:.35}
+.page h2{font-family:var(--display);font-size:16px;font-weight:800;margin:0}
+.page svg{display:block;width:100%;height:auto;margin:0 auto}
+.panel{border-radius:12px;padding:9px 12px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.sun{background:var(--sun)} .sky{background:var(--sky)} .mint{background:var(--mint)} .rose{background:var(--rose)} .lilac{background:var(--lilac)} .white{background:#fff;border:1.5px solid var(--line)}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px} .row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.eq{font-family:var(--mono);font-weight:700;font-size:13.5px;background:#fff;border-radius:8px;padding:3px 8px;align-self:flex-start;border:1.5px solid var(--line)}
+.page table{font-size:11.5px;background:#fff;border-radius:8px} .page th,.page td{padding:3px 7px} .page th{font-size:9.5px}
+.ok{color:var(--ok);font-weight:800;white-space:nowrap} .new{color:var(--bad);font-weight:800;white-space:nowrap}
+.page ol,.page ul{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:3px}
+.stack{font-family:var(--mono);font-size:12.5px;background:#fff;border-radius:10px;padding:8px 12px;border:1.5px solid var(--line);line-height:1.6}
+.stack .c{color:var(--bad);text-decoration:line-through;text-decoration-thickness:2px}
+.stack .sum{border-top:2px solid var(--ink);margin-top:3px;padding-top:2px;font-weight:700}
+.prob{display:flex;flex-direction:column;gap:2px;background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:7px 10px}
+.prob b{font-family:var(--display);font-size:13px}
+.prob .tag{font-family:var(--mono);font-size:10px;color:var(--accent);font-weight:700}
+.ans{font-size:11px;column-count:2;column-gap:18px}
+.ans p{margin:0 0 4px;break-inside:avoid}
+.foot{margin-top:auto;display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:5px;font-family:var(--mono);font-size:10px;color:var(--muted)}
+#stackFig{max-height:1.85in} #ferris{max-height:2.75in} #hole{max-height:2.2in} #pipe{max-height:.85in} #tri{max-height:1.75in} #slant{max-height:1.75in} #inc{max-height:1.75in} #heli{max-height:1.85in}
+@media (max-width:640px){.row2,.row3{grid-template-columns:1fr}.page{padding:16px}.band h1{font-size:22px}.band .num{display:none}.ans{column-count:1}}
+@media print{
+  @page{size:letter;margin:0}
+  body{background:#fff}
+  .tools{display:none!important}
+  .page{margin:0;border:0;border-radius:0;max-width:none;width:8.5in;height:11in;overflow:hidden;break-after:page}
+  .page:last-child{break-after:auto}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head><body>
+<div class="tools">
+  <a class="btn ghost" href="index.html" style="text-decoration:none">← Home</a>
+  <button type="button" class="btn" onclick="print()">Print / Save as PDF</button>
+  <a class="btn ghost" href="printables/unit2-worksheet-bridge.pdf" style="text-decoration:none">PDF ↓</a>
+  <span class="note">5 pages. The answers are on page 5.</span>
+</div>
+
+<!-- PAGE 1 · decoder + coverage map -->
+<article class="page">
+  <div class="band"><div><h1>Your Forces Worksheet,<br>Decoded</h1><p>The class worksheet "Forces (including circular motion)", mapped to what you've already practiced here, plus the pieces that were missing. Those are on pages 2–4.</p></div><span class="num">01</span></div>
+
+  <div class="panel sky"><h2>Coverage map: worksheet problem types → where to practice</h2>
+    <table><thead><tr><th>Worksheet problem type</th><th>Where on the site</th><th>Status</th></tr></thead><tbody>
+      <tr><td>Net force zero or not? (projectile, constant speed on a curve, Moon)</td><td>Newton's Laws Quest · Circular Quest</td><td class="ok">✓ covered</td></tr>
+      <tr><td>Reaction-force pairs · scale readings over pulleys</td><td>Newton's Laws · Tension Quest · Quizzes</td><td class="ok">✓ covered</td></tr>
+      <tr><td>Elevator tension · weight on the Moon / in space</td><td>Systems &amp; Gravity Quest</td><td class="ok">✓ covered</td></tr>
+      <tr><td>Helicopter lifting / lowering a load (2 bodies, vertical)</td><td><b>Page 2</b> of this sheet</td><td class="new">★ new</td></tr>
+      <tr><td>Boxes pulled in a line · Atwood · table + hanging mass</td><td>Tension &amp; Pulleys Quest</td><td class="ok">✓ covered</td></tr>
+      <tr><td>3 blocks (hanging–table–hanging) <b>with friction</b> · incline + hanging <b>with friction</b></td><td><b>Page 2</b>: stack-and-add + friction direction</td><td class="new">★ new</td></tr>
+      <tr><td>Slanted push + friction (N ≠ mg) · symmetric strings at 53°</td><td>Friction Quest · Tension Quest · <b>page 4</b> (37°/53° trick)</td><td class="new">★ added</td></tr>
+      <tr><td>Block resting on an incline: friction = ? · pushed at constant speed</td><td><b>Page 4</b>: "static friction is only what's needed"</td><td class="new">★ new</td></tr>
+      <tr><td>Ramp + kinematics (how long, how fast, how far up and back)</td><td>Friction Quest boss · <b>page 4</b> pipeline</td><td class="new">★ added</td></tr>
+      <tr><td>Cup of water in a vertical circle · vine/rope at the bottom</td><td>Circular Quest · Predict &amp; Reveal</td><td class="ok">✓ covered</td></tr>
+      <tr><td><b>Ferris wheel</b> (rev/min → speed; seat force at top AND bottom)</td><td><b>Page 3</b></td><td class="new">★ new</td></tr>
+      <tr><td><b>Puck on a table, string through a hole to a hanging mass</b></td><td><b>Page 3</b></td><td class="new">★ new</td></tr>
+      <tr><td>"Does it slide off / does the vine snap?" (needed vs available)</td><td><b>Page 4</b></td><td class="new">★ new</td></tr>
+    </tbody></table></div>
+
+  <div class="row2">
+    <div class="panel sun"><h2>Read the worked solutions like a pro: notation decoder</h2>
+      <table><tbody>
+        <tr><td><b>F<sub>net</sub> = ma</b></td><td>Newton's 2nd law. Write one per object.</td></tr>
+        <tr><td><b>F<sub>fr</sub></b>, <b>F<sub>sr</sub></b>, <b>f</b></td><td>Friction (handwriting varies). F<sub>fr</sub> = μF<sub>N</sub> when sliding.</td></tr>
+        <tr><td><b>F<sub>g</sub></b>, <b>w</b>, <b>mg</b></td><td>Weight. With g = 10, a 9-kg block → 90 N.</td></tr>
+        <tr><td><b>a<sub>c</sub></b></td><td>Centripetal acceleration v²/r, toward the center</td></tr>
+        <tr><td><b>+)</b> under equations</td><td>"Add these equations": tensions cancel (page 2)</td></tr>
+        <tr><td><b>a↓ / a↑</b> beside an FBD</td><td>The direction chosen as + for that object</td></tr>
+        <tr><td><b>★ / *</b></td><td>Final answer</td></tr>
+      </tbody></table></div>
+    <div class="panel rose"><h2>g = 10 vs g = 9.8</h2>
+      <p>Your class key uses <b>g = 10 m/s²</b> (easier arithmetic). This site mostly uses 9.8, so answers can differ by about 2%. That's not a mistake.</p>
+      <ul><li>On class tests: use whatever your teacher uses (looks like <b>10</b>).</li>
+        <li>On the AP exam: 9.8 or 10 both earn credit if you're consistent.</li>
+        <li>Quick convert: answer with 9.8 ≈ answer with 10 × 0.98.</li></ul>
+      <p class="eq">Weight: m × g → 60 kg × 10 = 600 N</p></div>
+  </div>
+  <div class="foot"><span>Physics Quests · Unit 2 Worksheet Bridge</span><span>Page 1 of 5</span></div>
+</article>
+
+<!-- PAGE 2 · stack-and-add -->
+<article class="page">
+  <div class="band b2"><div><h1>The Stack-and-Add Method</h1><p>The key solves every multi-object problem the same way: one F<sub>net</sub> = ma per object, then add the equations. Internal tensions cancel like magic.</p></div><span class="num">02</span></div>
+
+  <div class="panel mint"><h2>Example: hanging – table – hanging, with friction</h2>
+    <svg id="stackFig" viewBox="0 0 640 190" role="img" aria-label="Three blocks: 1 kg hanging on the left, 5 kg on a table, 4 kg hanging on the right"></svg>
+    <div class="row2">
+      <div><ol>
+        <li><b>Pick the direction of motion</b> first. The heavier side wins: 4 kg (40 N) beats 1 kg (10 N), so the system moves <b>toward the 4 kg</b>.</li>
+        <li><b>Make + point along the motion for EVERY object</b>: up for the 1 kg, right for the 5 kg, down for the 4 kg. The string "bends" the axis around the pulleys.</li>
+        <li><b>Friction opposes the motion</b>, so on the 5 kg it points left: F<sub>fr</sub> = μF<sub>N</sub> = 0.1 × 50 = 5 N.</li>
+        <li><b>Write F<sub>net</sub> = ma for each object, then ADD.</b> T<sub>1</sub> and T<sub>2</sub> each appear once as + and once as −, so they cancel.</li>
+        <li><b>Plug a back in</b> to any single equation to get each tension.</li></ol></div>
+      <div class="stack">
+        1 kg: &nbsp;<span class="c">T₁</span> − 10 = 1·a<br>
+        5 kg: &nbsp;<span class="c">T₂</span> − <span class="c">T₁</span> − 5 = 5·a<br>
+        4 kg: &nbsp;40 − <span class="c">T₂</span> = 4·a<br>
+        <div class="sum">+) &nbsp;&nbsp;&nbsp;&nbsp;25 = 10·a → a = 2.5 m/s²</div>
+        T₁ = 10 + 1(2.5) = 12.5 N<br>T₂ = 40 − 4(2.5) = 30 N</div>
+    </div>
+    <p class="note" style="margin:0"><b>Shortcut check:</b> a = (driving forces − resisting forces) ÷ (total mass) = (40 − 10 − 5) ÷ 10 = 2.5 m/s². Same answer, and only one line.</p></div>
+
+  <div class="row2">
+    <div class="panel sky"><h2>Same trick on a ramp</h2>
+      <svg id="inc" viewBox="0 0 320 150" role="img" aria-label="Block on a ramp tied over a pulley to a hanging block"></svg>
+      <ul><li>Along the ramp, gravity's pull is <b>mg sinθ</b>. Into the ramp it's <b>mg cosθ</b>, so F<sub>N</sub> = mg cosθ.</li>
+        <li>Compare the hanging weight with mg sinθ to find which way it moves. Friction then points <b>the other way</b>.</li>
+        <li>With friction: driving = hanging weight − mg sinθ − μmg cosθ.</li></ul></div>
+    <div class="panel lilac"><h2>Vertical version: helicopter + load</h2>
+      <svg id="heli" viewBox="0 0 320 170" role="img" aria-label="Helicopter carrying a crate on a cable, with forces"></svg>
+      <ul><li><b>Whole system</b> (heli + load): F<sub>lift</sub> − (M+m)g = (M+m)a → the lift force.</li>
+        <li><b>Load alone</b>: T − mg = ma → the cable tension.</li>
+        <li>Moving <b>down</b> and speeding up? Then a points down, so the lift is <em>less</em> than the total weight.</li></ul></div>
+  </div>
+  <div class="foot"><span>Physics Quests · Unit 2 Worksheet Bridge</span><span>Page 2 of 5</span></div>
+</article>
+
+<!-- PAGE 3 · circular gaps -->
+<article class="page">
+  <div class="band b3"><div><h1>Two Circular Problems<br>We Hadn't Covered</h1><p>The Ferris wheel, and the puck tied through a hole to a hanging mass. Both are classic test favorites.</p></div><span class="num">03</span></div>
+
+  <div class="panel sky"><h2>Ferris wheel vs. coaster loop: is the seat UNDER you or OVER you?</h2>
+    <svg id="ferris" viewBox="0 0 640 250" role="img" aria-label="Ferris wheel rider sits on the seat so at the top the normal force points up; coaster rider inside a loop has the track above so the normal force points down"></svg>
+    <div class="row2">
+      <div><b>Ferris wheel, top:</b> you sit ON the seat, so the seat pushes <b>up</b> (away from the center). Gravity points down (toward the center).<div class="eq" style="margin-top:3px">mg − N = mv²/r → N = m(g − a<sub>c</sub>)</div> You feel lighter. Bottom: N − mg = mv²/r → you feel heavier.</div>
+      <div><b>Coaster loop, top:</b> you're upside down INSIDE the track, so the track pushes <b>down</b> (toward the center).<div class="eq" style="margin-top:3px">mg + N = mv²/r</div> Same position, opposite N! <b>Always draw where the surface touches you</b> before writing the equation.</div>
+    </div></div>
+
+  <div class="panel sun"><h2>"Turns 4 times a minute": the rpm pipeline</h2>
+    <svg id="pipe" viewBox="0 0 640 90" role="img" aria-label="Revolutions per minute to period to speed to acceleration to force"></svg></div>
+
+  <div class="panel mint"><h2>Puck on a table, string through a hole, hanging mass</h2>
+    <div class="row2" style="align-items:center">
+      <svg id="hole" viewBox="0 0 320 190" role="img" aria-label="Puck circling on a frictionless table, string through a central hole to a hanging mass"></svg>
+      <div><ol>
+        <li><b>Hanging mass M is at rest</b> (a = 0): T = Mg.</li>
+        <li><b>The same string pulls the puck m</b> toward the hole. That tension IS the centripetal force: T = mv²/r.</li>
+        <li><b>Chain them:</b> Mg = mv²/r → v = √(Mgr / m).</li></ol>
+        <p style="margin-top:6px"><b>Intuition:</b> spin the puck faster and it needs more pull than M's weight can give. M gets yanked <b>up</b> and the circle widens until things balance again.</p>
+        <div class="eq" style="margin-top:5px">Mg = T = mv²/r</div></div>
+    </div></div>
+  <div class="foot"><span>Physics Quests · Unit 2 Worksheet Bridge</span><span>Page 3 of 5</span></div>
+</article>
+
+<!-- PAGE 4 · thresholds + angle toolbox -->
+<article class="page">
+  <div class="band b4"><div><h1>Needed vs. Available<br>+ Your Angle Toolbox</h1><p>"Does it slide off? Does the vine snap?" questions, the 37°/53° shortcut, and the friction fact that trips everyone up.</p></div><span class="num">04</span></div>
+
+  <div class="panel rose"><h2>Threshold problems: compare what the circle NEEDS with what the force CAN give</h2>
+    <table><thead><tr><th>Situation</th><th>Needed (toward the center)</th><th>Available (the limit)</th><th>If needed &gt; available…</th></tr></thead><tbody>
+      <tr><td>Box on a spinning merry-go-round / coin on a turntable</td><td>mv²/r</td><td>Max static friction μ<sub>s</sub>F<sub>N</sub> = μ<sub>s</sub>mg</td><td>It slides off. At the edge: v = √(μ<sub>s</sub>gr)</td></tr>
+      <tr><td>Swinging on a vine/rope, at the bottom</td><td>T = mg + mv²/r</td><td>Breaking strength</td><td>The vine snaps. Justify with numbers!</td></tr>
+      <tr><td>Cup or bucket upside down at the top</td><td>mv²/r</td><td>At least mg (gravity alone)</td><td>If mv²/r &lt; mg, the water falls out. Minimum v = √(gr)</td></tr>
+      <tr><td>Car over a hilltop</td><td>mv²/r</td><td>At most mg (N can't pull down)</td><td>The car leaves the road at v &gt; √(gr)</td></tr>
+    </tbody></table>
+    <p><b>FRQ move:</b> "The tension needed is 1236 N, which is more than the 1000 N breaking strength, so the vine breaks." A number on each side plus a comparison word scores the point.</p></div>
+
+  <div class="row3">
+    <div class="panel sun"><h2>The 3-4-5 triangle</h2><svg id="tri" viewBox="0 0 200 150" role="img" aria-label="3-4-5 right triangle with 37 and 53 degree angles"></svg>
+      <p><b>sin 37° = cos 53° = 0.6</b><br><b>cos 37° = sin 53° = 0.8</b><br>Problems using 37° or 53° are inviting this shortcut, so no calculator is needed.</p></div>
+    <div class="panel sky"><h2>Slanted force → N changes</h2><svg id="slant" viewBox="0 0 200 150" role="img" aria-label="Pushing down at an angle increases normal force; pulling up decreases it"></svg>
+      <p><b>Push down</b> at θ: N = mg + F sinθ (more friction).<br><b>Pull up</b> at θ: N = mg − F sinθ (less friction).<br>Only F cosθ moves the box forward.</p></div>
+    <div class="panel lilac"><h2>Static friction = only what's needed</h2>
+      <p>A block <b>at rest</b> on a 30° ramp: friction = <b>mg sinθ</b> (whatever balances it), <b>not</b> μ<sub>s</sub>F<sub>N</sub>.</p>
+      <p>μ<sub>s</sub>F<sub>N</sub> is the <b>maximum</b>, used only when it's "just about to slip".</p>
+      <p>Pushed at <b>constant speed</b>? a = 0, so friction = your push (70 N push → 70 N friction).</p></div>
+  </div>
+
+  <div class="panel mint"><h2>Ramp + kinematics: forces give a, then a gives motion</h2>
+    <p><b>1.</b> F<sub>net</sub> along the ramp → a (frictionless: a = g sinθ; sliding up with friction: a = −(g sinθ + μg cosθ)). <b>2.</b> Pick a kinematics equation: Δx = v₀t + ½at² · v = v₀ + at · v² = v₀² + 2aΔx. <b>3.</b> "How far up?" means v = 0 at the top. <b>Frictionless round trip:</b> the time up = the time down, so total = 2 × t<sub>up</sub>, and it comes back at the speed it started with.</p></div>
+  <div class="foot"><span>Physics Quests · Unit 2 Worksheet Bridge</span><span>Page 4 of 5</span></div>
+</article>
+
+<!-- PAGE 5 · practice -->
+<article class="page">
+  <div class="band b5"><div><h1>10 New Practice Problems</h1><p>Same types as the class worksheet, but new numbers. Use <b>g = 10 m/s²</b>. Draw an FBD for every one. Cover the answers until you're done!</p></div><span class="num">05</span></div>
+  <div class="row2" id="probs"></div>
+  <div class="panel white"><h2>Answers (cover these until you've tried!)</h2><div class="ans" id="ans"></div></div>
+  <div class="foot"><span>Physics Quests · Unit 2 Worksheet Bridge</span><span>Page 5 of 5</span></div>
+</article>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const C = {grav:"#d2452f", norm:"#1f6fc8", fric:"#b97a06", tens:"#2f8a3a", ink:"#15212c", muted:"#566775", ok:"#1f8a4c", bad:"#c2412d", acc:"#3b3fb6", road:"#c9d3db", app:"#8a46cc"};
+const A = (x1,y1,x2,y2,c,w=4) => { const a = Math.atan2(y2-y1,x2-x1), h = 4+w*2.2, s = .45;
+  return `<line x1="${x1}" y1="${y1}" x2="${x2-h*.7*Math.cos(a)}" y2="${y2-h*.7*Math.sin(a)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/><polygon points="${x2},${y2} ${x2-h*Math.cos(a-s)},${y2-h*Math.sin(a-s)} ${x2-h*Math.cos(a+s)},${y2-h*Math.sin(a+s)}" fill="${c}"/>`; };
+const T = (x,y,t,c=C.ink,sz=13,anc="middle",wt=700) => `<text x="${x}" y="${y}" text-anchor="${anc}" fill="${c}" style="font:${wt} ${sz}px var(--body)">${t}</text>`;
+const M = (x,y,t,c=C.ink,sz=12,anc="middle") => `<text x="${x}" y="${y}" text-anchor="${anc}" fill="${c}" style="font:700 ${sz}px var(--mono)">${t}</text>`;
+const box = (x,y,w,h,lab,col="#3b3fb6") => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" fill="${col}"/>`+T(x+w/2,y+h/2+5,lab,"#fff",13,"middle",800);
+const pulley = (x,y,r=12) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="${C.ink}" stroke-width="3"/><circle cx="${x}" cy="${y}" r="3" fill="${C.ink}"/>`;
+const person = (x,y,col="#b7791f",s=1) => `<g transform="translate(${x} ${y}) scale(${s})"><circle cx="0" cy="-26" r="7" fill="${col}"/><path d="M 0 -19 L 0 0 M 0 -14 L -9 -6 M 0 -14 L 9 -6 M 0 0 L -7 13 M 0 0 L 7 13" stroke="${col}" stroke-width="4" stroke-linecap="round" fill="none"/></g>`;
+
+/* page 2: three-block system */
+(() => { let s = `<rect x="170" y="70" width="300" height="14" fill="${C.road}"/><rect x="180" y="84" width="10" height="90" fill="${C.road}"/><rect x="450" y="84" width="10" height="90" fill="${C.road}"/>`;
+  s += pulley(158,70)+pulley(482,70);
+  s += `<line x1="158" y1="58" x2="270" y2="58" stroke="${C.ink}" stroke-width="2"/><line x1="370" y1="58" x2="482" y2="58" stroke="${C.ink}" stroke-width="2"/><line x1="146" y1="70" x2="146" y2="120" stroke="${C.ink}" stroke-width="2"/><line x1="494" y1="70" x2="494" y2="128" stroke="${C.ink}" stroke-width="2"/>`;
+  s += box(270,34,100,36,"5 kg","#3b3fb6") + box(124,120,44,34,"1 kg","#8a46cc") + box(470,128,48,40,"4 kg","#c2412d");
+  s += A(300,34,300,6,C.norm,3)+T(308,14,"F_N = 50 N",C.norm,11,"start") + A(270,64,226,64,C.fric,4)+T(232,96,"F_fr = 5 N",C.fric,11,"middle");
+  s += M(214,52,"T₁",C.tens,13)+M(426,52,"T₂",C.tens,13);
+  s += A(100,150,100,112,C.acc,3)+M(84,136,"+",C.acc,15,"end") + A(330,20,380,20,C.acc,3)+M(392,24,"+",C.acc,15,"start") + A(540,128,540,168,C.acc,3)+M(552,152,"+",C.acc,15,"start");
+  s += T(320,186,"+ follows the motion for every block (toward the heavier side)",C.acc,12);
+  $("#stackFig").innerHTML = s; })();
+
+/* page 2: ramp + hanging */
+(() => { const th = 30*Math.PI/180; let s = `<polygon points="20,140 250,140 250,${140-230*Math.tan(th)}" fill="${C.road}"/>`;
+  const px = 250, py = 140-230*Math.tan(th);
+  s += pulley(px+4, py-8, 10) + `<line x1="${px+14}" y1="${py-8}" x2="${px+14}" y2="${py+56}" stroke="${C.ink}" stroke-width="2"/>` + box(px-4, py+56, 36, 30, "m₂", "#c2412d");
+  s += `<g transform="translate(150 ${140-130*Math.tan(th)}) rotate(-30)"><rect x="-22" y="-30" width="44" height="30" rx="4" fill="#3b3fb6"/></g>` + T(150,140-130*Math.tan(th)-10,"m₁","#fff",12,"middle",800);
+  const bx = 150, by = 140-130*Math.tan(th)-14;
+  s += A(bx,by,bx-50*Math.cos(th),by+50*Math.sin(th),C.grav,3) + T(bx-62,by+38,"mg sinθ",C.grav,11,"end");
+  s += `<line x1="${bx+20*Math.cos(th)}" y1="${by-20*Math.sin(th)}" x2="${px-4}" y2="${py-16}" stroke="${C.ink}" stroke-width="2"/>` + A(bx+4,by-12,bx+4+60*Math.cos(th),by-12-60*Math.sin(th),C.tens,3) + T(bx+52,by-52,"T",C.tens,12);
+  $("#inc").innerHTML = s; })();
+
+/* page 2: helicopter */
+(() => { let s = `<g transform="translate(110 40)"><ellipse cx="0" cy="0" rx="46" ry="18" fill="#3b3fb6"/><rect x="40" y="-6" width="60" height="8" rx="3" fill="#3b3fb6"/><line x1="-60" y1="-26" x2="60" y2="-26" stroke="${C.ink}" stroke-width="4"/><line x1="0" y1="-26" x2="0" y2="-16" stroke="${C.ink}" stroke-width="4"/></g>`;
+  s += `<line x1="110" y1="58" x2="110" y2="110" stroke="${C.ink}" stroke-width="2"/>` + box(88,110,44,34,"load","#c2412d");
+  s += A(60,40,60,4,C.norm,4)+T(52,14,"F_lift",C.norm,12,"end") + A(160,48,160,92,C.grav,4)+T(168,88,"Mg",C.grav,12,"start");
+  s += A(140,112,140,84,C.tens,3)+T(148,90,"T",C.tens,12,"start") + A(80,140,80,166,C.grav,3)+T(72,166,"mg",C.grav,12,"end");
+  s += `<rect x="196" y="20" width="120" height="120" rx="10" fill="#fff"/>`+M(256,44,"system:",C.ink,11)+M(256,62,"F_lift−(M+m)g",C.ink,11)+M(256,78,"=(M+m)a",C.ink,11)+M(256,104,"load:",C.ink,11)+M(256,122,"T − mg = ma",C.ink,11);
+  $("#heli").innerHTML = s; })();
+
+/* page 3: Ferris wheel vs coaster loop */
+(() => { let s = "";
+  const fx = 150, fy = 130, R = 92;
+  s += `<circle cx="${fx}" cy="${fy}" r="${R}" fill="none" stroke="${C.ink}" stroke-width="4"/>` + [0,45,90,135,180,225,270,315].map(d=>{const a=d*Math.PI/180;return `<line x1="${fx}" y1="${fy}" x2="${fx+R*Math.cos(a)}" y2="${fy-R*Math.sin(a)}" stroke="${C.road}" stroke-width="2"/>`;}).join("") + `<circle cx="${fx}" cy="${fy}" r="5" fill="${C.ink}"/><path d="M ${fx-40} 245 L ${fx} ${fy} L ${fx+40} 245" fill="none" stroke="${C.ink}" stroke-width="4"/>`;
+  /* rider sits on top of a seat at the top and bottom */
+  const seat = (x,y) => `<rect x="${x-16}" y="${y}" width="32" height="7" rx="2" fill="#b7791f"/>` + person(x, y-2, "#3b3fb6", .8);
+  s += seat(fx, fy-R+14) + A(fx-26, fy-R+12, fx-26, fy-R-20, C.norm, 4) + T(fx-32, fy-R-8, "N ↑", C.norm, 12, "end") + A(fx+26, fy-R-6, fx+26, fy-R+30, C.grav, 4) + T(fx+32, fy-R+28, "mg ↓", C.grav, 12, "start");
+  s += seat(fx, fy+R-10) + A(fx-26, fy+R-6, fx-26, fy+R-50, C.norm, 4) + T(fx-32, fy+R-34, "N ↑ (big)", C.norm, 12, "end") + A(fx+26, fy+R-14, fx+26, fy+R+16, C.grav, 4);
+  s += T(fx, 16, "FERRIS WHEEL · rider sits ON the seat", C.ink, 13, "middle", 800);
+  const lx = 470, ly = 130, LR = 92;
+  s += `<circle cx="${lx}" cy="${ly}" r="${LR}" fill="none" stroke="${C.ink}" stroke-width="8"/><circle cx="${lx}" cy="${ly}" r="5" fill="${C.ink}"/>`;
+  s += `<g transform="translate(${lx} ${ly-LR+6}) rotate(180)"><rect x="-22" y="-20" width="44" height="18" rx="5" fill="#c2412d"/><circle cx="-12" cy="-2" r="5" fill="${C.ink}"/><circle cx="12" cy="-2" r="5" fill="${C.ink}"/></g>` + person(lx, ly-LR+40, "#3b3fb6", -.7);
+  s += A(lx-30, ly-LR+8, lx-30, ly-LR+48, C.norm, 4) + T(lx-36, ly-LR+40, "N ↓", C.norm, 12, "end") + A(lx+30, ly-LR+8, lx+30, ly-LR+52, C.grav, 4) + T(lx+36, ly-LR+48, "mg ↓", C.grav, 12, "start");
+  s += T(lx, 16, "COASTER LOOP · rider upside down INSIDE", C.ink, 13, "middle", 800) + M(lx, ly+6, "center", C.muted, 11);
+  $("#ferris").innerHTML = s; })();
+
+/* page 3: rpm pipeline */
+(() => { const st = [["rev/min","4 rev per min"],["period T","60 s ÷ 4 = 15 s"],["speed v","v = 2πr / T"],["a_c","a = v² / r"],["force","F_net = m·a_c"]];
+  let s = ""; st.forEach(([h,b],i) => { const x = 6+i*128; s += `<rect x="${x}" y="10" width="112" height="70" rx="12" fill="#fff" stroke="${C.xp||'#b7791f'}" stroke-width="2"/>`+T(x+56,36,h,C.ink,14,"middle",800)+M(x+56,60,b,C.acc,10.5); if (i<4) s += A(x+113,45,x+126,45,"#b7791f",3); });
+  $("#pipe").innerHTML = s; })();
+
+/* page 3: puck through a hole */
+(() => { let s = `<polygon points="30,70 290,70 250,120 -10,120" fill="#eef3f6" stroke="${C.ink}" stroke-width="2"/>`;
+  s += `<ellipse cx="140" cy="95" rx="90" ry="20" fill="none" stroke="${C.road}" stroke-width="3" stroke-dasharray="6 5"/><ellipse cx="140" cy="95" rx="5" ry="3" fill="${C.ink}"/>`;
+  s += `<line x1="140" y1="95" x2="226" y2="92" stroke="${C.ink}" stroke-width="2"/><ellipse cx="228" cy="92" rx="11" ry="6" fill="#3b3fb6"/>` + T(246,86,"m","#3b3fb6",14,"start",800);
+  s += A(218,98,170,98,C.tens,4) + T(194,114,"T",C.tens,13);
+  s += `<line x1="140" y1="95" x2="140" y2="150" stroke="${C.ink}" stroke-width="2"/>` + box(124,150,32,28,"M","#c2412d");
+  s += A(170,150,170,124,C.tens,4) + T(178,132,"T",C.tens,12,"start") + A(170,178,170,190,C.grav,4) + T(178,188,"Mg",C.grav,12,"start");
+  s += A(244,104,268,124,C.norm,3) + T(274,140,"v (tangent)",C.norm,11,"middle");
+  s += M(60,30,"top: T = mv²/r",C.tens,12,"start") + M(60,48,"bottom: T = Mg (at rest)",C.grav,12,"start");
+  $("#hole").innerHTML = s; })();
+
+/* page 4: 3-4-5 triangle */
+(() => { let s = `<polygon points="30,130 170,130 170,25" fill="#fff" stroke="${C.ink}" stroke-width="3"/><rect x="158" y="118" width="12" height="12" fill="none" stroke="${C.ink}" stroke-width="2"/>`;
+  s += T(100,146,"4",C.ink,16,"middle",800)+T(182,82,"3",C.ink,16,"start",800)+T(88,70,"5",C.ink,16,"end",800);
+  s += `<path d="M 60 130 A 30 30 0 0 0 54 112" fill="none" stroke="${C.bad}" stroke-width="2"/>`+M(70,122,"37°",C.bad,12,"start")+`<path d="M 170 52 A 27 27 0 0 1 154 47" fill="none" stroke="${C.acc}" stroke-width="2"/>`+M(150,62,"53°",C.acc,12,"end");
+  $("#tri").innerHTML = s; })();
+
+/* page 4: slanted push vs pull */
+(() => { let s = `<line x1="5" y1="70" x2="95" y2="70" stroke="${C.ink}" stroke-width="3"/>` + box(30,44,40,26,"m") + A(0,26,30,48,C.app,4) + A(60,70,60,104,C.grav,3) + A(40,44,40,16,C.norm,4) + T(50,140,"push ↘: N bigger",C.bad,11,"middle",800);
+  s += `<line x1="105" y1="70" x2="195" y2="70" stroke="${C.ink}" stroke-width="3"/>` + box(125,44,40,26,"m") + A(165,52,196,24,C.app,4) + A(155,70,155,104,C.grav,3) + A(135,44,135,26,C.norm,4) + T(150,140,"pull ↗: N smaller",C.ok,11,"middle",800);
+  s += T(50,124,"N = mg + F sinθ",C.ink,10,"middle",700) + T(150,124,"N = mg − F sinθ",C.ink,10,"middle",700);
+  $("#slant").innerHTML = s; })();
+
+/* page 5: practice + answers (all checked with g = 10) */
+const P = [
+ ["Ferris wheel","A 50-kg rider is on a Ferris wheel of radius 12 m that turns 3 times per minute. (a) Find the period and the speed. (b) Find a<sub>c</sub>. (c) Find the seat's force on the rider at the bottom and at the top (magnitude and direction). (d) Challenge: how many rev/min would make the rider feel weightless at the top?"],
+ ["Puck + hole","A 0.20-kg puck circles on a frictionless table at radius 0.80 m. Its string passes through a hole to a hanging 0.50-kg mass that stays at rest. (a) Find the tension. (b) Find the puck's speed. (c) To double the speed at the same radius, what hanging mass is needed?"],
+ ["Will it snap?","A 60-kg climber swings on a 6.0-m rope and moves at 5.0 m/s at the lowest point. The rope is rated for 900 N. (a) Does it hold? Justify. (b) What's the fastest safe speed at the bottom?"],
+ ["Slide off?","A coin sits 0.15 m from the center of a turntable, with μ<sub>s</sub> = 0.40. (a) What's the maximum speed before it slides? (b) How many rev/min is that?"],
+ ["3 blocks + friction","A 2-kg block hangs on the left and a 4-kg block hangs on the right, joined by strings over pulleys to a 6-kg block on a table (μ<sub>k</sub> = 0.20). Find the acceleration and both tensions."],
+ ["Ramp + hanging","A 5-kg block on a 37° ramp (μ<sub>k</sub> = 0.25) is tied over a pulley at the top of the ramp to a hanging 6-kg block. Which way does it move? Find a and T."],
+ ["Slanted pull","You pull a 10-kg crate with 50 N at 37° above the horizontal. μ<sub>k</sub> = 0.30. Find the normal force and the acceleration."],
+ ["Resting on a ramp","An 8-kg box sits at rest on a 37° ramp with μ<sub>s</sub> = 0.90. What is the friction force on it? (Careful!)"],
+ ["Ramp kinematics","A block is released from rest at the top of a frictionless 30° ramp 5.0 m long. How long does it take to reach the bottom, and how fast is it going?"],
+ ["Helicopter","A 3000-kg helicopter lifts a 500-kg crate on a cable, accelerating upward at 1.0 m/s². Find the lift force and the cable tension."]
+];
+const ANS = [
+ "<b>1.</b> T = 20 s, v = 2π(12)/20 = 3.77 m/s; a<sub>c</sub> = 1.18 m/s²; bottom N = 50(10 + 1.18) = 559 N ↑, top N = 50(10 − 1.18) = 441 N ↑ (still up!); weightless when v = √(gr) = 10.95 m/s → T = 6.9 s → about 8.7 rev/min.",
+ "<b>2.</b> T = Mg = 5.0 N; v = √(Tr/m) = √(5 × 0.8 / 0.2) = 4.47 m/s; 2v needs 4× the force → M = 2.0 kg.",
+ "<b>3.</b> T = mg + mv²/r = 600 + 60(25)/6 = 850 N &lt; 900 N, so it holds. Max: 900 − 600 = 60v²/6 → v = 5.48 m/s.",
+ "<b>4.</b> v = √(μ<sub>s</sub>gr) = √(0.4 × 10 × 0.15) = 0.775 m/s; f = v/(2πr) = 0.82 rev/s ≈ 49 rev/min.",
+ "<b>5.</b> It moves toward the 4 kg. F<sub>fr</sub> = 0.2 × 60 = 12 N; a = (40 − 20 − 12)/12 = 0.667 m/s²; T<sub>left</sub> = 20 + 2a = 21.3 N; T<sub>right</sub> = 40 − 4a = 37.3 N.",
+ "<b>6.</b> 60 N &gt; mg sin37° = 30 N, so the hanging block goes down and the ramp block goes up. F<sub>fr</sub> = 0.25 × 50 × 0.8 = 10 N (down the ramp). a = (60 − 30 − 10)/11 = 1.82 m/s²; T = 60 − 6a = 49.1 N.",
+ "<b>7.</b> N = 100 − 50(0.6) = 70 N; F<sub>fr</sub> = 0.3 × 70 = 21 N; a = (50(0.8) − 21)/10 = 1.9 m/s².",
+ "<b>8.</b> At rest → friction = mg sinθ = 80 × 0.6 = <b>48 N</b> (up the ramp). NOT μ<sub>s</sub>N = 57.6 N; that's the maximum it could give.",
+ "<b>9.</b> a = g sin30° = 5 m/s²; 5 = ½(5)t² → t = 1.41 s; v = at = 7.07 m/s.",
+ "<b>10.</b> System: F<sub>lift</sub> = (3500)(10 + 1) = 38,500 N. Crate: T = 500(10 + 1) = 5,500 N."
+];
+$("#probs").innerHTML = P.map(([t,q],i)=>`<div class="prob"><span class="tag">P${i+1} · ${t}</span><span>${q}</span></div>`).join("");
+$("#ans").innerHTML = ANS.map(a=>`<p>${a}</p>`).join("");
+})();
+</script>
+</body></html>
